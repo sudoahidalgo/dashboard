@@ -156,6 +156,13 @@
             color: #90a4ae;
         }
 
+        .metric-extra {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 4px;
+            color: #90a4ae;
+        }
+
         .loading {
             opacity: 0.6;
             animation: pulse 1.5s ease-in-out infinite;
@@ -208,48 +215,72 @@
                 <div class="metric-title">Real GDP (Inflation Adjusted)</div>
                 <div class="metric-value" id="gdp-value">Loading...</div>
                 <div class="metric-change" id="gdp-change">--</div>
+                <div class="metric-extra" id="gdp-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="gdp-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="gdp-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Annual Inflation</div>
                 <div class="metric-value" id="inflation-value">Loading...</div>
                 <div class="metric-change" id="inflation-change">--</div>
+                <div class="metric-extra" id="inflation-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="inflation-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="inflation-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Unemployment Rate</div>
                 <div class="metric-value" id="unemployment-value">Loading...</div>
                 <div class="metric-change" id="unemployment-change">--</div>
+                <div class="metric-extra" id="unemployment-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="unemployment-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="unemployment-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Federal Debt</div>
                 <div class="metric-value" id="debt-value">Loading...</div>
                 <div class="metric-change" id="debt-change">--</div>
+                <div class="metric-extra" id="debt-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="debt-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="debt-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">30-Year Mortgage Rate</div>
                 <div class="metric-value" id="mortgage-value">Loading...</div>
                 <div class="metric-change" id="mortgage-change">--</div>
+                <div class="metric-extra" id="mortgage-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="mortgage-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="mortgage-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Labor Participation Rate</div>
                 <div class="metric-value" id="labor-value">Loading...</div>
                 <div class="metric-change" id="labor-change">--</div>
+                <div class="metric-extra" id="labor-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="labor-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="labor-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Personal Savings Rate</div>
                 <div class="metric-value" id="savings-value">Loading...</div>
                 <div class="metric-change" id="savings-change">--</div>
+                <div class="metric-extra" id="savings-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="savings-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="savings-today">Today: Loading..</div>
             </div>
 
             <div class="metric-card">
                 <div class="metric-title">Median Home Sales Price</div>
                 <div class="metric-value" id="home-price-value">Loading...</div>
                 <div class="metric-change" id="home-price-change">--</div>
+                <div class="metric-extra" id="homePrice-ytd">YTD: Loading..</div>
+                <div class="metric-extra" id="homePrice-yesterday">Yesterday: Loading..</div>
+                <div class="metric-extra" id="homePrice-today">Today: Loading..</div>
             </div>
         </div>
 
@@ -338,7 +369,7 @@
             }
         }
 
-        async function fetchFredData(seriesId, limit = 10) {
+        async function fetchFredData(seriesId, limit = 10, startDate = null) {
             const cachedData = dataCache[seriesId];
             
             if (cachedData && (Date.now() - cachedData.timestamp) < CACHE_DURATION) {
@@ -346,7 +377,10 @@
             }
 
             try {
-                const url = `${CORS_PROXY}${encodeURIComponent(FRED_BASE_URL)}?series_id=${seriesId}&api_key=${FRED_API_KEY}&limit=${limit}&file_type=json&sort_order=desc`;
+                let url = `${CORS_PROXY}${encodeURIComponent(FRED_BASE_URL)}?series_id=${seriesId}&api_key=${FRED_API_KEY}&limit=${limit}&file_type=json&sort_order=desc`;
+                if (startDate) {
+                    url += `&observation_start=${startDate}`;
+                }
                 
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -507,16 +541,27 @@
             const results = {};
             
             try {
+                const yearStart = `${new Date().getFullYear()}-01-01`;
                 const promises = Object.entries(indicators).map(async ([key, indicator]) => {
-                    const data = await fetchFredData(indicator.series, 5);
+                    const data = await fetchFredData(indicator.series, 365, yearStart);
                     if (data && data.observations && data.observations.length >= 2) {
                         const observations = data.observations;
                         const latest = observations[0];
                         const previous = observations[1];
+                        const startObs = observations[observations.length - 1];
                         
                         let value = transformValue(latest.value, indicator.transform) || parseFloat(latest.value);
                         const change = calculateChange(latest.value, previous.value);
                         const trend = determineTrend(change);
+                        const ytd = calculateChange(latest.value, startObs.value);
+
+                        const diffPrev = Math.abs(new Date(latest.date) - new Date(previous.date));
+                        const isDaily = diffPrev <= 86400000; // 1 day in ms
+                        const todayStr = new Date().toISOString().split('T')[0];
+                        const todayVal = (isDaily && Math.abs(new Date(todayStr) - new Date(latest.date)) <= 86400000)
+                            ? transformValue(latest.value, indicator.transform)
+                            : null;
+                        const yesterdayVal = isDaily ? transformValue(previous.value, indicator.transform) : null;
                         
                         if (key === 'inflation') {
                             const yearAgoIndex = Math.min(observations.length - 1, 12);
@@ -532,7 +577,10 @@
                             value: value || 0,
                             change: change || 0,
                             trend: trend,
-                            lastUpdated: latest.date
+                            lastUpdated: latest.date,
+                            ytd: isNaN(ytd) ? null : ytd,
+                            today: todayVal,
+                            yesterday: yesterdayVal
                         };
                     }
                 });
@@ -541,14 +589,14 @@
                 
                 // Fill in any missing data with fallbacks
                 const fallbacks = {
-                    gdp: { value: 22.75, change: 1.25, trend: 'positive' },
-                    inflation: { value: 3.36, change: 0.31, trend: 'negative' },
-                    unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
-                    debt: { value: 34.00, change: 2.52, trend: 'negative' },
-                    mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
-                    labor: { value: 62.7, change: 0.00, trend: 'neutral' },
-                    savings: { value: 3.6, change: 0.00, trend: 'neutral' },
-                    homePrice: { value: 420800, change: -0.57, trend: 'positive' }
+                    gdp: { value: 22.75, change: 1.25, trend: 'positive', ytd: null, today: null, yesterday: null },
+                    inflation: { value: 3.36, change: 0.31, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    unemployment: { value: 3.90, change: 0.10, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    debt: { value: 34.00, change: 2.52, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    mortgage: { value: 7.03, change: 0.09, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    labor: { value: 62.7, change: 0.00, trend: 'neutral', ytd: null, today: null, yesterday: null },
+                    savings: { value: 3.6, change: 0.00, trend: 'neutral', ytd: null, today: null, yesterday: null },
+                    homePrice: { value: 420800, change: -0.57, trend: 'positive', ytd: null, today: null, yesterday: null }
                 };
                 
                 Object.keys(fallbacks).forEach(key => {
@@ -562,14 +610,14 @@
             } catch (error) {
                 console.error('Error fetching economic data:', error);
                 return {
-                    gdp: { value: 22.75, change: 1.25, trend: 'positive' },
-                    inflation: { value: 3.36, change: 0.31, trend: 'negative' },
-                    unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
-                    debt: { value: 34.00, change: 2.52, trend: 'negative' },
-                    mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
-                    labor: { value: 62.7, change: 0.00, trend: 'neutral' },
-                    savings: { value: 3.6, change: 0.00, trend: 'neutral' },
-                    homePrice: { value: 420800, change: -0.57, trend: 'positive' }
+                    gdp: { value: 22.75, change: 1.25, trend: 'positive', ytd: null, today: null, yesterday: null },
+                    inflation: { value: 3.36, change: 0.31, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    unemployment: { value: 3.90, change: 0.10, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    debt: { value: 34.00, change: 2.52, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    mortgage: { value: 7.03, change: 0.09, trend: 'negative', ytd: null, today: null, yesterday: null },
+                    labor: { value: 62.7, change: 0.00, trend: 'neutral', ytd: null, today: null, yesterday: null },
+                    savings: { value: 3.6, change: 0.00, trend: 'neutral', ytd: null, today: null, yesterday: null },
+                    homePrice: { value: 420800, change: -0.57, trend: 'positive', ytd: null, today: null, yesterday: null }
                 };
             }
         }
@@ -595,12 +643,25 @@
                 Object.entries(economicData).forEach(([key, data]) => {
                     const valueEl = document.getElementById(`${key}-value`);
                     const changeEl = document.getElementById(`${key}-change`);
-                    
+                    const ytdEl = document.getElementById(`${key}-ytd`);
+                    const yesterdayEl = document.getElementById(`${key}-yesterday`);
+                    const todayEl = document.getElementById(`${key}-today`);
+
                     if (valueEl && changeEl) {
                         valueEl.textContent = formatValue(data.value, indicators[key].format);
                         valueEl.classList.remove('loading');
                         changeEl.textContent = formatChange(data.change, data.trend);
                         changeEl.className = `metric-change ${getTrendClass(data.trend)}`;
+
+                        if (ytdEl) {
+                            ytdEl.textContent = data.ytd !== null ? `YTD: ${data.ytd.toFixed(2)}%` : 'YTD: N/A';
+                        }
+                        if (yesterdayEl) {
+                            yesterdayEl.textContent = data.yesterday !== null ? `Yesterday: ${formatValue(data.yesterday, indicators[key].format)}` : 'Yesterday: N/A';
+                        }
+                        if (todayEl) {
+                            todayEl.textContent = data.today !== null ? `Today: ${formatValue(data.today, indicators[key].format)}` : 'Today: N/A';
+                        }
                     }
                 });
 
