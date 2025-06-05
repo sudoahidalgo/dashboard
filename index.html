@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Economic Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .last-updated {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .metric-change {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .metric-change.negative {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .metric-change.neutral {
+            background: rgba(255, 193, 7, 0.2);
+            color: #FFC107;
+        }
+
+        .chart-container {
+            grid-column: span 2;
+            min-height: 200px;
+        }
+
+        .mini-chart {
+            width: 100%;
+            height: 60px;
+            margin-top: 12px;
+        }
+
+        .loading {
+            opacity: 0.6;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .error {
+            color: #f44336;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-column: span 1;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .source-info {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Economic Dashboard</h1>
+            <div class="last-updated" id="lastUpdated">Loading...</div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-title">Real GDP (Inflation Adjusted)</div>
+                <div class="metric-value" id="gdp-value">Loading...</div>
+                <div class="metric-change" id="gdp-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Annual Inflation</div>
+                <div class="metric-value" id="inflation-value">Loading...</div>
+                <div class="metric-change" id="inflation-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Unemployment Rate</div>
+                <div class="metric-value" id="unemployment-value">Loading...</div>
+                <div class="metric-change" id="unemployment-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Federal Debt</div>
+                <div class="metric-value" id="debt-value">Loading...</div>
+                <div class="metric-change" id="debt-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">30-Year Mortgage Rate</div>
+                <div class="metric-value" id="mortgage-value">Loading...</div>
+                <div class="metric-change" id="mortgage-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Labor Participation Rate</div>
+                <div class="metric-value" id="labor-value">Loading...</div>
+                <div class="metric-change" id="labor-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Personal Savings Rate</div>
+                <div class="metric-value" id="savings-value">Loading...</div>
+                <div class="metric-change" id="savings-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Median Home Sales Price</div>
+                <div class="metric-value" id="home-price-value">Loading...</div>
+                <div class="metric-change" id="home-price-change">--</div>
+            </div>
+        </div>
+
+        <div class="source-info">
+            Data sourced from Federal Reserve Economic Data (FRED) | Auto-refreshes daily
+        </div>
+    </div>
+
+    <script>
+        // FRED API configuration
+        const FRED_API_KEY = 'YOUR_FRED_API_KEY'; // You'll need to get this from https://fred.stlouisfed.org/docs/api/api_key.html
+        const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
+
+        // Economic indicators mapping
+        const indicators = {
+            gdp: { series: 'GDPC1', title: 'Real GDP', format: 'trillion', unit: 'trillion' },
+            inflation: { series: 'CPIAUCSL', title: 'CPI Inflation', format: 'percent', unit: '%' },
+            unemployment: { series: 'UNRATE', title: 'Unemployment', format: 'percent', unit: '%' },
+            debt: { series: 'GFDEBTN', title: 'Federal Debt', format: 'trillion', unit: 'trillion' },
+            mortgage: { series: 'MORTGAGE30US', title: 'Mortgage Rate', format: 'percent', unit: '%' },
+            labor: { series: 'CIVPART', title: 'Labor Participation', format: 'percent', unit: '%' },
+            savings: { series: 'PSAVERT', title: 'Savings Rate', format: 'percent', unit: '%' },
+            homePrice: { series: 'MSPUS', title: 'Home Price', format: 'currency', unit: '' }
+        };
+
+        // Mock data for demonstration (replace with real API calls)
+        const mockData = {
+            gdp: { value: 22.75, change: 1.25, trend: 'positive' },
+            inflation: { value: 3.36, change: 0.31, trend: 'negative' },
+            unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
+            debt: { value: 34.00, change: 2.52, trend: 'negative' },
+            mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
+            labor: { value: 62.7, change: 0.00, trend: 'neutral' },
+            savings: { value: 3.6, change: 0.00, trend: 'neutral' },
+            homePrice: { value: 420800, change: -0.57, trend: 'positive' }
+        };
+
+        function formatValue(value, format) {
+            switch (format) {
+                case 'trillion':
+                    return `$${value.toFixed(2)} trillion`;
+                case 'percent':
+                    return `${value.toFixed(2)}%`;
+                case 'currency':
+                    return `$${value.toLocaleString()}`;
+                default:
+                    return value.toFixed(2);
+            }
+        }
+
+        function formatChange(change, trend) {
+            const arrow = trend === 'positive' ? '↗' : trend === 'negative' ? '↘' : '→';
+            const sign = change > 0 ? '+' : '';
+            return `${sign}${change.toFixed(2)}% ${arrow}`;
+        }
+
+        function getTrendClass(trend) {
+            switch (trend) {
+                case 'positive': return 'positive';
+                case 'negative': return 'negative';
+                default: return 'neutral';
+            }
+        }
+
+        async function fetchEconomicData() {
+            // This is a placeholder for actual API calls
+            // To use real data, you'll need to:
+            // 1. Get a FRED API key from https://fred.stlouisfed.org/docs/api/api_key.html
+            // 2. Replace mockData with actual API calls
+            // 3. Handle CORS by using a proxy service or deploying with a backend
+            
+            return new Promise(resolve => {
+                setTimeout(() => resolve(mockData), 1000);
+            });
+        }
+
+        async function updateDashboard() {
+            try {
+                const data = await fetchEconomicData();
+
+                // Update GDP
+                document.getElementById('gdp-value').textContent = formatValue(data.gdp.value, 'trillion');
+                const gdpChange = document.getElementById('gdp-change');
+                gdpChange.textContent = formatChange(data.gdp.change, data.gdp.trend);
+                gdpChange.className = `metric-change ${getTrendClass(data.gdp.trend)}`;
+
+                // Update Inflation
+                document.getElementById('inflation-value').textContent = formatValue(data.inflation.value, 'percent');
+                const inflationChange = document.getElementById('inflation-change');
+                inflationChange.textContent = formatChange(data.inflation.change, data.inflation.trend);
+                inflationChange.className = `metric-change ${getTrendClass(data.inflation.trend)}`;
+
+                // Update Unemployment
+                document.getElementById('unemployment-value').textContent = formatValue(data.unemployment.value, 'percent');
+                const unemploymentChange = document.getElementById('unemployment-change');
+                unemploymentChange.textContent = formatChange(data.unemployment.change, data.unemployment.trend);
+                unemploymentChange.className = `metric-change ${getTrendClass(data.unemployment.trend)}`;
+
+                // Update Federal Debt
+                document.getElementById('debt-value').textContent = formatValue(data.debt.value, 'trillion');
+                const debtChange = document.getElementById('debt-change');
+                debtChange.textContent = formatChange(data.debt.change, data.debt.trend);
+                debtChange.className = `metric-change ${getTrendClass(data.debt.trend)}`;
+
+                // Update Mortgage Rate
+                document.getElementById('mortgage-value').textContent = formatValue(data.mortgage.value, 'percent');
+                const mortgageChange = document.getElementById('mortgage-change');
+                mortgageChange.textContent = formatChange(data.mortgage.change, data.mortgage.trend);
+                mortgageChange.className = `metric-change ${getTrendClass(data.mortgage.trend)}`;
+
+                // Update Labor Participation
+                document.getElementById('labor-value').textContent = formatValue(data.labor.value, 'percent');
+                const laborChange = document.getElementById('labor-change');
+                laborChange.textContent = formatChange(data.labor.change, data.labor.trend);
+                laborChange.className = `metric-change ${getTrendClass(data.labor.trend)}`;
+
+                // Update Savings Rate
+                document.getElementById('savings-value').textContent = formatValue(data.savings.value, 'percent');
+                const savingsChange = document.getElementById('savings-change');
+                savingsChange.textContent = formatChange(data.savings.change, data.savings.trend);
+                savingsChange.className = `metric-change ${getTrendClass(data.savings.trend)}`;
+
+                // Update Home Price
+                document.getElementById('home-price-value').textContent = formatValue(data.homePrice.value, 'currency');
+                const homePriceChange = document.getElementById('home-price-change');
+                homePriceChange.textContent = formatChange(data.homePrice.change, data.homePrice.trend);
+                homePriceChange.className = `metric-change ${getTrendClass(data.homePrice.trend)}`;
+
+                // Update last updated time
+                document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString()}`;
+
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+                document.getElementById('lastUpdated').textContent = 'Error loading data';
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+            
+            // Auto-refresh every 30 minutes
+            setInterval(updateDashboard, 30 * 60 * 1000);
+        });
+
+        // Refresh data when tab becomes visible
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                updateDashboard();
+            }
+        });
+    </script>
+</body>
+</html>
