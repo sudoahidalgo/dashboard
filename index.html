@@ -1124,21 +1124,30 @@
 
         async function fetchNFTData() {
             try {
-                // Try JPG Store API for EarthNode collection
-                const res = await fetch('https://public-api.jpgstoreapis.com/collection/earthnode/stats');
+                // Current JPG Store stats endpoint requires a policy ID and often blocks CORS requests.
+                // Use a simple proxy to bypass these restrictions.
+                const policyId = 'd81802b3b92bb83e6e8d3d11e516be037bb7ee2343d6da8c28b5c828'; // EarthNode policy ID
+                const url = `https://corsproxy.io/https://public-api.jpgstoreapis.com/policy/${policyId}/stats`;
+                const res = await fetch(url);
                 if (!res.ok) throw new Error('Network response was not ok');
                 const data = await res.json();
-                
+
                 // Update EarthNode NFT data with real API data
-                document.getElementById('earthnode-floor').textContent = data.floor_price ? `₳${data.floor_price}` : '₳245';
-                document.getElementById('earthnode-floor-display').textContent = data.floor_price ? `₳${data.floor_price}` : '₳245';
-                document.getElementById('earthnode-offer').textContent = data.best_offer ? `₳${data.best_offer}` : '₳238';
-                document.getElementById('earthnode-listed').textContent = data.listed_count ?? '523';
-                document.getElementById('earthnode-wallets').textContent = data.owner_count ?? '2,847';
-                
+                const floor = data.floor_price ?? data.floor;
+                const bestOffer = data.best_offer ?? data.best_offer_price;
+                const listed = data.listed_count ?? data.listed;
+                const owners = data.owner_count ?? data.owners;
+                document.getElementById('earthnode-floor').textContent = floor ? `₳${floor}` : '₳245';
+                document.getElementById('earthnode-floor-display').textContent = floor ? `₳${floor}` : '₳245';
+                document.getElementById('earthnode-offer').textContent = bestOffer ? `₳${bestOffer}` : '₳238';
+                document.getElementById('earthnode-listed').textContent = listed ?? '523';
+                document.getElementById('earthnode-wallets').textContent = owners ?? '2,847';
+
                 // Calculate 24h change if volume data is available
-                if (data.volume_24h && data.volume_24h_previous) {
-                    const change24h = ((data.volume_24h - data.volume_24h_previous) / data.volume_24h_previous) * 100;
+                const vol = data.volume_24h ?? data.volume_last_24h;
+                const volPrev = data.volume_24h_previous ?? data.volume_last_24h_previous;
+                if (vol && volPrev) {
+                    const change24h = ((vol - volPrev) / volPrev) * 100;
                     document.getElementById('earthnode-change').textContent = `${change24h > 0 ? '+' : ''}${change24h.toFixed(1)}%`;
                     document.getElementById('earthnode-change').className = `performance-value ${change24h > 0 ? 'positive' : 'negative'}`;
                 } else {
