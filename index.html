@@ -280,6 +280,33 @@
             </div>
         </div>
 
+        <div class="section-title">📊 Ray Dalio</div>
+        <div class="dashboard-grid" id="dalioGrid">
+            <div class="metric-card">
+                <div class="metric-title">GDP YoY Growth</div>
+                <div class="metric-value" id="dalioGrowth-value">Loading...</div>
+                <div class="metric-change" id="dalioGrowth-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Inflation YoY</div>
+                <div class="metric-value" id="dalioInflation-value">Loading...</div>
+                <div class="metric-change" id="dalioInflation-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">Debt to GDP</div>
+                <div class="metric-value" id="dalioDebtRatio-value">Loading...</div>
+                <div class="metric-change" id="dalioDebtRatio-change">--</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-title">10Y Treasury Rate</div>
+                <div class="metric-value" id="dalioTenYear-value">Loading...</div>
+                <div class="metric-change" id="dalioTenYear-change">--</div>
+            </div>
+        </div>
+
         <div class="source-info">
             Data sourced from Federal Reserve Economic Data (FRED), CoinGecko & ExchangeRate-API | Auto-refreshes every 30 minutes
         </div>
@@ -300,7 +327,11 @@
             mortgage: { series: 'MORTGAGE30US', title: 'Mortgage Rate', format: 'percent', unit: '%' },
             labor: { series: 'CIVPART', title: 'Labor Participation', format: 'percent', unit: '%' },
             savings: { series: 'PSAVERT', title: 'Savings Rate', format: 'percent', unit: '%' },
-            homePrice: { series: 'MSPUS', title: 'Home Price', format: 'currency', unit: '' }
+            homePrice: { series: 'MSPUS', title: 'Home Price', format: 'currency', unit: '' },
+            dalioGrowth: { series: 'GDPC1', title: 'GDP YoY Growth', format: 'percent', unit: '%', transform: 'yoy_percent' },
+            dalioInflation: { series: 'CPIAUCSL', title: 'Inflation YoY', format: 'percent', unit: '%', transform: 'yoy_percent' },
+            dalioDebtRatio: { series: 'GFDEGDQ188S', title: 'Debt to GDP', format: 'percent', unit: '%' },
+            dalioTenYear: { series: 'DGS10', title: '10Y Treasury Rate', format: 'percent', unit: '%' }
         };
 
         // Cache for API responses
@@ -518,7 +549,7 @@
                         const change = calculateChange(latest.value, previous.value);
                         const trend = determineTrend(change);
                         
-                        if (key === 'inflation') {
+                        if (key === 'inflation' || key === 'dalioGrowth' || key === 'dalioInflation') {
                             const yearAgoIndex = Math.min(observations.length - 1, 12);
                             if (observations[yearAgoIndex]) {
                                 const yearAgoValue = parseFloat(observations[yearAgoIndex].value);
@@ -548,7 +579,11 @@
                     mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
                     labor: { value: 62.7, change: 0.00, trend: 'neutral' },
                     savings: { value: 3.6, change: 0.00, trend: 'neutral' },
-                    homePrice: { value: 420800, change: -0.57, trend: 'positive' }
+                    homePrice: { value: 420800, change: -0.57, trend: 'positive' },
+                    dalioGrowth: { value: 2.5, change: 0.0, trend: 'neutral' },
+                    dalioInflation: { value: 3.3, change: 0.0, trend: 'neutral' },
+                    dalioDebtRatio: { value: 120, change: 0.0, trend: 'neutral' },
+                    dalioTenYear: { value: 4.5, change: 0.0, trend: 'neutral' }
                 };
                 
                 Object.keys(fallbacks).forEach(key => {
@@ -569,7 +604,11 @@
                     mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
                     labor: { value: 62.7, change: 0.00, trend: 'neutral' },
                     savings: { value: 3.6, change: 0.00, trend: 'neutral' },
-                    homePrice: { value: 420800, change: -0.57, trend: 'positive' }
+                    homePrice: { value: 420800, change: -0.57, trend: 'positive' },
+                    dalioGrowth: { value: 2.5, change: 0.0, trend: 'neutral' },
+                    dalioInflation: { value: 3.3, change: 0.0, trend: 'neutral' },
+                    dalioDebtRatio: { value: 120, change: 0.0, trend: 'neutral' },
+                    dalioTenYear: { value: 4.5, change: 0.0, trend: 'neutral' }
                 };
             }
         }
