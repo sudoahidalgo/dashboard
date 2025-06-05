@@ -99,6 +99,18 @@
             right: 0;
         }
 
+        .menu-link {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu-link:hover {
+            text-decoration: underline;
+        }
+
         .news-section {
             margin-bottom: 30px;
         }
@@ -356,22 +368,13 @@
             <div></div>
         </div>
 
-        <!-- Side Menu with News -->
+        <!-- Side Menu -->
         <div class="side-menu" id="sideMenu">
-            <div class="news-section">
-                <h3>🌍 World News</h3>
-                <div id="world-news">Loading...</div>
-            </div>
-            
-            <div class="news-section">
-                <h3>🇺🇸 US News</h3>
-                <div id="us-news">Loading...</div>
-            </div>
-            
-            <div class="news-section">
-                <h3>🇨🇷 Costa Rica News</h3>
-                <div id="cr-news">Loading...</div>
-            </div>
+            <a href="#economy" class="menu-link">Economy</a>
+            <a href="#digital-assets" class="menu-link">Digital Assets</a>
+            <a href="#us-economy" class="menu-link">US Economy</a>
+            <a href="#costa-rica" class="menu-link">Costa Rica</a>
+            <a href="/news" class="menu-link">News</a>
         </div>
 
         <div class="main-header">
@@ -380,7 +383,7 @@
         </div>
 
         <!-- Economy Section (Ray Dalio inspired) -->
-        <div class="section">
+        <div class="section" id="economy">
             <div class="section-header">
                 <h2 class="section-title">Economy</h2>
             </div>
@@ -480,7 +483,7 @@
         </div>
 
         <!-- Digital Assets Section -->
-        <div class="section">
+        <div class="section" id="digital-assets">
             <div class="section-header">
                 <h2 class="section-title">Digital Assets</h2>
                 <span class="section-emoji">₿</span>
@@ -644,7 +647,7 @@
         </div>
 
         <!-- Costa Rica Section -->
-        <div class="section">
+        <div class="section" id="costa-rica">
             <div class="section-header">
                 <h2 class="section-title">Costa Rica</h2>
                 <span class="section-emoji">🇨🇷</span>
@@ -852,7 +855,7 @@
         </div>
 
         <!-- US Section -->
-        <div class="section">
+        <div class="section" id="us-economy">
             <div class="section-header">
                 <h2 class="section-title">United States</h2>
                 <span class="section-emoji">🇺🇸</span>
@@ -1252,11 +1255,18 @@
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', () => {
             updateHealthIndicators();
-            loadNews();
             fetchCryptoData();
             fetchNFTData();
             fetchAdditionalTokens();
             updateTimestamp();
+
+            document.querySelectorAll('#sideMenu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (document.getElementById('sideMenu').classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
             
             // Auto-refresh every 30 minutes
             setInterval(() => {
