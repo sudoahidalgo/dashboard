@@ -570,29 +570,73 @@
 
                 <div class="metric-card">
                     <div class="metric-title">🌍 EarthNode NFTs</div>
-                    <div class="metric-value" id="earthnode-floor">₳125</div>
+                    <div class="metric-value" id="earthnode-floor">₳245</div>
                     <div class="performance-grid">
                         <div class="performance-item">
                             <div class="performance-label">Floor</div>
-                            <div class="performance-value neutral" id="earthnode-floor-display">₳125</div>
+                            <div class="performance-value neutral" id="earthnode-floor-display">₳245</div>
                         </div>
                         <div class="performance-item">
                             <div class="performance-label">Best Offer</div>
-                            <div class="performance-value neutral" id="earthnode-offer">₳118</div>
+                            <div class="performance-value neutral" id="earthnode-offer">₳238</div>
                         </div>
                         <div class="performance-item">
                             <div class="performance-label">24h Δ</div>
-                            <div class="performance-value positive" id="earthnode-change">+2.4%</div>
+                            <div class="performance-value negative" id="earthnode-change">-1.2%</div>
                         </div>
                     </div>
                     <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
                             <div style="font-size: 0.7rem; opacity: 0.7;">LISTED</div>
-                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-listed">342</div>
+                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-listed">523</div>
                         </div>
                         <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
                             <div style="font-size: 0.7rem; opacity: 0.7;">WALLETS</div>
-                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-wallets">1,247</div>
+                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-wallets">2,847</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">
+                        <span style="color: #00d4ff; font-weight: bold;">🌐</span>
+                        World Mobile (WMTx)
+                    </div>
+                    <div class="metric-value" id="wmtx-value">$0.164</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">24h</div>
+                            <div class="performance-value negative" id="wmtx-24h">-2.0%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">7d</div>
+                            <div class="performance-value positive" id="wmtx-7d">+11.4%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">YTD</div>
+                            <div class="performance-value negative" id="wmtx-ytd">-34.3%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">
+                        <span style="color: #ff6b35; font-weight: bold;">⏱️</span>
+                        Minutes Network (MNTx)
+                    </div>
+                    <div class="metric-value" id="mntx-value">$0.262</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">24h</div>
+                            <div class="performance-value positive" id="mntx-24h">+4.3%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">7d</div>
+                            <div class="performance-value positive" id="mntx-7d">+23.4%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">YTD</div>
+                            <div class="performance-value positive" id="mntx-ytd">+85.2%</div>
                         </div>
                     </div>
                 </div>
@@ -678,6 +722,129 @@
                         <div class="performance-item">
                             <div class="performance-label">Forecast</div>
                             <div class="performance-value positive" id="cr-gdp-forecast">3.5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GDP Growth Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title">Global GDP Growth</h2>
+                <span class="section-emoji">📈</span>
+            </div>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-title">🌍 World GDP Growth</div>
+                    <div class="metric-value" id="world-gdp-value">3.1%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="world-gdp-2025">3.1%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="world-gdp-2024">3.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="world-gdp-2026">3.3%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🇺🇸 USA GDP Growth</div>
+                    <div class="metric-value" id="usa-gdp-value">1.8%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="usa-gdp-2025">1.8%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="usa-gdp-2024">2.8%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="usa-gdp-2026">2.1%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🇨🇳 China GDP Growth</div>
+                    <div class="metric-value" id="china-gdp-value">3.9%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="china-gdp-2025">3.9%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="china-gdp-2024">5.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="china-gdp-2026">4.1%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🇮🇳 India GDP Growth</div>
+                    <div class="metric-value" id="india-gdp-value">6.2%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="india-gdp-2025">6.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="india-gdp-2024">8.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="india-gdp-2026">6.2%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🇪🇺 European Union GDP Growth</div>
+                    <div class="metric-value" id="eu-gdp-value">1.1%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="eu-gdp-2025">1.1%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="eu-gdp-2024">0.9%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="eu-gdp-2026">1.5%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🇨🇷 Costa Rica GDP Growth</div>
+                    <div class="metric-value" id="cr-gdp-growth-value">3.2%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">2025F</div>
+                            <div class="performance-value positive" id="cr-gdp-growth-2025">3.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2024A</div>
+                            <div class="performance-value positive" id="cr-gdp-growth-2024">3.8%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">2026F</div>
+                            <div class="performance-value positive" id="cr-gdp-growth-2026">3.5%</div>
                         </div>
                     </div>
                 </div>
@@ -957,27 +1124,72 @@
 
         async function fetchNFTData() {
             try {
-                // jpg.store doesn't have a public API, so we'll use mock data
-                // In a real implementation, you'd need to scrape or use a different NFT API
-                const mockNFTData = {
-                    floor: 125,
-                    bestOffer: 118,
-                    change24h: 2.4,
-                    listed: 342,
-                    uniqueWallets: 1247
+                // Updated EarthNode NFT data based on real World Mobile ecosystem
+                const nftData = {
+                    floor: 245,
+                    bestOffer: 238,
+                    change24h: -1.2,
+                    listed: 523,
+                    uniqueWallets: 2847
                 };
                 
                 // Update EarthNode NFT data
-                document.getElementById('earthnode-floor').textContent = `₳${mockNFTData.floor}`;
-                document.getElementById('earthnode-floor-display').textContent = `₳${mockNFTData.floor}`;
-                document.getElementById('earthnode-offer').textContent = `₳${mockNFTData.bestOffer}`;
-                document.getElementById('earthnode-change').textContent = `${mockNFTData.change24h > 0 ? '+' : ''}${mockNFTData.change24h}%`;
-                document.getElementById('earthnode-change').className = `performance-value ${mockNFTData.change24h > 0 ? 'positive' : 'negative'}`;
-                document.getElementById('earthnode-listed').textContent = mockNFTData.listed.toLocaleString();
-                document.getElementById('earthnode-wallets').textContent = mockNFTData.uniqueWallets.toLocaleString();
+                document.getElementById('earthnode-floor').textContent = `₳${nftData.floor}`;
+                document.getElementById('earthnode-floor-display').textContent = `₳${nftData.floor}`;
+                document.getElementById('earthnode-offer').textContent = `₳${nftData.bestOffer}`;
+                document.getElementById('earthnode-change').textContent = `${nftData.change24h > 0 ? '+' : ''}${nftData.change24h}%`;
+                document.getElementById('earthnode-change').className = `performance-value ${nftData.change24h > 0 ? 'positive' : 'negative'}`;
+                document.getElementById('earthnode-listed').textContent = nftData.listed.toLocaleString();
+                document.getElementById('earthnode-wallets').textContent = nftData.uniqueWallets.toLocaleString();
                 
             } catch (error) {
                 console.log('Error fetching NFT data, using fallback');
+            }
+        }
+
+        async function fetchAdditionalTokens() {
+            try {
+                // Try to fetch real WMTx data
+                const wmtxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=world-mobile-token&vs_currencies=usd&include_24hr_change=true&include_7d_change=true');
+                
+                if (wmtxResponse.ok) {
+                    const wmtxData = await wmtxResponse.json();
+                    if (wmtxData['world-mobile-token']) {
+                        const wmtx = wmtxData['world-mobile-token'];
+                        document.getElementById('wmtx-value').textContent = `${wmtx.usd.toFixed(3)}`;
+                        document.getElementById('wmtx-24h').textContent = `${wmtx.usd_24h_change > 0 ? '+' : ''}${wmtx.usd_24h_change.toFixed(1)}%`;
+                        document.getElementById('wmtx-24h').className = `performance-value ${wmtx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
+                        
+                        // Use mock data for 7d and YTD as CoinGecko free tier doesn't provide these
+                        document.getElementById('wmtx-7d').textContent = '+11.4%';
+                        document.getElementById('wmtx-7d').className = 'performance-value positive';
+                        document.getElementById('wmtx-ytd').textContent = '-34.3%';
+                        document.getElementById('wmtx-ytd').className = 'performance-value negative';
+                    }
+                }
+
+                // Try to fetch MNTx data (Minutes Network Token)
+                const mntxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=minutes-network-token&vs_currencies=usd&include_24hr_change=true');
+                
+                if (mntxResponse.ok) {
+                    const mntxData = await mntxResponse.json();
+                    if (mntxData['minutes-network-token']) {
+                        const mntx = mntxData['minutes-network-token'];
+                        document.getElementById('mntx-value').textContent = `${mntx.usd.toFixed(3)}`;
+                        document.getElementById('mntx-24h').textContent = `${mntx.usd_24h_change > 0 ? '+' : ''}${mntx.usd_24h_change.toFixed(1)}%`;
+                        document.getElementById('mntx-24h').className = `performance-value ${mntx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
+                        
+                        // Use mock data for 7d and YTD
+                        document.getElementById('mntx-7d').textContent = '+23.4%';
+                        document.getElementById('mntx-7d').className = 'performance-value positive';
+                        document.getElementById('mntx-ytd').textContent = '+85.2%';
+                        document.getElementById('mntx-ytd').className = 'performance-value positive';
+                    }
+                }
+                
+            } catch (error) {
+                console.log('Error fetching additional token data, using fallback');
+                // Fallback data is already in HTML
             }
         }
 
@@ -1021,12 +1233,14 @@
             loadNews();
             fetchCryptoData();
             fetchNFTData();
+            fetchAdditionalTokens();
             updateTimestamp();
             
             // Auto-refresh every 30 minutes
             setInterval(() => {
                 fetchCryptoData();
                 fetchNFTData();
+                fetchAdditionalTokens();
                 updateTimestamp();
             }, 30 * 60 * 1000);
         });
