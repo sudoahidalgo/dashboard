@@ -356,21 +356,11 @@
             <div></div>
         </div>
 
-        <!-- Side Menu with News -->
+        <!-- Side Menu -->
         <div class="side-menu" id="sideMenu">
             <div class="news-section">
-                <h3>🌍 World News</h3>
-                <div id="world-news">Loading...</div>
-            </div>
-            
-            <div class="news-section">
-                <h3>🇺🇸 US News</h3>
-                <div id="us-news">Loading...</div>
-            </div>
-            
-            <div class="news-section">
-                <h3>🇨🇷 Costa Rica News</h3>
-                <div id="cr-news">Loading...</div>
+                <h3>News</h3>
+                <a href="news.html" style="color:#fff;text-decoration:underline;">View Latest News</a>
             </div>
         </div>
 
@@ -1019,30 +1009,6 @@
     </div>
 
     <script>
-        // News data - would be fetched from APIs in real implementation
-        const newsData = {
-            world: [
-                { title: "Global Economic Growth Shows Signs of Recovery", source: "Reuters", time: "2h ago" },
-                { title: "Central Banks Signal Coordinated Policy Response", source: "Financial Times", time: "4h ago" },
-                { title: "Oil Prices Stabilize After Volatile Week", source: "Bloomberg", time: "6h ago" },
-                { title: "Emerging Markets See Capital Inflows Resume", source: "WSJ", time: "8h ago" },
-                { title: "IMF Revises Global Growth Forecasts Upward", source: "AP News", time: "12h ago" }
-            ],
-            us: [
-                { title: "Fed Officials Signal Potential Rate Adjustment", source: "CNBC", time: "1h ago" },
-                { title: "U.S. Jobs Report Exceeds Expectations", source: "Yahoo Finance", time: "3h ago" },
-                { title: "Consumer Confidence Index Rises to New High", source: "MarketWatch", time: "5h ago" },
-                { title: "Housing Market Shows Signs of Stabilization", source: "CNN Business", time: "7h ago" },
-                { title: "Tech Sector Drives Stock Market Rally", source: "NASDAQ", time: "10h ago" }
-            ],
-            cr: [
-                { title: "Costa Rica Central Bank Maintains Key Rate", source: "La Nación", time: "2h ago" },
-                { title: "Tourism Sector Shows Strong Recovery", source: "Tico Times", time: "4h ago" },
-                { title: "Coffee Export Prices Reach Five-Year High", source: "CRHoy", time: "6h ago" },
-                { title: "New Infrastructure Projects Boost GDP", source: "El Financiero", time: "9h ago" },
-                { title: "Digital Banking Adoption Accelerates", source: "AmericaEconomía", time: "11h ago" }
-            ]
-        };
 
         // Health indicator thresholds for Economy section
         const healthThresholds = {
@@ -1093,34 +1059,6 @@
             });
         }
 
-        function loadNews() {
-            // Load World News
-            const worldNewsContainer = document.getElementById('world-news');
-            worldNewsContainer.innerHTML = newsData.world.map(item => `
-                <div class="news-item">
-                    <h4>${item.title}</h4>
-                    <p>${item.source} • ${item.time}</p>
-                </div>
-            `).join('');
-
-            // Load US News
-            const usNewsContainer = document.getElementById('us-news');
-            usNewsContainer.innerHTML = newsData.us.map(item => `
-                <div class="news-item">
-                    <h4>${item.title}</h4>
-                    <p>${item.source} • ${item.time}</p>
-                </div>
-            `).join('');
-
-            // Load CR News
-            const crNewsContainer = document.getElementById('cr-news');
-            crNewsContainer.innerHTML = newsData.cr.map(item => `
-                <div class="news-item">
-                    <h4>${item.title}</h4>
-                    <p>${item.source} • ${item.time}</p>
-                </div>
-            `).join('');
-        }
 
         async function fetchNFTData() {
             try {
@@ -1252,7 +1190,6 @@
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', () => {
             updateHealthIndicators();
-            loadNews();
             fetchCryptoData();
             fetchNFTData();
             fetchAdditionalTokens();
