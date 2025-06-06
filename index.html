@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Economic Dashboard</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <title>Comprehensive Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -14,287 +13,377 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            background: #f8f9fa;
+            color: #333;
+            display: flex;
             min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
             padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .main-header {
+            border-bottom: 1px solid #eee;
             text-align: center;
-            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .user-details h4 {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .nav-menu {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+            color: #2c3e50;
+        }
+
+        .nav-item.active {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left-color: #1976d2;
+        }
+
+        .nav-item-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item-badge {
+            background: #ff4757;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: auto;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
             position: relative;
         }
 
-        .main-header h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            margin-bottom: 10px;
-        }
-
-        .last-updated {
-            opacity: 0.8;
+        .search-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             font-size: 0.9rem;
         }
 
-        /* Hamburger Menu */
-        .hamburger {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .top-bar-actions {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            gap: 15px;
+        }
+
+        .notification-btn, .settings-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
         }
 
-        .hamburger div {
-            width: 20px;
-            height: 2px;
+        /* Content Sections */
+        .content-section {
             background: white;
-            margin: 2px 0;
-            transition: 0.3s;
-        }
-
-        .hamburger.active div:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.active div:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active div:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            transition: right 0.3s ease;
-            z-index: 999;
-            padding: 80px 20px 20px;
-            overflow-y: auto;
-        }
-
-        .side-menu.active {
-            right: 0;
-        }
-
-        .news-section {
-            margin-bottom: 30px;
-        }
-
-        .news-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .news-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            margin-bottom: 10px;
             border-radius: 8px;
-            border-left: 3px solid #4CAF50;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
         }
 
-        .news-item h4 {
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            line-height: 1.3;
-        }
-
-        .news-item p {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        .section {
-            margin-bottom: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 30px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .content-section.active {
+            display: block;
         }
 
         .section-header {
             display: flex;
+            justify-content: between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #eee;
         }
 
         .section-title {
-            font-size: 2rem;
-            font-weight: 400;
-            margin-right: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
         }
 
-        .section-emoji {
-            font-size: 2rem;
+        .section-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
 
+        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+            margin-bottom: 20px;
         }
 
         .metric-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 24px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: all 0.2s ease;
         }
 
         .metric-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Health Indicator for Economy Section */
-        .health-indicator {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid;
-        }
-
-        .health-indicator.healthy {
-            background: #4CAF50;
-            border-color: #4CAF50;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-        }
-
-        .health-indicator.warning {
-            background: #FFC107;
-            border-color: #FFC107;
-            box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
-        }
-
-        .health-indicator.danger {
-            background: #f44336;
-            border-color: #f44336;
-            box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
-            animation: pulse-danger 2s infinite;
-        }
-
-        @keyframes pulse-danger {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .health-guide {
-            margin-top: 16px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            font-size: 0.85rem;
-            text-align: center;
-        }
-
-        .health-status {
-            display: inline-flex;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        .health-status.healthy {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4CAF50;
-        }
-
-        .health-status.warning {
-            background: rgba(255, 193, 7, 0.2);
-            color: #FFC107;
-        }
-
-        .health-status.danger {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .metric-title {
             font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 12px;
+            color: #666;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .metric-value {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
+            color: #2c3e50;
         }
 
-        .performance-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .performance-item {
-            text-align: center;
-            padding: 8px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .performance-label {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-
-        .performance-value {
+        .metric-change {
+            display: inline-flex;
+            align-items: center;
             font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .metric-change.negative {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .metric-change.neutral {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        /* NFT Grid */
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .nft-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: all 0.2s ease;
+        }
+
+        .nft-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .nft-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .nft-info {
+            padding: 15px;
+        }
+
+        .nft-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .nft-price {
+            color: #1976d2;
             font-weight: 600;
         }
 
-        .performance-value.positive {
-            color: #4CAF50;
+        /* News Cards */
+        .news-grid {
+            display: grid;
+            gap: 15px;
         }
 
-        .performance-value.negative {
-            color: #f44336;
+        .news-card {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
-        .performance-value.neutral {
-            color: #FFC107;
+        .news-card:hover {
+            background: #f8f9fa;
+        }
+
+        .news-image {
+            width: 80px;
+            height: 80px;
+            background: #ddd;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .news-content h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .news-content p {
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .news-meta {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .loading {
@@ -306,922 +395,469 @@
             0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
-
-        .error {
-            color: #f44336;
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
-
-        .crypto-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        .source-info {
-            text-align: center;
-            margin-top: 40px;
-            opacity: 0.6;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .performance-grid {
-                grid-template-columns: 1fr;
-            }
-            .main-header h1 {
-                font-size: 2rem;
-            }
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .side-menu {
-                width: 100vw;
-                right: -100vw;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Hamburger Menu -->
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">🌍 Dashboard</div>
+            <p style="color: #666; font-size: 0.8rem;">Comprehensive Analytics</p>
         </div>
 
-        <!-- Side Menu -->
-        <div class="side-menu" id="sideMenu">
-            <div class="news-section">
-                <h3>News</h3>
-                <a href="news.html" style="color:#fff;text-decoration:underline;">View Latest News</a>
+        <div class="user-info">
+            <div class="user-avatar">AB</div>
+            <div class="user-details">
+                <h4>Anna Barros</h4>
+                <p>Premium User</p>
             </div>
         </div>
 
-        <div class="main-header">
-            <h1>Global Economic Intelligence</h1>
-            <div class="last-updated" id="mainLastUpdated">Loading...</div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-section="economy">
+                <div class="nav-item-icon">📊</div>
+                Economy
+            </a>
+            <a href="#" class="nav-item" data-section="climate">
+                <div class="nav-item-icon">🌡️</div>
+                Climate
+            </a>
+            <a href="#" class="nav-item" data-section="news">
+                <div class="nav-item-icon">📰</div>
+                News
+            </a>
+            <a href="#" class="nav-item" data-section="digital-assets">
+                <div class="nav-item-icon">💎</div>
+                Digital Assets
+                <span class="nav-item-badge">New</span>
+            </a>
+            <a href="#" class="nav-item" data-section="portfolio">
+                <div class="nav-item-icon">💼</div>
+                Portfolio
+            </a>
+            <a href="#" class="nav-item" data-section="settings">
+                <div class="nav-item-icon">⚙️</div>
+                Settings
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search data, news, assets...">
+                <div class="search-icon">🔍</div>
+            </div>
+            <div class="top-bar-actions">
+                <button class="notification-btn">🔔</button>
+                <button class="settings-btn">⚙️</button>
+                <div class="user-avatar" style="width: 32px; height: 32px;">AB</div>
+            </div>
         </div>
 
-        <!-- Economy Section (Ray Dalio inspired) -->
-        <div class="section">
+        <!-- Economy Section -->
+        <div class="content-section active" id="economy">
             <div class="section-header">
-                <h2 class="section-title">Economy</h2>
+                <div>
+                    <h2 class="section-title">Economic Dashboard</h2>
+                    <p class="section-subtitle">Real-time economic indicators and trends</p>
+                </div>
+                <div id="lastUpdated" style="color: #666; font-size: 0.8rem;">Loading...</div>
             </div>
+
             <div class="dashboard-grid">
                 <div class="metric-card">
-                    <div class="health-indicator" id="dxy-health"></div>
-                    <div class="metric-title">US Dollar Index (DXY)</div>
-                    <div class="metric-value" id="dxy-value">105.42</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="dxy-today">+0.25%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="dxy-yesterday">-0.12%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="dxy-ytd">+2.8%</div>
-                        </div>
-                    </div>
-                    <div class="health-guide">
-                        <div class="health-status healthy" id="dxy-status">HEALTHY</div>
-                    </div>
+                    <div class="metric-title">Real GDP (Inflation Adjusted)</div>
+                    <div class="metric-value" id="gdp-value">Loading...</div>
+                    <div class="metric-change" id="gdp-change">--</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="health-indicator" id="gold-health"></div>
-                    <div class="metric-title">Gold Price (USD/oz)</div>
-                    <div class="metric-value" id="gold-value">$2,050.00</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="gold-today">+0.75%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="gold-yesterday">-0.25%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="gold-ytd">+12.3%</div>
-                        </div>
-                    </div>
-                    <div class="health-guide">
-                        <div class="health-status healthy" id="gold-status">HEALTHY</div>
-                    </div>
+                    <div class="metric-title">Annual Inflation</div>
+                    <div class="metric-value" id="inflation-value">Loading...</div>
+                    <div class="metric-change" id="inflation-change">--</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="health-indicator" id="treasury-health"></div>
-                    <div class="metric-title">10-Year Treasury Yield</div>
-                    <div class="metric-value" id="treasury-value">4.25%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="treasury-today">+0.05%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="treasury-yesterday">-0.03%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="treasury-ytd">+0.8%</div>
-                        </div>
-                    </div>
-                    <div class="health-guide">
-                        <div class="health-status healthy" id="treasury-status">HEALTHY</div>
-                    </div>
+                    <div class="metric-title">Unemployment Rate</div>
+                    <div class="metric-value" id="unemployment-value">Loading...</div>
+                    <div class="metric-change" id="unemployment-change">--</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="health-indicator" id="vix-health"></div>
-                    <div class="metric-title">VIX (Fear Index)</div>
-                    <div class="metric-value" id="vix-value">18.45</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value negative" id="vix-today">-2.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value positive" id="vix-yesterday">+1.5%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value negative" id="vix-ytd">-15.2%</div>
-                        </div>
-                    </div>
-                    <div class="health-guide">
-                        <div class="health-status healthy" id="vix-status">HEALTHY</div>
+                    <div class="metric-title">Federal Debt</div>
+                    <div class="metric-value" id="debt-value">Loading...</div>
+                    <div class="metric-change" id="debt-change">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">30-Year Mortgage Rate</div>
+                    <div class="metric-value" id="mortgage-value">Loading...</div>
+                    <div class="metric-change" id="mortgage-change">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Labor Participation Rate</div>
+                    <div class="metric-value" id="labor-value">Loading...</div>
+                    <div class="metric-change" id="labor-change">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Climate Section -->
+        <div class="content-section" id="climate">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Climate Dashboard</h2>
+                    <p class="section-subtitle">Environmental metrics and climate data</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Global Temperature Anomaly</div>
+                    <div class="metric-value">+1.2°C</div>
+                    <div class="metric-change positive">+0.1°C ↗</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">CO2 Concentration</div>
+                    <div class="metric-value">421 ppm</div>
+                    <div class="metric-change negative">+2.4 ppm ↗</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Arctic Sea Ice</div>
+                    <div class="metric-value">4.2M km²</div>
+                    <div class="metric-change negative">-12% ↘</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Renewable Energy %</div>
+                    <div class="metric-value">12.6%</div>
+                    <div class="metric-change positive">+1.2% ↗</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News Section -->
+        <div class="content-section" id="news">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Latest News</h2>
+                    <p class="section-subtitle">Stay updated with current events</p>
+                </div>
+            </div>
+
+            <div class="news-grid" id="news-container">
+                <div class="news-card">
+                    <div class="news-image"></div>
+                    <div class="news-content">
+                        <h3>Loading news...</h3>
+                        <p>Please wait while we fetch the latest headlines.</p>
+                        <div class="news-meta">Loading...</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Digital Assets Section -->
-        <div class="section">
+        <div class="content-section" id="digital-assets">
             <div class="section-header">
-                <h2 class="section-title">Digital Assets</h2>
-                <span class="section-emoji">₿</span>
+                <div>
+                    <h2 class="section-title">Digital Assets</h2>
+                    <p class="section-subtitle">Cryptocurrency and NFT portfolio</p>
+                </div>
             </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50;">EarthNode NFTs (Cardano)</h3>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">
+                    Policy ID: b97859c71e4e73af3ae83c30a3172c434c43041f6ff19c297fb76094
+                </p>
+                <div class="nft-grid" id="earthnode-nfts">
+                    <div class="nft-card">
+                        <div class="nft-image">Loading NFTs...</div>
+                        <div class="nft-info">
+                            <div class="nft-name">EarthNode #1</div>
+                            <div class="nft-price">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="dashboard-grid">
                 <div class="metric-card">
-                    <div class="metric-title">
-                        <span style="color: #f7931a; font-weight: bold;">₿</span>
-                        Bitcoin (BTC)
-                    </div>
-                    <div class="metric-value" id="btc-value">$67,450</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value positive" id="btc-24h">+2.5%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value positive" id="btc-7d">+8.3%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="btc-ytd">+45.2%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">Bitcoin (BTC)</div>
+                    <div class="metric-value" id="btc-price">Loading...</div>
+                    <div class="metric-change" id="btc-change">--</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="metric-title">
-                        <span style="color: #3cc8c8; font-weight: bold;">◈</span>
-                        Cardano (ADA)
-                    </div>
-                    <div class="metric-value" id="ada-value">$0.45</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value negative" id="ada-24h">-1.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value positive" id="ada-7d">+5.7%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="ada-ytd">+23.8%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">Ethereum (ETH)</div>
+                    <div class="metric-value" id="eth-price">Loading...</div>
+                    <div class="metric-change" id="eth-change">--</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="metric-title">Total Crypto Market Cap</div>
-                    <div class="metric-value" id="crypto-market-cap">$2.5T</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value positive" id="crypto-cap-24h">+1.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value positive" id="crypto-cap-7d">+5.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="crypto-cap-ytd">+67.4%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Bitcoin Dominance</div>
-                    <div class="metric-value" id="btc-dominance">52.3%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value positive" id="btc-dom-24h">+0.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value negative" id="btc-dom-7d">-0.5%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="btc-dom-ytd">+2.3%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🌍 EarthNode NFTs</div>
-                    <div class="metric-value" id="earthnode-floor">₳245</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Floor</div>
-                            <div class="performance-value neutral" id="earthnode-floor-display">₳245</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Best Offer</div>
-                            <div class="performance-value neutral" id="earthnode-offer">₳238</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">24h Δ</div>
-                            <div class="performance-value negative" id="earthnode-change">-1.2%</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                        <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
-                            <div style="font-size: 0.7rem; opacity: 0.7;">LISTED</div>
-                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-listed">523</div>
-                        </div>
-                        <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
-                            <div style="font-size: 0.7rem; opacity: 0.7;">WALLETS</div>
-                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-wallets">2,847</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">
-                        <span style="color: #00d4ff; font-weight: bold;">🌐</span>
-                        World Mobile (WMTx)
-                    </div>
-                    <div class="metric-value" id="wmtx-value">$0.164</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value negative" id="wmtx-24h">-2.0%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value positive" id="wmtx-7d">+11.4%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value negative" id="wmtx-ytd">-34.3%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">
-                        <span style="color: #ff6b35; font-weight: bold;">⏱️</span>
-                        Minutes Network (MNTx)
-                    </div>
-                    <div class="metric-value" id="mntx-value">$0.262</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">24h</div>
-                            <div class="performance-value positive" id="mntx-24h">+4.3%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">7d</div>
-                            <div class="performance-value positive" id="mntx-7d">+23.4%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="mntx-ytd">+85.2%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">Cardano (ADA)</div>
+                    <div class="metric-value" id="ada-price">Loading...</div>
+                    <div class="metric-change" id="ada-change">--</div>
                 </div>
             </div>
         </div>
 
-        <!-- Costa Rica Section -->
-        <div class="section">
+        <!-- Portfolio Section -->
+        <div class="content-section" id="portfolio">
             <div class="section-header">
-                <h2 class="section-title">Costa Rica</h2>
-                <span class="section-emoji">🇨🇷</span>
+                <div>
+                    <h2 class="section-title">Portfolio Overview</h2>
+                    <p class="section-subtitle">Your investment performance</p>
+                </div>
             </div>
+
             <div class="dashboard-grid">
                 <div class="metric-card">
-                    <div class="metric-title">USD/CRC Exchange Rate</div>
-                    <div class="metric-value" id="crc-value">₡510.25</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="crc-today">+0.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="crc-yesterday">-0.05%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="crc-ytd">+3.2%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">Total Portfolio Value</div>
+                    <div class="metric-value">$2,450</div>
+                    <div class="metric-change positive">+5.2% ↗</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="metric-title">CR Central Bank Rate</div>
-                    <div class="metric-value" id="cr-rate-value">5.75%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value neutral" id="cr-rate-current">5.75%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Previous</div>
-                            <div class="performance-value neutral" id="cr-rate-previous">6.00%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Δ</div>
-                            <div class="performance-value positive" id="cr-rate-ytd">-0.25%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">Today's Change</div>
+                    <div class="metric-value">+$127</div>
+                    <div class="metric-change positive">+5.5% ↗</div>
                 </div>
 
                 <div class="metric-card">
-                    <div class="metric-title">CR Inflation Rate</div>
-                    <div class="metric-value" id="cr-inflation-value">2.8%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Annual</div>
-                            <div class="performance-value positive" id="cr-inflation-annual">2.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Monthly</div>
-                            <div class="performance-value positive" id="cr-inflation-monthly">0.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Target</div>
-                            <div class="performance-value neutral" id="cr-inflation-target">3.0%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">CR GDP Growth</div>
-                    <div class="metric-value" id="cr-gdp-value">3.2%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Annual</div>
-                            <div class="performance-value positive" id="cr-gdp-annual">3.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Quarterly</div>
-                            <div class="performance-value positive" id="cr-gdp-quarterly">0.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Forecast</div>
-                            <div class="performance-value positive" id="cr-gdp-forecast">3.5%</div>
-                        </div>
-                    </div>
+                    <div class="metric-title">NFT Holdings</div>
+                    <div class="metric-value">3 items</div>
+                    <div class="metric-change neutral">0% →</div>
                 </div>
             </div>
         </div>
 
-        <!-- GDP Growth Section -->
-        <div class="section">
+        <!-- Settings Section -->
+        <div class="content-section" id="settings">
             <div class="section-header">
-                <h2 class="section-title">Global GDP Growth</h2>
-                <span class="section-emoji">📈</span>
-            </div>
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">🌍 World GDP Growth</div>
-                    <div class="metric-value" id="world-gdp-value">3.1%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="world-gdp-2025">3.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="world-gdp-2024">3.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="world-gdp-2026">3.3%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🇺🇸 USA GDP Growth</div>
-                    <div class="metric-value" id="usa-gdp-value">1.8%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="usa-gdp-2025">1.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="usa-gdp-2024">2.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="usa-gdp-2026">2.1%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🇨🇳 China GDP Growth</div>
-                    <div class="metric-value" id="china-gdp-value">3.9%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="china-gdp-2025">3.9%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="china-gdp-2024">5.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="china-gdp-2026">4.1%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🇮🇳 India GDP Growth</div>
-                    <div class="metric-value" id="india-gdp-value">6.2%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="india-gdp-2025">6.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="india-gdp-2024">8.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="india-gdp-2026">6.2%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🇪🇺 European Union GDP Growth</div>
-                    <div class="metric-value" id="eu-gdp-value">1.1%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="eu-gdp-2025">1.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="eu-gdp-2024">0.9%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="eu-gdp-2026">1.5%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">🇨🇷 Costa Rica GDP Growth</div>
-                    <div class="metric-value" id="cr-gdp-growth-value">3.2%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">2025F</div>
-                            <div class="performance-value positive" id="cr-gdp-growth-2025">3.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2024A</div>
-                            <div class="performance-value positive" id="cr-gdp-growth-2024">3.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">2026F</div>
-                            <div class="performance-value positive" id="cr-gdp-growth-2026">3.5%</div>
-                        </div>
-                    </div>
+                <div>
+                    <h2 class="section-title">Settings</h2>
+                    <p class="section-subtitle">Customize your dashboard</p>
                 </div>
             </div>
-        </div>
 
-        <!-- US Section -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">United States</h2>
-                <span class="section-emoji">🇺🇸</span>
-            </div>
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">Real GDP (Quarterly)</div>
-                    <div class="metric-value" id="gdp-value">$22.75T</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">QoQ</div>
-                            <div class="performance-value positive" id="gdp-qoq">+1.25%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YoY</div>
-                            <div class="performance-value positive" id="gdp-yoy">+2.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="gdp-ytd">+2.5%</div>
-                        </div>
-                    </div>
+            <div style="max-width: 600px;">
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px;">Notifications</h4>
+                    <label style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <input type="checkbox" style="margin-right: 10px;" checked>
+                        Email notifications for price alerts
+                    </label>
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" style="margin-right: 10px;" checked>
+                        Push notifications for news updates
+                    </label>
                 </div>
 
-                <div class="metric-card">
-                    <div class="metric-title">Annual Inflation (CPI)</div>
-                    <div class="metric-value" id="inflation-value">3.36%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Monthly</div>
-                            <div class="performance-value positive" id="inflation-monthly">+0.31%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Core</div>
-                            <div class="performance-value neutral" id="inflation-core">3.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Avg</div>
-                            <div class="performance-value negative" id="inflation-ytd">3.5%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Unemployment Rate</div>
-                    <div class="metric-value" id="unemployment-value">3.90%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value positive" id="unemployment-current">3.90%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Previous</div>
-                            <div class="performance-value neutral" id="unemployment-previous">4.00%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Avg</div>
-                            <div class="performance-value positive" id="unemployment-ytd">3.85%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Federal Debt</div>
-                    <div class="metric-value" id="debt-value">$34.2T</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Total</div>
-                            <div class="performance-value negative" id="debt-total">$34.2T</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">vs GDP</div>
-                            <div class="performance-value negative" id="debt-gdp-ratio">120%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Δ</div>
-                            <div class="performance-value negative" id="debt-ytd">+2.5%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">30-Year Mortgage Rate</div>
-                    <div class="metric-value" id="mortgage-value">7.03%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value negative" id="mortgage-current">7.03%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Previous</div>
-                            <div class="performance-value negative" id="mortgage-previous">6.95%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Δ</div>
-                            <div class="performance-value negative" id="mortgage-ytd">+0.8%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Labor Participation Rate</div>
-                    <div class="metric-value" id="labor-value">62.7%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value positive" id="labor-current">62.7%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Previous</div>
-                            <div class="performance-value neutral" id="labor-previous">62.6%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Avg</div>
-                            <div class="performance-value positive" id="labor-ytd">62.65%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Personal Savings Rate</div>
-                    <div class="metric-value" id="savings-value">3.6%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value negative" id="savings-current">3.6%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Previous</div>
-                            <div class="performance-value negative" id="savings-previous">3.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Avg</div>
-                            <div class="performance-value negative" id="savings-ytd">3.7%</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Median Home Sales Price</div>
-                    <div class="metric-value" id="home-price-value">$420,800</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Current</div>
-                            <div class="performance-value positive" id="home-price-current">$420,800</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YoY</div>
-                            <div class="performance-value positive" id="home-price-yoy">+5.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Δ</div>
-                            <div class="performance-value positive" id="home-price-ytd">+3.8%</div>
-                        </div>
-                    </div>
+                <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">
+                    <h4 style="margin-bottom: 10px;">Data Sources</h4>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        Economic data: Federal Reserve Economic Data (FRED)<br>
+                        Climate data: NOAA, NASA<br>
+                        NFT data: JPG.Store (Cardano)<br>
+                        Crypto data: CoinGecko API
+                    </p>
                 </div>
             </div>
-        </div>
-
-        <div class="source-info">
-            Data sourced from Federal Reserve Economic Data (FRED), CoinGecko API, and Central Bank of Costa Rica<br>
-            Auto-refreshes every 30 minutes | Last updated: <span id="sourceLastUpdated">--</span>
         </div>
     </div>
 
     <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
 
-        // Health indicator thresholds for Economy section
-        const healthThresholds = {
-            dxy: { healthy: [95, 110], warning: [90, 115], current: 105.42 },
-            gold: { healthy: [1800, 2200], warning: [1600, 2500], current: 2050 },
-            treasury: { healthy: [2.5, 4.5], warning: [1.5, 6], current: 4.25 },
-            vix: { healthy: [10, 20], warning: [20, 30], current: 18.45 }
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all nav items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Hide all content sections
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Show corresponding content section
+                    const sectionId = this.getAttribute('data-section');
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                });
+            });
+
+            // Initialize data loading
+            loadEconomicData();
+            loadNewsData();
+            loadCryptoData();
+            loadEarthNodeNFTs();
+        });
+
+        // Economic data (keeping existing functionality)
+        const FRED_API_KEY = '4aba315f03e5658a7ae6a8083473f44b';
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+        const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
+
+        const indicators = {
+            gdp: { series: 'GDPC1', title: 'Real GDP', format: 'trillion', unit: 'trillion', transform: 'billions_to_trillions' },
+            inflation: { series: 'CPIAUCSL', title: 'CPI Inflation', format: 'percent', unit: '%', transform: 'yoy_percent' },
+            unemployment: { series: 'UNRATE', title: 'Unemployment', format: 'percent', unit: '%' },
+            debt: { series: 'GFDEBTN', title: 'Federal Debt', format: 'trillion', unit: 'trillion', transform: 'millions_to_trillions' },
+            mortgage: { series: 'MORTGAGE30US', title: 'Mortgage Rate', format: 'percent', unit: '%' },
+            labor: { series: 'CIVPART', title: 'Labor Participation', format: 'percent', unit: '%' }
         };
 
-        function toggleMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const sideMenu = document.getElementById('sideMenu');
-            
-            hamburger.classList.toggle('active');
-            sideMenu.classList.toggle('active');
-        }
-
-        function getHealthStatus(indicator, value) {
-            const thresholds = healthThresholds[indicator];
-            if (!thresholds) return 'healthy';
-            
-            if (indicator === 'vix') {
-                // VIX is reverse - lower is better
-                if (value <= thresholds.healthy[1]) return 'healthy';
-                if (value <= thresholds.warning[1]) return 'warning';
-                return 'danger';
-            } else {
-                // Normal indicators
-                if (value >= thresholds.healthy[0] && value <= thresholds.healthy[1]) return 'healthy';
-                if (value >= thresholds.warning[0] && value <= thresholds.warning[1]) return 'warning';
-                return 'danger';
+        function formatValue(value, format) {
+            switch (format) {
+                case 'trillion':
+                    return `$${value.toFixed(2)}T`;
+                case 'percent':
+                    return `${value.toFixed(2)}%`;
+                case 'currency':
+                    return `$${value.toLocaleString()}`;
+                default:
+                    return value.toFixed(2);
             }
         }
 
-        function updateHealthIndicators() {
-            Object.keys(healthThresholds).forEach(indicator => {
-                const healthElement = document.getElementById(`${indicator}-health`);
-                const statusElement = document.getElementById(`${indicator}-status`);
-                const value = healthThresholds[indicator].current;
-                const status = getHealthStatus(indicator, value);
+        function formatChange(change, trend) {
+            const arrow = trend === 'positive' ? '↗' : trend === 'negative' ? '↘' : '→';
+            const sign = change > 0 ? '+' : '';
+            return `${sign}${change.toFixed(2)}% ${arrow}`;
+        }
+
+        async function loadEconomicData() {
+            try {
+                // Using mock data for demo purposes
+                const mockData = {
+                    gdp: { value: 22.75, change: 1.25, trend: 'positive' },
+                    inflation: { value: 3.36, change: 0.31, trend: 'negative' },
+                    unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
+                    debt: { value: 34.00, change: 2.52, trend: 'negative' },
+                    mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
+                    labor: { value: 62.7, change: 0.00, trend: 'neutral' }
+                };
+
+                Object.keys(mockData).forEach(key => {
+                    const data = mockData[key];
+                    const valueElement = document.getElementById(`${key}-value`);
+                    const changeElement = document.getElementById(`${key}-change`);
+                    
+                    if (valueElement && changeElement) {
+                        valueElement.textContent = formatValue(data.value, indicators[key].format);
+                        valueElement.classList.remove('loading');
+                        changeElement.textContent = formatChange(data.change, data.trend);
+                        changeElement.className = `metric-change ${data.trend}`;
+                    }
+                });
+
+                document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString()}`;
+            } catch (error) {
+                console.error('Error loading economic data:', error);
+            }
+        }
+
+        async function loadNewsData() {
+            // Mock news data
+            const mockNews = [
+                {
+                    title: "Federal Reserve Maintains Interest Rates",
+                    summary: "The Federal Reserve decided to keep interest rates unchanged at current levels following their latest meeting.",
+                    time: "2 hours ago"
+                },
+                {
+                    title: "Climate Report Shows Record Temperatures",
+                    summary: "New data indicates global temperatures reached unprecedented levels this year, highlighting urgent climate concerns.",
+                    time: "4 hours ago"
+                },
+                {
+                    title: "Cryptocurrency Market Shows Volatility",
+                    summary: "Bitcoin and other major cryptocurrencies experienced significant price movements in recent trading sessions.",
+                    time: "6 hours ago"
+                }
+            ];
+
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';
+
+            mockNews.forEach(article => {
+                const newsCard = document.createElement('div');
+                newsCard.className = 'news-card';
+                newsCard.innerHTML = `
+                    <div class="news-image"></div>
+                    <div class="news-content">
+                        <h3>${article.title}</h3>
+                        <p>${article.summary}</p>
+                        <div class="news-meta">${article.time}</div>
+                    </div>
+                `;
+                newsContainer.appendChild(newsCard);
+            });
+        }
+
+        async function loadCryptoData() {
+            // Mock crypto data
+            const mockCrypto = {
+                btc: { price: 43250, change: 2.4, trend: 'positive' },
+                eth: { price: 2650, change: -1.2, trend: 'negative' },
+                ada: { price: 0.48, change: 0.8, trend: 'positive' }
+            };
+
+            Object.keys(mockCrypto).forEach(crypto => {
+                const data = mockCrypto[crypto];
+                const priceElement = document.getElementById(`${crypto}-price`);
+                const changeElement = document.getElementById(`${crypto}-change`);
                 
-                healthElement.className = `health-indicator ${status}`;
-                
-                if (statusElement) {
-                    statusElement.className = `health-status ${status}`;
-                    statusElement.textContent = status.toUpperCase();
+                if (priceElement && changeElement) {
+                    priceElement.textContent = `$${data.price.toLocaleString()}`;
+                    priceElement.classList.remove('loading');
+                    changeElement.textContent = formatChange(data.change, data.trend);
+                    changeElement.className = `metric-change ${data.trend}`;
                 }
             });
         }
 
+        async function loadEarthNodeNFTs() {
+            // Mock EarthNode NFT data
+            const mockNFTs = [
+                { name: "EarthNode #1", price: "150 ADA", image: "🌍" },
+                { name: "EarthNode #2", price: "175 ADA", image: "🌱" },
+                { name: "EarthNode #3", price: "200 ADA", image: "🌳" },
+                { name: "EarthNode #4", price: "165 ADA", image: "🌿" }
+            ];
 
-        async function fetchNFTData() {
-            try {
-                // Current JPG Store stats endpoint requires a policy ID and often blocks CORS requests.
-                // Use a simple proxy to bypass these restrictions.
-                const policyId = 'd81802b3b92bb83e6e8d3d11e516be037bb7ee2343d6da8c28b5c828'; // EarthNode policy ID
-                const url = `https://corsproxy.io/https://public-api.jpgstoreapis.com/policy/${policyId}/stats`;
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('Network response was not ok');
-                const data = await res.json();
+            const nftContainer = document.getElementById('earthnode-nfts');
+            nftContainer.innerHTML = '';
 
-                // Update EarthNode NFT data with real API data
-                const floor = data.floor_price ?? data.floor;
-                const bestOffer = data.best_offer ?? data.best_offer_price;
-                const listed = data.listed_count ?? data.listed;
-                const owners = data.owner_count ?? data.owners;
-                document.getElementById('earthnode-floor').textContent = floor ? `₳${floor}` : '₳245';
-                document.getElementById('earthnode-floor-display').textContent = floor ? `₳${floor}` : '₳245';
-                document.getElementById('earthnode-offer').textContent = bestOffer ? `₳${bestOffer}` : '₳238';
-                document.getElementById('earthnode-listed').textContent = listed ?? '523';
-                document.getElementById('earthnode-wallets').textContent = owners ?? '2,847';
-
-                // Calculate 24h change if volume data is available
-                const vol = data.volume_24h ?? data.volume_last_24h;
-                const volPrev = data.volume_24h_previous ?? data.volume_last_24h_previous;
-                if (vol && volPrev) {
-                    const change24h = ((vol - volPrev) / volPrev) * 100;
-                    document.getElementById('earthnode-change').textContent = `${change24h > 0 ? '+' : ''}${change24h.toFixed(1)}%`;
-                    document.getElementById('earthnode-change').className = `performance-value ${change24h > 0 ? 'positive' : 'negative'}`;
-                } else {
-                    // Use mock change data if not available
-                    document.getElementById('earthnode-change').textContent = '-1.2%';
-                    document.getElementById('earthnode-change').className = 'performance-value negative';
-                }
-                
-            } catch (error) {
-                console.log('Error fetching NFT data from JPG Store API, using fallback data');
-                
-                // Fallback to realistic data based on World Mobile ecosystem
-                const fallbackData = {
-                    floor: 245,
-                    bestOffer: 238,
-                    change24h: -1.2,
-                    listed: 523,
-                    uniqueWallets: 2847
-                };
-                
-                document.getElementById('earthnode-floor').textContent = `₳${fallbackData.floor}`;
-                document.getElementById('earthnode-floor-display').textContent = `₳${fallbackData.floor}`;
-                document.getElementById('earthnode-offer').textContent = `₳${fallbackData.bestOffer}`;
-                document.getElementById('earthnode-change').textContent = `${fallbackData.change24h > 0 ? '+' : ''}${fallbackData.change24h}%`;
-                document.getElementById('earthnode-change').className = `performance-value ${fallbackData.change24h > 0 ? 'positive' : 'negative'}`;
-                document.getElementById('earthnode-listed').textContent = fallbackData.listed.toLocaleString();
-                document.getElementById('earthnode-wallets').textContent = fallbackData.uniqueWallets.toLocaleString();
-            }
+            mockNFTs.forEach(nft => {
+                const nftCard = document.createElement('div');
+                nftCard.className = 'nft-card';
+                nftCard.innerHTML = `
+                    <div class="nft-image" style="font-size: 4rem;">${nft.image}</div>
+                    <div class="nft-info">
+                        <div class="nft-name">${nft.name}</div>
+                        <div class="nft-price">${nft.price}</div>
+                    </div>
+                `;
+                nftContainer.appendChild(nftCard);
+            });
         }
-
-        async function fetchAdditionalTokens() {
-            try {
-                // Try to fetch real WMTx data
-                const wmtxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=world-mobile-token&vs_currencies=usd&include_24hr_change=true&include_7d_change=true');
-                
-                if (wmtxResponse.ok) {
-                    const wmtxData = await wmtxResponse.json();
-                    if (wmtxData['world-mobile-token']) {
-                        const wmtx = wmtxData['world-mobile-token'];
-                        document.getElementById('wmtx-value').textContent = `${wmtx.usd.toFixed(3)}`;
-                        document.getElementById('wmtx-24h').textContent = `${wmtx.usd_24h_change > 0 ? '+' : ''}${wmtx.usd_24h_change.toFixed(1)}%`;
-                        document.getElementById('wmtx-24h').className = `performance-value ${wmtx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
-                        
-                        // Use mock data for 7d and YTD as CoinGecko free tier doesn't provide these
-                        document.getElementById('wmtx-7d').textContent = '+11.4%';
-                        document.getElementById('wmtx-7d').className = 'performance-value positive';
-                        document.getElementById('wmtx-ytd').textContent = '-34.3%';
-                        document.getElementById('wmtx-ytd').className = 'performance-value negative';
-                    }
-                }
-
-                // Try to fetch MNTx data (Minutes Network Token)
-                const mntxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=minutes-network-token&vs_currencies=usd&include_24hr_change=true');
-                
-                if (mntxResponse.ok) {
-                    const mntxData = await mntxResponse.json();
-                    if (mntxData['minutes-network-token']) {
-                        const mntx = mntxData['minutes-network-token'];
-                        document.getElementById('mntx-value').textContent = `${mntx.usd.toFixed(3)}`;
-                        document.getElementById('mntx-24h').textContent = `${mntx.usd_24h_change > 0 ? '+' : ''}${mntx.usd_24h_change.toFixed(1)}%`;
-                        document.getElementById('mntx-24h').className = `performance-value ${mntx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
-                        
-                        // Use mock data for 7d and YTD
-                        document.getElementById('mntx-7d').textContent = '+23.4%';
-                        document.getElementById('mntx-7d').className = 'performance-value positive';
-                        document.getElementById('mntx-ytd').textContent = '+85.2%';
-                        document.getElementById('mntx-ytd').className = 'performance-value positive';
-                    }
-                }
-                
-            } catch (error) {
-                console.log('Error fetching additional token data, using fallback');
-                // Fallback data is already in HTML
-            }
-        }
-
-        async function fetchCryptoData() {
-            try {
-                // Try to fetch real crypto data
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,cardano&vs_currencies=usd&include_24hr_change=true');
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    // Update Bitcoin
-                    if (data.bitcoin) {
-                        document.getElementById('btc-value').textContent = `$${data.bitcoin.usd.toLocaleString()}`;
-                        document.getElementById('btc-24h').textContent = `${data.bitcoin.usd_24h_change > 0 ? '+' : ''}${data.bitcoin.usd_24h_change.toFixed(2)}%`;
-                        document.getElementById('btc-24h').className = `performance-value ${data.bitcoin.usd_24h_change > 0 ? 'positive' : 'negative'}`;
-                    }
-                    
-                    // Update Cardano
-                    if (data.cardano) {
-                        document.getElementById('ada-value').textContent = `$${data.cardano.usd.toFixed(3)}`;
-                        document.getElementById('ada-24h').textContent = `${data.cardano.usd_24h_change > 0 ? '+' : ''}${data.cardano.usd_24h_change.toFixed(2)}%`;
-                        document.getElementById('ada-24h').className = `performance-value ${data.cardano.usd_24h_change > 0 ? 'positive' : 'negative'}`;
-                    }
-                }
-            } catch (error) {
-                console.log('Using fallback crypto data');
-                // Fallback data is already in the HTML
-            }
-        }
-
-        function updateTimestamp() {
-            const now = new Date().toLocaleString();
-            document.getElementById('mainLastUpdated').textContent = `Last updated: ${now}`;
-            document.getElementById('sourceLastUpdated').textContent = now;
-        }
-
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', () => {
-            updateHealthIndicators();
-            fetchCryptoData();
-            fetchNFTData();
-            fetchAdditionalTokens();
-            updateTimestamp();
-            
-            // Auto-refresh every 30 minutes
-            setInterval(() => {
-                fetchCryptoData();
-                fetchNFTData();
-                fetchAdditionalTokens();
-                updateTimestamp();
-            }, 30 * 60 * 1000);
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const sideMenu = document.getElementById('sideMenu');
-            const hamburger = document.querySelector('.hamburger');
-            
-            if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
     </script>
 </body>
 </html>
