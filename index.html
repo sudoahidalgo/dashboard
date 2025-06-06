@@ -674,10 +674,9 @@
                 <div>
                     <h2 class="section-title">Latest News</h2>
                     <p class="section-subtitle">Top 5 headlines from World, US, and Costa Rica</p>
+                        <div id="news-refresh-info" style="color: #666; font-size: 0.8rem;">Actualizado automáticamente cada 10 minutos</div>
                 </div>
-                <button onclick="loadNewsData()" style="background: #1976d2; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
-                    🔄 Refresh
-                </button>
+                
             </div>
 
             <!-- World News -->
@@ -951,8 +950,8 @@
                 loadCryptoData();
             }, 5 * 60 * 1000);
             
-            // Auto-refresh news every 15 minutes
-            setInterval(loadNewsData, 15 * 60 * 1000);
+            // Auto-refresh news every 10 minutes
+            setInterval(loadNewsData, 10 * 60 * 1000);
         });
 
         // Economic data (keeping existing functionality)
@@ -1254,25 +1253,25 @@
                 // Mock news data organized by region
                 const newsData = {
                     world: [
-                        { title: "Global Climate Summit Reaches Historic Agreement", summary: "World leaders commit to ambitious new carbon reduction targets for 2030.", time: "2 hours ago", link: "#" },
-                        { title: "International Trade Relations Show Signs of Recovery", summary: "Economic indicators suggest improving global trade partnerships.", time: "4 hours ago", link: "#" },
-                        { title: "Technology Giants Announce Major AI Collaboration", summary: "Leading tech companies form alliance for responsible AI development.", time: "6 hours ago", link: "#" },
-                        { title: "Renewable Energy Investments Hit Record Highs", summary: "Solar and wind projects receive unprecedented funding worldwide.", time: "8 hours ago", link: "#" },
-                        { title: "Global Health Initiative Launches New Vaccine Program", summary: "WHO announces expanded immunization coverage for developing nations.", time: "10 hours ago", link: "#" }
+                        { title: "Cumbre climática alcanza acuerdo histórico", summary: "Líderes mundiales se comprometen a nuevas metas de reducción de carbono para 2030.", time: "2 horas atrás", link: "https://www.un.org/es/climatechange" },
+                        { title: "Relaciones comerciales internacionales muestran recuperación", summary: "Indicadores económicos sugieren una mejora en las alianzas globales.", time: "4 horas atrás", link: "https://www.worldbank.org/en/topic/trade" },
+                        { title: "Gigantes tecnológicos anuncian colaboración en IA", summary: "Empresas líderes forman alianza para el desarrollo responsable de la inteligencia artificial.", time: "6 horas atrás", link: "https://www.bbc.com/news/technology" },
+                        { title: "Inversiones en energías renovables alcanzan cifras récord", summary: "Proyectos solares y eólicos reciben financiamiento sin precedentes.", time: "8 horas atrás", link: "https://www.iea.org" },
+                        { title: "Iniciativa global de salud lanza nuevo programa de vacunas", summary: "La OMS amplia la cobertura de inmunización en países en desarrollo.", time: "10 horas atrás", link: "https://www.who.int" }
                     ],
                     us: [
-                        { title: "Federal Reserve Maintains Interest Rate Stability", summary: "Central bank keeps rates unchanged amid economic uncertainty.", time: "1 hour ago", link: "#" },
-                        { title: "Infrastructure Bill Shows Positive Economic Impact", summary: "New data reveals job creation and modernization benefits.", time: "3 hours ago", link: "#" },
-                        { title: "Tech Sector Leads Stock Market Rally", summary: "Major indices gain ground on strong earnings reports.", time: "5 hours ago", link: "#" },
-                        { title: "Energy Independence Goals Gain Bipartisan Support", summary: "Congress advances legislation to boost domestic energy production.", time: "7 hours ago", link: "#" },
-                        { title: "Housing Market Shows Signs of Stabilization", summary: "Real estate data indicates moderation in price volatility.", time: "9 hours ago", link: "#" }
+                        { title: "Federal Reserve mantiene tasas de interes", summary: "El banco central mantiene sin cambios las tasas en medio de la incertidumbre economica.", time: "1 hora atras", link: "https://www.cnbc.com/2024/05/10/fed-keeps-rates-steady.html" },
+                        { title: "Ley de infraestructura impulsa la economia", summary: "Nuevos datos revelan creacion de empleo y modernizacion de obras.", time: "3 horas atras", link: "https://www.wsj.com/articles/infrastructure-bill-economic-impact-2024" },
+                        { title: "Sector tecnologico lidera el rally bursatil", summary: "Los indices principales suben por fuertes reportes de ganancias.", time: "5 horas atras", link: "https://www.nasdaq.com/articles/tech-stocks-lead-market-rally" },
+                        { title: "Objetivos de independencia energetica ganan apoyo", summary: "El Congreso avanza legislacion para impulsar la produccion domestica de energia.", time: "7 horas atras", link: "https://www.politico.com/news/2024/05/10/energy-independence-bill-00000000" },
+                        { title: "Mercado de vivienda muestra signos de estabilizacion", summary: "Datos inmobiliarios indican moderacion en la volatilidad de precios.", time: "9 horas atras", link: "https://www.cnn.com/2024/05/10/housing-market-stabilization/index.html" }
                     ],
                     costaRica: [
-                        { title: "Costa Rica's Green Energy Initiative Expands", summary: "Country increases renewable energy capacity to 99% of electricity grid.", time: "1 hour ago", link: "#" },
-                        { title: "Tourism Sector Reports Strong Recovery", summary: "Visitor numbers approach pre-pandemic levels with eco-tourism leading growth.", time: "3 hours ago", link: "#" },
-                        { title: "Coffee Export Prices Reach Five-Year High", summary: "Premium Costa Rican coffee commands top prices in international markets.", time: "5 hours ago", link: "#" },
-                        { title: "Biodiversity Conservation Program Wins International Award", summary: "National parks system recognized for outstanding environmental protection.", time: "7 hours ago", link: "#" },
-                        { title: "Digital Nomad Visa Program Attracts Tech Workers", summary: "New visa category brings remote workers and digital entrepreneurs to Costa Rica.", time: "9 hours ago", link: "#" }
+                        { title: "Inversion extranjera directa alcanza maximo historico", summary: "El pais capta niveles record de capital, segun datos oficiales.", time: "1 hora atras", link: "https://www.nacion.com/economia/inversion-extranjera-directa-alcanza-maximo-historico" },
+                        { title: "Costa Rica fortalece su matriz energetica renovable", summary: "Autoridades impulsan proyectos de energia limpia en todo el territorio.", time: "3 horas atras", link: "https://www.larepublica.net/noticia/costa-rica-fortalece-su-matriz-energetica-renovable-2024" },
+                        { title: "Sector turismo se recupera con fuerza", summary: "La llegada de visitantes se acerca a niveles prepandemia.", time: "5 horas atras", link: "https://www.elfinancierocr.com/negocios/sector-turismo-se-recupera-con-fuerza-este-ano" },
+                        { title: "Precios del cafe costarricense suben en mercados internacionales", summary: "Productores locales celebran el alza en las exportaciones.", time: "7 horas atras", link: "https://www.nacion.com/economia/agro/precios-del-cafe-costarricense-suben-en-mercados" },
+                        { title: "Plan fiscal reactivara la economia en 2024", summary: "Analistas prev en impacto positivo sobre la inversion y el empleo.", time: "9 horas atras", link: "https://www.larepublica.net/noticia/plan-fiscal-reactivara-la-economia-en-2024" }
                     ]
                 };
 
