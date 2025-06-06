@@ -933,9 +933,12 @@
                     <h2 class="section-title">Digital Assets</h2>
                     <p class="section-subtitle">Cryptocurrency performance and NFT portfolio</p>
                 </div>
-                <button onclick="loadCryptoData()" style="background: #1976d2; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
-                    🔄 Refresh Prices
-                </button>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button onclick="loadCryptoData()" style="background: #1976d2; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+                        🔄 Refresh Prices
+                    </button>
+                    <div id="cryptoLastUpdated" style="color: #666; font-size: 0.8rem;">Loading...</div>
+                </div>
             </div>
 
             <div style="margin-bottom: 30px;">
@@ -1041,7 +1044,7 @@
 
                     <div class="metric-card">
                         <div class="metric-title">Unique Wallets</div>
-                        <div class="metric-value">51%</div>
+                        <div class="metric-value">510</div>
                         <div class="metric-change positive">+1.8% ↗</div>
                     </div>
                 </div>
@@ -1606,8 +1609,17 @@
                         }
                     });
                 });
+
+                const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
+                if (cryptoUpdateEl) {
+                    cryptoUpdateEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+                }
             } catch (error) {
                 console.error('Error loading crypto data:', error);
+                const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
+                if (cryptoUpdateEl) {
+                    cryptoUpdateEl.innerHTML = '<span style="color: #f44336;">Error loading data</span>';
+                }
             }
         }
     </script>
