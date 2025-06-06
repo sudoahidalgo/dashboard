@@ -1092,15 +1092,6 @@
                     </div>
 
 
-                    <div class="metric-card">
-                        <div class="metric-title">Minutes Network Token (MNTx)</div>
-                        <div class="metric-value" id="mntx-price">Loading...</div>
-                        <div style="display: flex; gap: 10px; margin-top: 10px; font-size: 0.8rem;">
-                            <span id="mntx-24h" class="metric-change">24h: --</span>
-                            <span id="mntx-30d" class="metric-change">30d: --</span>
-                            <span id="mntx-ytd" class="metric-change">YTD: --</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1717,8 +1708,7 @@
                 btc: 'bitcoin',
                 eth: 'ethereum',
                 ada: 'cardano',
-                wmtx: 'world-mobile-token',
-                mntx: 'minutes-network'
+                wmtx: 'world-mobile-token'
             };
 
             try {
@@ -1728,8 +1718,20 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 const coins = await response.json();
 
+                if (!Array.isArray(coins) || coins.length === 0) {
+                    console.error('CoinGecko API returned no data for ids:', ids);
+                }
+
                 const dataMap = {};
-                coins.forEach(c => dataMap[c.id] = c);
+                coins.forEach(c => {
+                    if (!c.id || typeof c.current_price !== 'number' ||
+                        c.price_change_percentage_24h_in_currency === undefined ||
+                        c.price_change_percentage_30d_in_currency === undefined ||
+                        c.price_change_percentage_1y_in_currency === undefined) {
+                        console.error('Coin data missing fields:', c);
+                    }
+                    dataMap[c.id] = c;
+                });
 
                 Object.entries(coinMap).forEach(([key, id]) => {
                     const coin = dataMap[id];
@@ -1737,7 +1739,7 @@
                     if (priceElement) {
                         if (coin && typeof coin.current_price === 'number') {
                             const price = coin.current_price;
-                            if (key === 'wmtx' || key === 'mntx') {
+                            if (key === 'wmtx') {
                                 priceElement.textContent = price.toFixed(4);
                             } else {
                                 priceElement.textContent = price.toLocaleString();
