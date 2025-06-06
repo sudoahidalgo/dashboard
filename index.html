@@ -1473,6 +1473,8 @@
         // Economic data (keeping existing functionality)
         // Insert your FRED API key below or configure it via environment during build
         const FRED_API_KEY = '<YOUR_FRED_KEY>';
+        const SPORTS_API_KEY = '<YOUR_SPORTS_API_KEY>';
+        const SPORTS_API_URL = 'https://www.thesportsdb.com/api/v1/json';
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
         const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
 
@@ -2154,45 +2156,28 @@ async function loadMinutesNetworkStats() {
 }
 
 async function loadSportsScores() {
-        const sources = [
-            { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/es.1.json', name: 'La Liga' },
-            { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/fr.1.json', name: 'Ligue 1' },
-            { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/uefa.cl.json', name: 'Champions League' }
-        ];
-        // Use the user's local timezone when comparing match dates
-        const today = new Date().toLocaleDateString('en-CA');
         const container = document.getElementById('sports-scores-container');
         container.innerHTML = '';
-        let found = false;
-
-        for (const src of sources) {
-            try {
-                const resp = await fetch(src.url);
-                const data = await resp.json();
-                const matches = (data.matches || []).filter(m => m.date === today);
-                if (!matches.length) continue;
-                found = true;
-                const leagueTitle = document.createElement('h4');
-                leagueTitle.textContent = src.name;
-                container.appendChild(leagueTitle);
-                matches.slice(0,5).forEach(match => {
-                    const div = document.createElement('div');
-                    div.className = 'news-card';
-                    const score = match.score && match.score.ft ? match.score.ft.join(' - ') : 'vs';
-                    div.innerHTML = `
-                        <div class="news-content">
-                            <h3>${match.team1} ${score} ${match.team2}</h3>
-                            <div class="news-meta">${match.round}</div>
-                        </div>`;
-                    container.appendChild(div);
-                });
-            } catch (e) {
-                console.error('Error loading', src.name, e);
+        const today = new Date().toISOString().slice(0, 10);
+        try {
+            const resp = await fetch(`${SPORTS_API_URL}/${SPORTS_API_KEY}/eventsday.php?d=${today}&s=Tennis`);
+            const data = await resp.json();
+            const events = data.events || [];
+            if (!events.length) {
+                container.textContent = 'No matches today';
+                return;
             }
-        }
-
-        if (!found) {
-            container.textContent = 'No matches today';
+            events.forEach(event => {
+                const div = document.createElement('div');
+                div.className = 'news-card';
+                const score = event.intHomeScore && event.intAwayScore ? `${event.intHomeScore} - ${event.intAwayScore}` : 'vs';
+                const time = event.strTime ? event.strTime.slice(0,5) : '';
+                div.innerHTML = `<div class="news-content"><h3>${event.strEvent} ${score}</h3><div class="news-meta">${event.strLeague} • ${time}</div></div>`;
+                container.appendChild(div);
+            });
+        } catch (e) {
+            console.error('Error loading tennis scores', e);
+            container.textContent = 'Failed to load matches';
         }
     }
     </script>
