@@ -267,6 +267,12 @@
             color: #ef6c00;
         }
 
+        .metric-subtext {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
         /* Metric Table */
         .metric-table {
             width: 100%;
@@ -469,6 +475,10 @@
 
         body.dark-theme .metric-value {
             color: #e0e0e0;
+        }
+
+        body.dark-theme .metric-subtext {
+            color: #bdbdbd;
         }
 
         body.dark-theme .metric-table th {
@@ -1028,16 +1038,19 @@
                         <div class="metric-title">Global GDP Growth</div>
                         <div class="metric-value" id="world-gdp-value">Loading...</div>
                         <div class="metric-change" id="world-gdp-change">--</div>
+                        <div class="metric-subtext" id="world-gdp-compare">YTD: -- • LY: -- • 3Y Avg: --</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-title">Global Inflation</div>
                         <div class="metric-value" id="world-inflation-value">Loading...</div>
                         <div class="metric-change" id="world-inflation-change">--</div>
+                        <div class="metric-subtext" id="world-inflation-compare">YTD: -- • LY: -- • 3Y Avg: --</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-title">Global Unemployment</div>
                         <div class="metric-value" id="world-unemployment-value">Loading...</div>
                         <div class="metric-change" id="world-unemployment-change">--</div>
+                        <div class="metric-subtext" id="world-unemployment-compare">YTD: -- • LY: -- • 3Y Avg: --</div>
                     </div>
                 </div>
             </div>
@@ -1542,7 +1555,7 @@
 
         // Economic data (keeping existing functionality)
         // Insert your FRED API key below or configure it via environment during build
-        const FRED_API_KEY = '<5da971100c2d6bb0da05e61eb190bb78>';
+        const FRED_API_KEY = '5da971100c2d6bb0da05e61eb190bb78';
         // Optional CoinMarketCap API key for enhanced crypto data
         const CMC_API_KEY = '<0a4353e0-be6f-4054-8a70-d091098ee130>';
         const SPORTS_API_KEY = '123';
@@ -1895,15 +1908,44 @@
         }
 
         async function loadWorldEconomicData() {
-            const data = {
-                gdp: { value: 3.1, change: 0.1, trend: 'positive' },
-                inflation: { value: 5.0, change: -0.1, trend: 'positive' },
-                unemployment: { value: 6.2, change: -0.05, trend: 'positive' }
+            const seriesMap = {
+                gdp: 'NYGDPMKTPCDWLD', // World GDP constant dollars
+                inflation: 'FPCPITOTLZGWD', // World inflation rate
+                unemployment: 'LRUNTTTTW', // World unemployment rate
             };
+
             const idMap = { gdp: 'world-gdp', inflation: 'world-inflation', unemployment: 'world-unemployment' };
-            Object.entries(data).forEach(([key, val]) => {
+            const results = {};
+
+            await Promise.all(Object.entries(seriesMap).map(async ([key, series]) => {
+                const data = await fetchFredData(series, 5);
+                if (data && data.observations && data.observations.length >= 4) {
+                    const obs = data.observations.filter(o => o.value !== '.').map(o => ({ value: parseFloat(o.value), date: o.date }));
+                    const latest = obs[0];
+                    const prev = obs[1];
+                    const three = obs.slice(1, 4);
+                    const avg3 = three.reduce((sum, o) => sum + o.value, 0) / three.length;
+
+                    const change = calculateChange(latest.value, prev.value);
+                    const trend = determineTrend(change);
+
+                    results[key] = {
+                        value: latest.value,
+                        change,
+                        trend,
+                        ytd: latest.value,
+                        lastYear: prev.value,
+                        avg3,
+                    };
+                } else {
+                    results[key] = { value: 0, change: 0, trend: 'neutral', ytd: 0, lastYear: 0, avg3: 0 };
+                }
+            }));
+
+            Object.entries(results).forEach(([key, val]) => {
                 const valueEl = document.getElementById(`${idMap[key]}-value`);
                 const changeEl = document.getElementById(`${idMap[key]}-change`);
+                const compEl = document.getElementById(`${idMap[key]}-compare`);
                 if (valueEl) {
                     valueEl.textContent = `${val.value.toFixed(2)}%`;
                     valueEl.classList.remove('loading');
@@ -1912,7 +1954,11 @@
                     changeEl.textContent = formatChange(val.change, val.trend);
                     changeEl.className = `metric-change ${val.trend}`;
                 }
+                if (compEl) {
+                    compEl.textContent = `YTD: ${val.ytd.toFixed(2)} • LY: ${val.lastYear.toFixed(2)} • 3Y Avg: ${val.avg3.toFixed(2)}`;
+                }
             });
+
             const upd = document.getElementById('world-last-updated');
             if (upd) upd.textContent = `Last updated: ${new Date().toLocaleString()}`;
         }
