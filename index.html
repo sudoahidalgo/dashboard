@@ -1231,9 +1231,7 @@
             </div>
 
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 15px; color: #2c3e50;">
-                    <img src="https://worldmobiletoken.com/wp-content/uploads/2021/05/WMT_logo.png" alt="World Mobile logo" width="24" style="vertical-align: middle; margin-right: 5px;">📱 World Mobile
-                </h3>
+                <h3 style="margin-bottom: 15px; color: #2c3e50;">📱 World Mobile</h3>
                 <h3 class="subsection-title">WMTx</h3>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -1306,6 +1304,45 @@
                         <div class="metric-value">510</div>
                         <div class="metric-change positive">+1.8% ↗</div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <h3 style="margin-bottom: 15px; color: #2c3e50;">🛰️ Minutes Network</h3>
+            <h3 class="subsection-title">MNTx</h3>
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-title">MNTx Price</div>
+                    <div class="metric-value" id="mntx-price">Loading...</div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px; font-size: 0.8rem;">
+                        <span id="mntx-24h" class="metric-change">24h: --</span>
+                        <span id="mntx-30d" class="metric-change">30d: --</span>
+                        <span id="mntx-ytd" class="metric-change">YTD: --</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">24h Volume</div>
+                    <div class="metric-value" id="mntx-volume">Loading...</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">CMC Rank</div>
+                    <div class="metric-value" id="mntx-rank">Loading...</div>
+                </div>
+            </div>
+            <h3 class="subsection-title">Minutes Network Explorer</h3>
+            <div class="dashboard-grid" style="margin-top: 20px;">
+                <div class="metric-card">
+                    <div class="metric-title">Total Transactions</div>
+                    <div class="metric-value" id="mn-total-txns">Loading...</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Total Addresses</div>
+                    <div class="metric-value" id="mn-total-addresses">Loading...</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Daily Transactions</div>
+                    <div class="metric-value" id="mn-daily-txns">Loading...</div>
                 </div>
             </div>
         </div>
@@ -1421,14 +1458,16 @@
             loadNewsData();
             loadSportsScores();
             loadCryptoData();
-            
+
             loadWorldMobileStats();
+            loadMinutesNetworkStats();
             // Auto-refresh data every 5 minutes
             setInterval(() => {
                 loadEconomicData();
                 loadWeatherData();
                 loadCryptoData();
                 loadWorldMobileStats();
+                loadMinutesNetworkStats();
                 loadSportsScores();
             }, 5 * 60 * 1000);
 
@@ -1869,7 +1908,8 @@
                 btc: 'bitcoin',
                 eth: 'ethereum',
                 ada: 'cardano',
-                wmtx: 'world-mobile-token'
+                wmtx: 'world-mobile-token',
+                mntx: 'minutes-network'
             };
 
             try {
@@ -1900,7 +1940,7 @@
                     if (priceElement) {
                         if (coin && typeof coin.current_price === 'number') {
                             const price = coin.current_price;
-                            if (key === 'wmtx') {
+                            if (key === 'wmtx' || key === 'mntx') {
                                 priceElement.textContent = price.toFixed(4);
                             } else {
                                 priceElement.textContent = price.toLocaleString();
@@ -1931,24 +1971,24 @@
                             }
                         }
                     });
-                    if (key === "wmtx") {
-                        const extraPrice = document.getElementById("wmtx-price");
+                    if (key === "wmtx" || key === "mntx") {
+                        const extraPrice = document.getElementById(`${key}-price`);
                         if (extraPrice) {
                             extraPrice.textContent = coin.current_price.toFixed(4);
                             extraPrice.classList.remove("loading");
                         }
                         ["24h","30d","ytd"].forEach(p => {
                             const val = changes[p];
-                            const el = document.getElementById(`wmtx-${p}`);
+                            const el = document.getElementById(`${key}-${p}`);
                             if (el && typeof val === "number") {
                                 const t = val > 0 ? "positive" : val < 0 ? "negative" : "neutral";
                                 el.textContent = `${p}: ${formatChange(val, t)}`;
                                 el.className = `metric-change ${t}`;
                             }
                         });
-                        const volEl = document.getElementById("wmtx-volume");
+                        const volEl = document.getElementById(`${key}-volume`);
                         if (volEl) volEl.textContent = coin.total_volume.toLocaleString();
-                        const rankEl = document.getElementById("wmtx-rank");
+                        const rankEl = document.getElementById(`${key}-rank`);
                         if (rankEl) rankEl.textContent = `#${coin.market_cap_rank}`;
                     }
                 });
@@ -2002,9 +2042,33 @@ async function loadWorldMobileStats() {
                 const dailyEl = document.getElementById("wm-daily-txns");
                 if (dailyEl) dailyEl.textContent = fallback.dailyTransactions.toLocaleString();
         }
-    }
+}
 
-    async function loadSportsScores() {
+async function loadMinutesNetworkStats() {
+    try {
+        const response = await fetch(CORS_PROXY + encodeURIComponent('https://explorer.minutesnetwork.io/api/v1/stats'));
+        const data = await response.json();
+        if (data) {
+            const totalTxEl = document.getElementById("mn-total-txns");
+            if (totalTxEl) totalTxEl.textContent = Number(data.totalTransactions).toLocaleString();
+            const totalAddrEl = document.getElementById("mn-total-addresses");
+            if (totalAddrEl) totalAddrEl.textContent = Number(data.totalAddresses).toLocaleString();
+            const dailyEl = document.getElementById("mn-daily-txns");
+            if (dailyEl) dailyEl.textContent = Number(data.dailyTransactions).toLocaleString();
+        }
+    } catch (error) {
+        console.error("Error loading Minutes Network stats:", error);
+        const fallback = { totalTransactions: 1000000, totalAddresses: 50000, dailyTransactions: 500 };
+        const totalTxEl = document.getElementById("mn-total-txns");
+        if (totalTxEl) totalTxEl.textContent = fallback.totalTransactions.toLocaleString();
+        const totalAddrEl = document.getElementById("mn-total-addresses");
+        if (totalAddrEl) totalAddrEl.textContent = fallback.totalAddresses.toLocaleString();
+        const dailyEl = document.getElementById("mn-daily-txns");
+        if (dailyEl) dailyEl.textContent = fallback.dailyTransactions.toLocaleString();
+    }
+}
+
+async function loadSportsScores() {
         const sources = [
             { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/es.1.json', name: 'La Liga' },
             { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/fr.1.json', name: 'Ligue 1' },
