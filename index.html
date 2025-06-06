@@ -739,9 +739,6 @@
                     <h2 class="section-title">Digital Assets</h2>
                     <p class="section-subtitle">Cryptocurrency performance and NFT portfolio</p>
                 </div>
-                <button onclick="loadCryptoData()" style="background: #1976d2; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
-                    🔄 Refresh Prices
-                </button>
             </div>
 
             <div style="margin-bottom: 30px;">
@@ -944,13 +941,15 @@
             loadNewsData();
             loadCryptoData();
             
-            // Auto-refresh data every 5 minutes
+            // Auto-refresh economic and weather data every 5 minutes
             setInterval(() => {
                 loadEconomicData();
                 loadWeatherData();
-                loadCryptoData();
             }, 5 * 60 * 1000);
-            
+
+            // Auto-refresh crypto prices every 10 minutes
+            setInterval(loadCryptoData, 10 * 60 * 1000);
+
             // Auto-refresh news every 15 minutes
             setInterval(loadNewsData, 15 * 60 * 1000);
         });
