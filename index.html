@@ -670,6 +670,12 @@
                         <div class="metric-value" id="precipitation-value">Loading...</div>
                         <div class="metric-change" id="precipitation-change">--</div>
                     </div>
+
+                    <div class="metric-card">
+                        <div class="metric-title">Today's Rain</div>
+                        <div class="metric-value" id="rain-forecast-value">Loading...</div>
+                        <div class="metric-change" id="rain-forecast-change">--</div>
+                    </div>
                 </div>
                 <div class="forecast-grid">
                     <div class="metric-card" id="forecast-today">Loading forecast...</div>
@@ -1229,7 +1235,7 @@
                 // Using Open-Meteo API for your location in Costa Rica
                 const lat = 9.9306338;
                 const lon = -84.238416;
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation&daily=temperature_2m_max,temperature_2m_min&forecast_days=10&timezone=auto`;
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=10&timezone=auto`;
                 
                 const response = await fetch(url);
                 const data = await response.json();
@@ -1263,6 +1269,13 @@
 
                     if (data.daily) {
                         const daily = data.daily;
+                        if (daily.precipitation_sum) {
+                            const rainToday = daily.precipitation_sum[0];
+                            document.getElementById('rain-forecast-value').textContent = `${rainToday} mm`;
+                            document.getElementById('rain-forecast-value').classList.remove('loading');
+                            document.getElementById('rain-forecast-change').textContent = rainToday > 0 ? 'Rain expected' : 'No rain';
+                            document.getElementById('rain-forecast-change').className = `metric-change ${rainToday > 0 ? 'warning' : 'positive'}`;
+                        }
                         document.getElementById('forecast-today').textContent = `Today: ${Math.round(daily.temperature_2m_max[0])}°/${Math.round(daily.temperature_2m_min[0])}°`;
                         document.getElementById('forecast-tomorrow').textContent = `Tomorrow: ${Math.round(daily.temperature_2m_max[1])}°/${Math.round(daily.temperature_2m_min[1])}°`;
                         const max = Math.max(...daily.temperature_2m_max);
@@ -1277,6 +1290,9 @@
                 document.getElementById('humidity-value').textContent = '75%';
                 document.getElementById('wind-value').textContent = '12 km/h';
                 document.getElementById('precipitation-value').textContent = '0 mm';
+                document.getElementById('rain-forecast-value').textContent = '0 mm';
+                document.getElementById('rain-forecast-change').textContent = 'No rain';
+                document.getElementById('rain-forecast-change').className = 'metric-change positive';
                 document.getElementById('forecast-today').textContent = 'Today: 26°/18°';
                 document.getElementById('forecast-tomorrow').textContent = 'Tomorrow: 27°/18°';
                 document.getElementById('forecast-10d').textContent = '10d High 29°/Low 17°';
