@@ -336,13 +336,6 @@
             background: #f8f9fa;
         }
 
-        .news-image {
-            width: 80px;
-            height: 80px;
-            background: #ddd;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
 
         .news-content h3 {
             font-size: 1rem;
@@ -1332,7 +1325,6 @@
                 const newsCard = document.createElement('div');
                 newsCard.className = 'news-card';
                 newsCard.innerHTML = `
-                    <div class="news-image"></div>
                     <div class="news-content">
                         <h3><a href="${article.link}" target="_blank">${article.title}</a></h3>
                         <p>${article.summary}</p>
