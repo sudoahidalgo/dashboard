@@ -1475,6 +1475,49 @@
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
         const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
 
+        const CRYPTO_FALLBACK = {
+            'bitcoin': {
+                current_price: 67500,
+                price_change_percentage_24h_in_currency: 1.2,
+                price_change_percentage_30d_in_currency: 5.3,
+                price_change_percentage_1y_in_currency: 122.1,
+                total_volume: 25000000000,
+                market_cap_rank: 1
+            },
+            'ethereum': {
+                current_price: 3500,
+                price_change_percentage_24h_in_currency: 1.8,
+                price_change_percentage_30d_in_currency: 7.2,
+                price_change_percentage_1y_in_currency: 95.5,
+                total_volume: 15000000000,
+                market_cap_rank: 2
+            },
+            'cardano': {
+                current_price: 0.45,
+                price_change_percentage_24h_in_currency: 0.9,
+                price_change_percentage_30d_in_currency: 4.1,
+                price_change_percentage_1y_in_currency: 40.2,
+                total_volume: 750000000,
+                market_cap_rank: 8
+            },
+            'world-mobile-token': {
+                current_price: 0.16,
+                price_change_percentage_24h_in_currency: 2.1,
+                price_change_percentage_30d_in_currency: 9.8,
+                price_change_percentage_1y_in_currency: 26.5,
+                total_volume: 10000000,
+                market_cap_rank: 450
+            },
+            'minutes-network': {
+                current_price: 0.06,
+                price_change_percentage_24h_in_currency: 0.5,
+                price_change_percentage_30d_in_currency: 2.5,
+                price_change_percentage_1y_in_currency: 12.0,
+                total_volume: 3000000,
+                market_cap_rank: 1400
+            }
+        };
+
         // Ray Dalio's Key Economic Indicators
         const indicators = {
             gdp: { series: 'GDPC1', title: 'Real GDP Growth', format: 'percent', unit: '%', thresholds: { good: 2, warning: 0 } },
@@ -1983,6 +2026,12 @@
                     dataMap[c.id] = c;
                 });
 
+                Object.values(coinMap).forEach(id => {
+                    if (!dataMap[id] && CRYPTO_FALLBACK[id]) {
+                        dataMap[id] = CRYPTO_FALLBACK[id];
+                    }
+                });
+
                 updateCryptoUI(coinMap, dataMap);
 
                 const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
@@ -1991,50 +2040,7 @@
                 }
             } catch (error) {
                 console.error('Error loading crypto data:', error);
-                const fallbackData = {
-                    'bitcoin': {
-                        current_price: 67500,
-                        price_change_percentage_24h_in_currency: 1.2,
-                        price_change_percentage_30d_in_currency: 5.3,
-                        price_change_percentage_1y_in_currency: 122.1,
-                        total_volume: 25000000000,
-                        market_cap_rank: 1
-                    },
-                    'ethereum': {
-                        current_price: 3500,
-                        price_change_percentage_24h_in_currency: 1.8,
-                        price_change_percentage_30d_in_currency: 7.2,
-                        price_change_percentage_1y_in_currency: 95.5,
-                        total_volume: 15000000000,
-                        market_cap_rank: 2
-                    },
-                    'cardano': {
-                        current_price: 0.45,
-                        price_change_percentage_24h_in_currency: 0.9,
-                        price_change_percentage_30d_in_currency: 4.1,
-                        price_change_percentage_1y_in_currency: 40.2,
-                        total_volume: 750000000,
-                        market_cap_rank: 8
-                    },
-                    'world-mobile-token': {
-                        current_price: 0.16,
-                        price_change_percentage_24h_in_currency: 2.1,
-                        price_change_percentage_30d_in_currency: 9.8,
-                        price_change_percentage_1y_in_currency: 26.5,
-                        total_volume: 10000000,
-                        market_cap_rank: 450
-                    },
-                    'minutes-network': {
-                        current_price: 0.06,
-                        price_change_percentage_24h_in_currency: 0.5,
-                        price_change_percentage_30d_in_currency: 2.5,
-                        price_change_percentage_1y_in_currency: 12.0,
-                        total_volume: 3000000,
-                        market_cap_rank: 1400
-                    }
-                };
-
-                updateCryptoUI(coinMap, fallbackData);
+                updateCryptoUI(coinMap, CRYPTO_FALLBACK);
                 const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
                 if (cryptoUpdateEl) {
                     cryptoUpdateEl.textContent = 'Last updated: offline data';
@@ -2069,6 +2075,12 @@
                         total_volume: quote.volume_24h,
                         market_cap_rank: c.cmc_rank
                     };
+                }
+            });
+
+            Object.values(coinMap).forEach(id => {
+                if (!dataMap[id] && CRYPTO_FALLBACK[id]) {
+                    dataMap[id] = CRYPTO_FALLBACK[id];
                 }
             });
 
