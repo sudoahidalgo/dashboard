@@ -580,6 +580,125 @@
                     <div class="metric-change" id="credit-change">--</div>
                     <div class="health-indicator" id="credit-health">--</div>
                 </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Private Credit Growth</div>
+                    <div class="metric-value" id="creditgrowth-value">Loading...</div>
+                    <div class="metric-change" id="creditgrowth-change">--</div>
+                    <div class="health-indicator" id="creditgrowth-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Debt Service Ratio</div>
+                    <div class="metric-value" id="debtservice-value">Loading...</div>
+                    <div class="metric-change" id="debtservice-change">--</div>
+                    <div class="health-indicator" id="debtservice-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Short-Term Rate</div>
+                    <div class="metric-value" id="shortrate-value">Loading...</div>
+                    <div class="metric-change" id="shortrate-change">--</div>
+                    <div class="health-indicator" id="shortrate-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Long-Term Yield</div>
+                    <div class="metric-value" id="longrate-value">Loading...</div>
+                    <div class="metric-change" id="longrate-change">--</div>
+                    <div class="health-indicator" id="longrate-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Yield Curve Spread</div>
+                    <div class="metric-value" id="yieldcurve-value">Loading...</div>
+                    <div class="metric-change" id="yieldcurve-change">--</div>
+                    <div class="health-indicator" id="yieldcurve-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">M2 Money Growth</div>
+                    <div class="metric-value" id="m2growth-value">Loading...</div>
+                    <div class="metric-change" id="m2growth-change">--</div>
+                    <div class="health-indicator" id="m2growth-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Central Bank Balance</div>
+                    <div class="metric-value" id="balancesheet-value">Loading...</div>
+                    <div class="metric-change" id="balancesheet-change">--</div>
+                    <div class="health-indicator" id="balancesheet-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Inflation Expectations</div>
+                    <div class="metric-value" id="inflationexpect-value">Loading...</div>
+                    <div class="metric-change" id="inflationexpect-change">--</div>
+                    <div class="health-indicator" id="inflationexpect-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">PMI</div>
+                    <div class="metric-value" id="pmi-value">Loading...</div>
+                    <div class="metric-change" id="pmi-change">--</div>
+                    <div class="health-indicator" id="pmi-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Industrial Production</div>
+                    <div class="metric-value" id="industrialprod-value">Loading...</div>
+                    <div class="metric-change" id="industrialprod-change">--</div>
+                    <div class="health-indicator" id="industrialprod-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Wage Growth</div>
+                    <div class="metric-value" id="wagegrowth-value">Loading...</div>
+                    <div class="metric-change" id="wagegrowth-change">--</div>
+                    <div class="health-indicator" id="wagegrowth-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">S&amp;P 500 Index</div>
+                    <div class="metric-value" id="stockindex-value">Loading...</div>
+                    <div class="metric-change" id="stockindex-change">--</div>
+                    <div class="health-indicator" id="stockindex-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Real Estate Prices</div>
+                    <div class="metric-value" id="realestate-value">Loading...</div>
+                    <div class="metric-change" id="realestate-change">--</div>
+                    <div class="health-indicator" id="realestate-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Current Account</div>
+                    <div class="metric-value" id="currentaccount-value">Loading...</div>
+                    <div class="metric-change" id="currentaccount-change">--</div>
+                    <div class="health-indicator" id="currentaccount-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">FX Reserves</div>
+                    <div class="metric-value" id="reserves-value">Loading...</div>
+                    <div class="metric-change" id="reserves-change">--</div>
+                    <div class="health-indicator" id="reserves-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Currency Strength</div>
+                    <div class="metric-value" id="currency-value">Loading...</div>
+                    <div class="metric-change" id="currency-change">--</div>
+                    <div class="health-indicator" id="currency-health">--</div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Fiscal Balance</div>
+                    <div class="metric-value" id="fiscalbalance-value">Loading...</div>
+                    <div class="metric-change" id="fiscalbalance-change">--</div>
+                    <div class="health-indicator" id="fiscalbalance-health">--</div>
+                </div>
             </div>
         </div>
 
@@ -969,7 +1088,24 @@
             mortgage: { series: 'MORTGAGE30US', title: '30-Year Mortgage Rate', format: 'percent', unit: '%', thresholds: { good: 4, warning: 7 } },
             labor: { series: 'CIVPART', title: 'Labor Participation', format: 'percent', unit: '%', thresholds: { good: 63, warning: 60 } },
             wealth: { series: 'GINIALLRH', title: 'Wealth Inequality (Gini)', format: 'decimal', unit: '', thresholds: { good: 0.4, warning: 0.5 } },
-            credit: { series: 'DPSACBW027SBOG', title: 'Credit Spread', format: 'percent', unit: '%', thresholds: { good: 2, warning: 4 } }
+            credit: { series: 'DPSACBW027SBOG', title: 'Credit Spread', format: 'percent', unit: '%', thresholds: { good: 2, warning: 4 } },
+            creditgrowth: { series: '', title: 'Private Credit Growth', format: 'percent', unit: '%', thresholds: { good: 5, warning: 2 } },
+            debtservice: { series: '', title: 'Debt Service Ratio', format: 'percent', unit: '%', thresholds: { good: 10, warning: 20 } },
+            shortrate: { series: '', title: 'Short-Term Rate', format: 'percent', unit: '%', thresholds: { good: 2, warning: 4 } },
+            longrate: { series: '', title: 'Long-Term Yield', format: 'percent', unit: '%', thresholds: { good: 3, warning: 5 } },
+            yieldcurve: { series: '', title: 'Yield Curve Spread', format: 'percent', unit: '%', thresholds: { good: 1, warning: 0 } },
+            m2growth: { series: '', title: 'M2 Growth', format: 'percent', unit: '%', thresholds: { good: 5, warning: 2 } },
+            balancesheet: { series: '', title: 'Central Bank Balance', format: 'currency', unit: '', thresholds: null },
+            inflationexpect: { series: '', title: 'Inflation Expectations', format: 'percent', unit: '%', thresholds: { good: 2, warning: 3 } },
+            pmi: { series: '', title: 'PMI', format: 'decimal', unit: '', thresholds: { good: 50, warning: 45 } },
+            industrialprod: { series: '', title: 'Industrial Production', format: 'percent', unit: '%', thresholds: { good: 2, warning: 0 } },
+            wagegrowth: { series: '', title: 'Wage Growth', format: 'percent', unit: '%', thresholds: { good: 3, warning: 1 } },
+            stockindex: { series: '', title: 'S&P 500 Index', format: 'currency', unit: '', thresholds: null },
+            realestate: { series: '', title: 'Real Estate Prices', format: 'percent', unit: '%', thresholds: { good: 5, warning: 0 } },
+            currentaccount: { series: '', title: 'Current Account', format: 'percent', unit: '%', thresholds: { good: 0, warning: -3 } },
+            reserves: { series: '', title: 'FX Reserves', format: 'currency', unit: '', thresholds: { good: 100, warning: 50 } },
+            currency: { series: '', title: 'Currency Strength', format: 'decimal', unit: '', thresholds: { good: 100, warning: 90 } },
+            fiscalbalance: { series: '', title: 'Fiscal Balance', format: 'percent', unit: '%', thresholds: { good: 0, warning: -3 } }
         };
 
         function formatValue(value, format) {
@@ -1136,16 +1272,33 @@
         async function loadEconomicData() {
             try {
                 // Using enhanced mock data based on current economic conditions
-                const mockData = {
-                    gdp: { value: 2.1, change: 0.3, trend: 'positive' },
-                    inflation: { value: 3.2, change: -0.4, trend: 'positive' },
-                    unemployment: { value: 4.1, change: -0.2, trend: 'positive' },
-                    debt: { value: 123, change: 2.1, trend: 'negative' },
-                    mortgage: { value: 6.8, change: 0.1, trend: 'negative' },
-                    labor: { value: 62.5, change: -0.1, trend: 'negative' },
-                    wealth: { value: 0.48, change: 0.01, trend: 'negative' },
-                    credit: { value: 1.8, change: -0.2, trend: 'positive' }
-                };
+            const mockData = {
+                gdp: { value: 2.1, change: 0.3, trend: 'positive' },
+                inflation: { value: 3.2, change: -0.4, trend: 'positive' },
+                unemployment: { value: 4.1, change: -0.2, trend: 'positive' },
+                debt: { value: 123, change: 2.1, trend: 'negative' },
+                mortgage: { value: 6.8, change: 0.1, trend: 'negative' },
+                labor: { value: 62.5, change: -0.1, trend: 'negative' },
+                wealth: { value: 0.48, change: 0.01, trend: 'negative' },
+                credit: { value: 1.8, change: -0.2, trend: 'positive' },
+                creditgrowth: { value: 4.2, change: 0.5, trend: 'positive' },
+                debtservice: { value: 13.0, change: 0.2, trend: 'negative' },
+                shortrate: { value: 5.1, change: 0.1, trend: 'positive' },
+                longrate: { value: 4.2, change: -0.1, trend: 'negative' },
+                yieldcurve: { value: -0.9, change: 0.1, trend: 'positive' },
+                m2growth: { value: 3.2, change: -0.1, trend: 'negative' },
+                balancesheet: { value: 8500, change: -50, trend: 'negative' },
+                inflationexpect: { value: 2.4, change: 0.1, trend: 'positive' },
+                pmi: { value: 51.4, change: 0.2, trend: 'positive' },
+                industrialprod: { value: 1.7, change: -0.1, trend: 'negative' },
+                wagegrowth: { value: 3.5, change: 0.1, trend: 'positive' },
+                stockindex: { value: 4500, change: 15, trend: 'positive' },
+                realestate: { value: 5.5, change: 0.3, trend: 'positive' },
+                currentaccount: { value: -2.7, change: 0.1, trend: 'positive' },
+                reserves: { value: 1300, change: -10, trend: 'negative' },
+                currency: { value: 102, change: -0.5, trend: 'negative' },
+                fiscalbalance: { value: -4.5, change: 0.2, trend: 'positive' }
+            };
 
                 Object.keys(mockData).forEach(key => {
                     const dataPoint = mockData[key];
@@ -1164,7 +1317,7 @@
                         changeElement.className = `metric-change ${dataPoint.trend}`;
                         
                         // Update health status
-                        const isReverse = ['inflation', 'unemployment', 'debt', 'mortgage', 'wealth'].includes(key);
+                        const isReverse = ['inflation', 'unemployment', 'debt', 'mortgage', 'wealth', 'debtservice', 'shortrate', 'longrate', 'inflationexpect'].includes(key);
                         const healthStatus = getHealthStatus(dataPoint.value, indicator.thresholds, isReverse);
                         healthElement.textContent = getHealthLabel(healthStatus);
                         healthElement.className = `health-indicator ${healthStatus}`;
