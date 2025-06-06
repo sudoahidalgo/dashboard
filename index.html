@@ -1475,7 +1475,7 @@
         const FRED_API_KEY = '<5da971100c2d6bb0da05e61eb190bb78>';
         // Optional CoinMarketCap API key for enhanced crypto data
         const CMC_API_KEY = '<0a4353e0-be6f-4054-8a70-d091098ee130>';
-        const SPORTS_API_KEY = '<123>';
+        const SPORTS_API_KEY = '123';
         const SPORTS_API_URL = 'https://www.thesportsdb.com/api/v1/json';
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
         const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
@@ -2146,26 +2146,37 @@ async function loadSportsScores() {
         const container = document.getElementById('sports-scores-container');
         container.innerHTML = '';
         const today = new Date().toISOString().slice(0, 10);
-        try {
-            const resp = await fetch(`${SPORTS_API_URL}/${SPORTS_API_KEY}/eventsday.php?d=${today}&s=Tennis`);
-            const data = await resp.json();
-            const events = data.events || [];
-            if (!events.length) {
-                container.textContent = 'No matches today';
-                return;
+        const leagues = [
+            'FIFA World Cup',
+            'UEFA Champions League',
+            'NFL',
+            'Costa Rica Primera Division',
+            'ATP World Tour'
+        ];
+        const sports = ['Soccer', 'Tennis', 'American Football'];
+        const allEvents = [];
+        for (const sport of sports) {
+            try {
+                const resp = await fetch(`${SPORTS_API_URL}/${SPORTS_API_KEY}/eventsday.php?d=${today}&s=${encodeURIComponent(sport)}`);
+                const data = await resp.json();
+                const events = (data.events || []).filter(ev => leagues.includes(ev.strLeague));
+                allEvents.push(...events);
+            } catch (e) {
+                console.error(`Error loading ${sport} scores`, e);
             }
-            events.forEach(event => {
-                const div = document.createElement('div');
-                div.className = 'news-card';
-                const score = event.intHomeScore && event.intAwayScore ? `${event.intHomeScore} - ${event.intAwayScore}` : 'vs';
-                const time = event.strTime ? event.strTime.slice(0,5) : '';
-                div.innerHTML = `<div class="news-content"><h3>${event.strEvent} ${score}</h3><div class="news-meta">${event.strLeague} • ${time}</div></div>`;
-                container.appendChild(div);
-            });
-        } catch (e) {
-            console.error('Error loading tennis scores', e);
-            container.textContent = 'Failed to load matches';
         }
+        if (!allEvents.length) {
+            container.textContent = 'No matches today';
+            return;
+        }
+        allEvents.forEach(event => {
+            const div = document.createElement('div');
+            div.className = 'news-card';
+            const score = event.intHomeScore && event.intAwayScore ? `${event.intHomeScore} - ${event.intAwayScore}` : 'vs';
+            const time = event.strTime ? event.strTime.slice(0,5) : '';
+            div.innerHTML = `<div class="news-content"><h3>${event.strEvent} ${score}</h3><div class="news-meta">${event.strLeague} • ${time}</div></div>`;
+            container.appendChild(div);
+        });
     }
     </script>
 </body>
