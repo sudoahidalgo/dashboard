@@ -130,6 +130,10 @@
             align-items: center;
         }
 
+        .top-bar-message {
+            font-weight: 500;
+        }
+
 
         .top-bar-actions {
             display: flex;
@@ -499,6 +503,7 @@
     <div class="main-content">
         <!-- Top Bar -->
         <div class="top-bar">
+            <div id="greeting" class="top-bar-message"></div>
             <div class="top-bar-actions">
                 <button id="theme-toggle" class="icon-button">🌙</button>
                 <div class="user-avatar" style="width: 32px; height: 32px;">AH</div>
@@ -1079,6 +1084,24 @@
     </div>
 
     <script>
+        function updateGreeting() {
+            const greetingEl = document.getElementById('greeting');
+            if (!greetingEl) return;
+            const now = new Date();
+            const hour = now.getHours();
+            const day = now.getDay();
+            const weekend = day === 0 || day === 6;
+            let message;
+            if (hour < 12) {
+                message = `Good Morning Adrian, ${weekend ? 'enjoy your weekend' : 'have a nice day'}! ☀️`;
+            } else if (hour < 18) {
+                message = `Good Afternoon Adrian, ${weekend ? 'enjoy your weekend' : 'have a nice day'}! ⛅`;
+            } else {
+                message = `Good Evening Adrian, ${weekend ? 'enjoy your weekend' : 'have a good night'}! 🌙`;
+            }
+            greetingEl.textContent = message;
+        }
+
         // Navigation functionality
         document.addEventListener('DOMContentLoaded', function() {
             const navItems = document.querySelectorAll('.nav-item[data-section]');
@@ -1126,6 +1149,9 @@
                 document.body.classList.add('dark-theme');
                 themeToggle.textContent = '☀️';
             }
+
+            updateGreeting();
+            setInterval(updateGreeting, 60 * 1000);
 
             // Initialize data loading
             loadEconomicData();
