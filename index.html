@@ -185,6 +185,15 @@
             margin-top: 5px;
         }
 
+        .subsection-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            border-left: 4px solid #1976d2;
+            padding-left: 8px;
+        }
+
         /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
@@ -419,6 +428,11 @@
             color: #e0e0e0;
         }
 
+        body.dark-theme .subsection-title {
+            color: #e0e0e0;
+            border-left-color: #90caf9;
+        }
+
         body.dark-theme .metric-value {
             color: #e0e0e0;
         }
@@ -514,7 +528,7 @@
         <div class="content-section active" id="economy">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">Key indicators for economic stability and crisis prediction</h2>
+                    <h2 class="section-title">Ray Dalio's Economic Health Guide</h2>
                 </div>
                 <div id="lastUpdated" style="color: #666; font-size: 0.8rem;">Loading...</div>
             </div>
@@ -530,7 +544,7 @@
 
             <!-- Credit Growth & Debt Levels -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Credit Growth &amp; Debt Levels</h3>
+                <h3 class="subsection-title">Credit Growth &amp; Debt Levels</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Tracks credit expansion and overall debt burden to gauge financial stability.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -558,7 +572,7 @@
 
             <!-- Interest Rates & Yield Curves -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Interest Rates &amp; Yield Curves</h3>
+                <h3 class="subsection-title">Interest Rates &amp; Yield Curves</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Signals monetary policy stance and expectations for future growth.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -593,7 +607,7 @@
 
             <!-- Money Supply & Liquidity -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Money Supply &amp; Liquidity</h3>
+                <h3 class="subsection-title">Money Supply &amp; Liquidity</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Measures broad liquidity conditions via money supply and central bank actions.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -614,7 +628,7 @@
 
             <!-- Inflation & Inflation Expectations -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Inflation &amp; Inflation Expectations</h3>
+                <h3 class="subsection-title">Inflation &amp; Inflation Expectations</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Current price pressures and future expectations guide policy responses.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -635,7 +649,7 @@
 
             <!-- Economic Output & Growth -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Economic Output &amp; Growth</h3>
+                <h3 class="subsection-title">Economic Output &amp; Growth</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Shows momentum in production and business activity.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -663,7 +677,7 @@
 
             <!-- Labor Market Indicators -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Labor Market Indicators</h3>
+                <h3 class="subsection-title">Labor Market Indicators</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Measures employment conditions and wage pressures.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -698,7 +712,7 @@
 
             <!-- Asset Prices -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Asset Prices</h3>
+                <h3 class="subsection-title">Asset Prices</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Reflects investor sentiment and potential wealth effects.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -726,7 +740,7 @@
 
             <!-- External Balances & Currency -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">External Balances &amp; Currency</h3>
+                <h3 class="subsection-title">External Balances &amp; Currency</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Indicates international competitiveness and capital flows.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -754,7 +768,7 @@
 
             <!-- Fiscal and Monetary Policy Actions -->
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 5px; color: #2c3e50;">Fiscal and Monetary Policy Actions</h3>
+                <h3 class="subsection-title">Fiscal and Monetary Policy Actions</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Shows government budget stance and policy impacts on the economy.</p>
                 <div class="dashboard-grid">
                     <div class="metric-card">
@@ -867,8 +881,8 @@
             <div class="section-header">
                 <div>
                     <h2 class="section-title">Latest News</h2>
-                    <p class="section-subtitle">Top 5 headlines from World, US, and Costa Rica</p>
-                        <div id="news-refresh-info" style="color: #666; font-size: 0.8rem;">Actualizado automáticamente cada 10 minutos</div>
+                    <p class="section-subtitle">Top 5 headlines from World, US, World Sports, Costa Rica, and Costa Rica Sports</p>
+                        <div id="news-refresh-info" style="color: #666; font-size: 0.8rem;">Automatically updated every 10 minutes</div>
                 </div>
                 
             </div>
@@ -907,6 +921,23 @@
                 </div>
             </div>
 
+            <!-- World Sports News -->
+            <div style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
+                    🏅 World Sports News
+                </h3>
+                <div class="news-grid" id="world-sports-news-container">
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <h3>Loading world sports news...</h3>
+                            <p>Please wait while we fetch the latest sports headlines.</p>
+                            <div class="news-meta">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Costa Rica News -->
             <div style="margin-bottom: 30px;">
                 <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
@@ -918,6 +949,23 @@
                         <div class="news-content">
                             <h3>Loading Costa Rica news...</h3>
                             <p>Please wait while we fetch the latest local headlines.</p>
+                            <div class="news-meta">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Costa Rica Sports News -->
+            <div style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
+                    🏆 Costa Rica Sports News
+                </h3>
+                <div class="news-grid" id="costa-rica-sports-news-container">
+                    <div class="news-card">
+                        <div class="news-image"></div>
+                        <div class="news-content">
+                            <h3>Loading Costa Rica sports news...</h3>
+                            <p>Please wait while we fetch the latest local sports headlines.</p>
                             <div class="news-meta">Loading...</div>
                         </div>
                     </div>
@@ -1505,18 +1553,25 @@
                 // Mock news data organized by region
                 const newsData = {
                     world: [
-                        { title: "Cumbre climática alcanza acuerdo histórico", summary: "Líderes mundiales se comprometen a nuevas metas de reducción de carbono para 2030.", time: "2 horas atrás", link: "https://www.un.org/es/climatechange" },
-                        { title: "Relaciones comerciales internacionales muestran recuperación", summary: "Indicadores económicos sugieren una mejora en las alianzas globales.", time: "4 horas atrás", link: "https://www.worldbank.org/en/topic/trade" },
-                        { title: "Gigantes tecnológicos anuncian colaboración en IA", summary: "Empresas líderes forman alianza para el desarrollo responsable de la inteligencia artificial.", time: "6 horas atrás", link: "https://www.bbc.com/news/technology" },
-                        { title: "Inversiones en energías renovables alcanzan cifras récord", summary: "Proyectos solares y eólicos reciben financiamiento sin precedentes.", time: "8 horas atrás", link: "https://www.iea.org" },
-                        { title: "Iniciativa global de salud lanza nuevo programa de vacunas", summary: "La OMS amplia la cobertura de inmunización en países en desarrollo.", time: "10 horas atrás", link: "https://www.who.int" }
+                        { title: "Climate summit reaches historic agreement", summary: "World leaders commit to new carbon reduction goals for 2030.", time: "2h ago", link: "https://www.un.org/climatechange" },
+                        { title: "International trade ties show improvement", summary: "Economic indicators point to stronger global alliances.", time: "4h ago", link: "https://www.worldbank.org/en/topic/trade" },
+                        { title: "Tech giants announce AI collaboration", summary: "Leading companies form alliance for responsible AI development.", time: "6h ago", link: "https://www.bbc.com/news/technology" },
+                        { title: "Renewable energy investments hit record levels", summary: "Solar and wind projects secure unprecedented funding.", time: "8h ago", link: "https://www.iea.org" },
+                        { title: "Global health initiative launches new vaccine program", summary: "WHO expands immunization coverage in developing nations.", time: "10h ago", link: "https://www.who.int" }
+                    ],
+                    worldSports: [
+                        { title: "Olympic committee announces 2032 host city", summary: "The selected venue prepares for major investments.", time: "1h ago", link: "https://www.olympics.com" },
+                        { title: "World Cup qualifiers deliver big upsets", summary: "Underdog teams surprise fans around the globe.", time: "3h ago", link: "https://www.fifa.com" },
+                        { title: "Top tennis star claims Grand Slam title", summary: "Victory marks the player's record-breaking win.", time: "5h ago", link: "https://www.atptour.com" },
+                        { title: "Marathon world record smashed", summary: "Runners celebrate historic achievement at major race.", time: "7h ago", link: "https://www.worldathletics.org" },
+                        { title: "International cricket league expands", summary: "New markets join as the sport's popularity grows.", time: "9h ago", link: "https://www.icc-cricket.com" }
                     ],
                     us: [
-                        { title: "Federal Reserve mantiene tasas de interes", summary: "El banco central mantiene sin cambios las tasas en medio de la incertidumbre economica.", time: "1 hora atras", link: "https://www.cnbc.com/2024/05/10/fed-keeps-rates-steady.html" },
-                        { title: "Ley de infraestructura impulsa la economia", summary: "Nuevos datos revelan creacion de empleo y modernizacion de obras.", time: "3 horas atras", link: "https://www.wsj.com/articles/infrastructure-bill-economic-impact-2024" },
-                        { title: "Sector tecnologico lidera el rally bursatil", summary: "Los indices principales suben por fuertes reportes de ganancias.", time: "5 horas atras", link: "https://www.nasdaq.com/articles/tech-stocks-lead-market-rally" },
-                        { title: "Objetivos de independencia energetica ganan apoyo", summary: "El Congreso avanza legislacion para impulsar la produccion domestica de energia.", time: "7 horas atras", link: "https://www.politico.com/news/2024/05/10/energy-independence-bill-00000000" },
-                        { title: "Mercado de vivienda muestra signos de estabilizacion", summary: "Datos inmobiliarios indican moderacion en la volatilidad de precios.", time: "9 horas atras", link: "https://www.cnn.com/2024/05/10/housing-market-stabilization/index.html" }
+                        { title: "Federal Reserve keeps interest rates steady", summary: "The central bank holds rates amid economic uncertainty.", time: "1h ago", link: "https://www.cnbc.com/2024/05/10/fed-keeps-rates-steady.html" },
+                        { title: "Infrastructure bill boosts the economy", summary: "New data show job creation and modernization of public works.", time: "3h ago", link: "https://www.wsj.com/articles/infrastructure-bill-economic-impact-2024" },
+                        { title: "Tech sector leads stock market rally", summary: "Major indexes rise on strong earnings reports.", time: "5h ago", link: "https://www.nasdaq.com/articles/tech-stocks-lead-market-rally" },
+                        { title: "Energy independence goals gain support", summary: "Congress advances legislation to spur domestic production.", time: "7h ago", link: "https://www.politico.com/news/2024/05/10/energy-independence-bill-00000000" },
+                        { title: "Housing market shows signs of stabilization", summary: "Real estate data indicates moderating price volatility.", time: "9h ago", link: "https://www.cnn.com/2024/05/10/housing-market-stabilization/index.html" }
                     ],
                     costaRica: [
                         { title: "Inversion extranjera directa alcanza maximo historico", summary: "El pais capta niveles record de capital, segun datos oficiales.", time: "1 hora atras", link: "https://www.nacion.com/economia/inversion-extranjera-directa-alcanza-maximo-historico" },
@@ -1524,17 +1579,30 @@
                         { title: "Sector turismo se recupera con fuerza", summary: "La llegada de visitantes se acerca a niveles prepandemia.", time: "5 horas atras", link: "https://www.elfinancierocr.com/negocios/sector-turismo-se-recupera-con-fuerza-este-ano" },
                         { title: "Precios del cafe costarricense suben en mercados internacionales", summary: "Productores locales celebran el alza en las exportaciones.", time: "7 horas atras", link: "https://www.nacion.com/economia/agro/precios-del-cafe-costarricense-suben-en-mercados" },
                         { title: "Plan fiscal reactivara la economia en 2024", summary: "Analistas prev en impacto positivo sobre la inversion y el empleo.", time: "9 horas atras", link: "https://www.larepublica.net/noticia/plan-fiscal-reactivara-la-economia-en-2024" }
+                    ],
+                    costaRicaSports: [
+                        { title: "Seleccion tica se prepara para la Copa Oro", summary: "La convocatoria incluye jovenes promesas del futbol.", time: "2 horas atras", link: "https://www.fedefutbol.com" },
+                        { title: "Final del campeonato local atrae a miles", summary: "Los aficionados llenan el estadio para apoyar a sus equipos.", time: "4 horas atras", link: "https://www.nacion.com" },
+                        { title: "Surfistas compiten en playa Jaco", summary: "Evento internacional de surf reune a atletas de todo el mundo.", time: "6 horas atras", link: "https://www.crsurf.com" },
+                        { title: "Ciclista costarricense gana prueba internacional", summary: "El deportista destaca en importante vuelta ciclística.", time: "8 horas atras", link: "https://www.crciclismo.com" },
+                        { title: "Equipo juvenil de voleibol celebra titulo nacional", summary: "Los jovenes atletas logran un campeonato historico.", time: "10 horas atras", link: "https://www.fecovol.co.cr" }
                     ]
                 };
 
                 // Update World News
                 updateNewsSection('world-news-container', newsData.world);
-                
+
                 // Update US News
                 updateNewsSection('us-news-container', newsData.us);
-                
+
+                // Update World Sports News
+                updateNewsSection('world-sports-news-container', newsData.worldSports);
+
                 // Update Costa Rica News
                 updateNewsSection('costa-rica-news-container', newsData.costaRica);
+
+                // Update Costa Rica Sports News
+                updateNewsSection('costa-rica-sports-news-container', newsData.costaRicaSports);
                 
             } catch (error) {
                 console.error('Error loading news data:', error);
