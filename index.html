@@ -271,17 +271,23 @@
 
         .metric-table th,
         .metric-table td {
-            padding: 8px 12px;
+            padding: 6px 8px;
             border-bottom: 1px solid #eee;
         }
 
         .metric-table th {
             text-align: left;
             background: #f8f9fa;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #666;
+        }
+
+        .range-cell {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
         }
 
         /* NFT Grid */
@@ -469,6 +475,10 @@
             border-color: #333;
         }
 
+        body.dark-theme .range-cell {
+            color: #ccc;
+        }
+
         /* Health Indicator Styles */
         .health-indicator {
             font-size: 0.8rem;
@@ -584,24 +594,36 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Debt-to-GDP Ratio</td>
                         <td><span class="metric-value" id="debt-value">Loading...</span></td>
                         <td><span class="metric-change" id="debt-change">--</span></td>
                         <td><span class="health-indicator" id="debt-health">--</span></td>
+                        <td class="range-cell" id="debt-low">--</td>
+                        <td class="range-cell" id="debt-normal">--</td>
+                        <td class="range-cell" id="debt-high">--</td>
                     </tr>
                     <tr>
                         <td>Private Credit Growth</td>
                         <td><span class="metric-value" id="creditgrowth-value">Loading...</span></td>
                         <td><span class="metric-change" id="creditgrowth-change">--</span></td>
                         <td><span class="health-indicator" id="creditgrowth-health">--</span></td>
+                        <td class="range-cell" id="creditgrowth-low">--</td>
+                        <td class="range-cell" id="creditgrowth-normal">--</td>
+                        <td class="range-cell" id="creditgrowth-high">--</td>
                     </tr>
                     <tr>
                         <td>Debt Service Ratio</td>
                         <td><span class="metric-value" id="debtservice-value">Loading...</span></td>
                         <td><span class="metric-change" id="debtservice-change">--</span></td>
                         <td><span class="health-indicator" id="debtservice-health">--</span></td>
+                        <td class="range-cell" id="debtservice-low">--</td>
+                        <td class="range-cell" id="debtservice-normal">--</td>
+                        <td class="range-cell" id="debtservice-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -616,30 +638,45 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Short-Term Rate</td>
                         <td><span class="metric-value" id="shortrate-value">Loading...</span></td>
                         <td><span class="metric-change" id="shortrate-change">--</span></td>
                         <td><span class="health-indicator" id="shortrate-health">--</span></td>
+                        <td class="range-cell" id="shortrate-low">--</td>
+                        <td class="range-cell" id="shortrate-normal">--</td>
+                        <td class="range-cell" id="shortrate-high">--</td>
                     </tr>
                     <tr>
                         <td>Long-Term Yield</td>
                         <td><span class="metric-value" id="longrate-value">Loading...</span></td>
                         <td><span class="metric-change" id="longrate-change">--</span></td>
                         <td><span class="health-indicator" id="longrate-health">--</span></td>
+                        <td class="range-cell" id="longrate-low">--</td>
+                        <td class="range-cell" id="longrate-normal">--</td>
+                        <td class="range-cell" id="longrate-high">--</td>
                     </tr>
                     <tr>
                         <td>Yield Curve Spread</td>
                         <td><span class="metric-value" id="yieldcurve-value">Loading...</span></td>
                         <td><span class="metric-change" id="yieldcurve-change">--</span></td>
                         <td><span class="health-indicator" id="yieldcurve-health">--</span></td>
+                        <td class="range-cell" id="yieldcurve-low">--</td>
+                        <td class="range-cell" id="yieldcurve-normal">--</td>
+                        <td class="range-cell" id="yieldcurve-high">--</td>
                     </tr>
                     <tr>
                         <td>30-Year Mortgage Rate</td>
                         <td><span class="metric-value" id="mortgage-value">Loading...</span></td>
                         <td><span class="metric-change" id="mortgage-change">--</span></td>
                         <td><span class="health-indicator" id="mortgage-health">--</span></td>
+                        <td class="range-cell" id="mortgage-low">--</td>
+                        <td class="range-cell" id="mortgage-normal">--</td>
+                        <td class="range-cell" id="mortgage-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -654,18 +691,27 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>M2 Money Growth</td>
                         <td><span class="metric-value" id="m2growth-value">Loading...</span></td>
                         <td><span class="metric-change" id="m2growth-change">--</span></td>
                         <td><span class="health-indicator" id="m2growth-health">--</span></td>
+                        <td class="range-cell" id="m2growth-low">--</td>
+                        <td class="range-cell" id="m2growth-normal">--</td>
+                        <td class="range-cell" id="m2growth-high">--</td>
                     </tr>
                     <tr>
                         <td>Central Bank Balance</td>
                         <td><span class="metric-value" id="balancesheet-value">Loading...</span></td>
                         <td><span class="metric-change" id="balancesheet-change">--</span></td>
                         <td><span class="health-indicator" id="balancesheet-health">--</span></td>
+                        <td class="range-cell" id="balancesheet-low">--</td>
+                        <td class="range-cell" id="balancesheet-normal">--</td>
+                        <td class="range-cell" id="balancesheet-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -680,18 +726,27 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Inflation Rate (YoY)</td>
                         <td><span class="metric-value" id="inflation-value">Loading...</span></td>
                         <td><span class="metric-change" id="inflation-change">--</span></td>
                         <td><span class="health-indicator" id="inflation-health">--</span></td>
+                        <td class="range-cell" id="inflation-low">--</td>
+                        <td class="range-cell" id="inflation-normal">--</td>
+                        <td class="range-cell" id="inflation-high">--</td>
                     </tr>
                     <tr>
                         <td>Inflation Expectations</td>
                         <td><span class="metric-value" id="inflationexpect-value">Loading...</span></td>
                         <td><span class="metric-change" id="inflationexpect-change">--</span></td>
                         <td><span class="health-indicator" id="inflationexpect-health">--</span></td>
+                        <td class="range-cell" id="inflationexpect-low">--</td>
+                        <td class="range-cell" id="inflationexpect-normal">--</td>
+                        <td class="range-cell" id="inflationexpect-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -706,24 +761,36 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Real GDP Growth Rate</td>
                         <td><span class="metric-value" id="gdp-value">Loading...</span></td>
                         <td><span class="metric-change" id="gdp-change">--</span></td>
                         <td><span class="health-indicator" id="gdp-health">--</span></td>
+                        <td class="range-cell" id="gdp-low">--</td>
+                        <td class="range-cell" id="gdp-normal">--</td>
+                        <td class="range-cell" id="gdp-high">--</td>
                     </tr>
                     <tr>
                         <td>PMI</td>
                         <td><span class="metric-value" id="pmi-value">Loading...</span></td>
                         <td><span class="metric-change" id="pmi-change">--</span></td>
                         <td><span class="health-indicator" id="pmi-health">--</span></td>
+                        <td class="range-cell" id="pmi-low">--</td>
+                        <td class="range-cell" id="pmi-normal">--</td>
+                        <td class="range-cell" id="pmi-high">--</td>
                     </tr>
                     <tr>
                         <td>Industrial Production</td>
                         <td><span class="metric-value" id="industrialprod-value">Loading...</span></td>
                         <td><span class="metric-change" id="industrialprod-change">--</span></td>
                         <td><span class="health-indicator" id="industrialprod-health">--</span></td>
+                        <td class="range-cell" id="industrialprod-low">--</td>
+                        <td class="range-cell" id="industrialprod-normal">--</td>
+                        <td class="range-cell" id="industrialprod-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -738,30 +805,45 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Unemployment Rate</td>
                         <td><span class="metric-value" id="unemployment-value">Loading...</span></td>
                         <td><span class="metric-change" id="unemployment-change">--</span></td>
                         <td><span class="health-indicator" id="unemployment-health">--</span></td>
+                        <td class="range-cell" id="unemployment-low">--</td>
+                        <td class="range-cell" id="unemployment-normal">--</td>
+                        <td class="range-cell" id="unemployment-high">--</td>
                     </tr>
                     <tr>
                         <td>Labor Participation Rate</td>
                         <td><span class="metric-value" id="labor-value">Loading...</span></td>
                         <td><span class="metric-change" id="labor-change">--</span></td>
                         <td><span class="health-indicator" id="labor-health">--</span></td>
+                        <td class="range-cell" id="labor-low">--</td>
+                        <td class="range-cell" id="labor-normal">--</td>
+                        <td class="range-cell" id="labor-high">--</td>
                     </tr>
                     <tr>
                         <td>Wage Growth</td>
                         <td><span class="metric-value" id="wagegrowth-value">Loading...</span></td>
                         <td><span class="metric-change" id="wagegrowth-change">--</span></td>
                         <td><span class="health-indicator" id="wagegrowth-health">--</span></td>
+                        <td class="range-cell" id="wagegrowth-low">--</td>
+                        <td class="range-cell" id="wagegrowth-normal">--</td>
+                        <td class="range-cell" id="wagegrowth-high">--</td>
                     </tr>
                     <tr>
                         <td>Wealth Inequality (Gini)</td>
                         <td><span class="metric-value" id="wealth-value">Loading...</span></td>
                         <td><span class="metric-change" id="wealth-change">--</span></td>
                         <td><span class="health-indicator" id="wealth-health">--</span></td>
+                        <td class="range-cell" id="wealth-low">--</td>
+                        <td class="range-cell" id="wealth-normal">--</td>
+                        <td class="range-cell" id="wealth-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -776,24 +858,36 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>S&amp;P 500 Index</td>
                         <td><span class="metric-value" id="stockindex-value">Loading...</span></td>
                         <td><span class="metric-change" id="stockindex-change">--</span></td>
                         <td><span class="health-indicator" id="stockindex-health">--</span></td>
+                        <td class="range-cell" id="stockindex-low">--</td>
+                        <td class="range-cell" id="stockindex-normal">--</td>
+                        <td class="range-cell" id="stockindex-high">--</td>
                     </tr>
                     <tr>
                         <td>Real Estate Prices</td>
                         <td><span class="metric-value" id="realestate-value">Loading...</span></td>
                         <td><span class="metric-change" id="realestate-change">--</span></td>
                         <td><span class="health-indicator" id="realestate-health">--</span></td>
+                        <td class="range-cell" id="realestate-low">--</td>
+                        <td class="range-cell" id="realestate-normal">--</td>
+                        <td class="range-cell" id="realestate-high">--</td>
                     </tr>
                     <tr>
                         <td>Credit Spread Risk</td>
                         <td><span class="metric-value" id="credit-value">Loading...</span></td>
                         <td><span class="metric-change" id="credit-change">--</span></td>
                         <td><span class="health-indicator" id="credit-health">--</span></td>
+                        <td class="range-cell" id="credit-low">--</td>
+                        <td class="range-cell" id="credit-normal">--</td>
+                        <td class="range-cell" id="credit-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -808,24 +902,36 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Current Account</td>
                         <td><span class="metric-value" id="currentaccount-value">Loading...</span></td>
                         <td><span class="metric-change" id="currentaccount-change">--</span></td>
                         <td><span class="health-indicator" id="currentaccount-health">--</span></td>
+                        <td class="range-cell" id="currentaccount-low">--</td>
+                        <td class="range-cell" id="currentaccount-normal">--</td>
+                        <td class="range-cell" id="currentaccount-high">--</td>
                     </tr>
                     <tr>
                         <td>FX Reserves</td>
                         <td><span class="metric-value" id="reserves-value">Loading...</span></td>
                         <td><span class="metric-change" id="reserves-change">--</span></td>
                         <td><span class="health-indicator" id="reserves-health">--</span></td>
+                        <td class="range-cell" id="reserves-low">--</td>
+                        <td class="range-cell" id="reserves-normal">--</td>
+                        <td class="range-cell" id="reserves-high">--</td>
                     </tr>
                     <tr>
                         <td>Currency Strength</td>
                         <td><span class="metric-value" id="currency-value">Loading...</span></td>
                         <td><span class="metric-change" id="currency-change">--</span></td>
                         <td><span class="health-indicator" id="currency-health">--</span></td>
+                        <td class="range-cell" id="currency-low">--</td>
+                        <td class="range-cell" id="currency-normal">--</td>
+                        <td class="range-cell" id="currency-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -840,12 +946,18 @@
                         <th>Current</th>
                         <th>Change</th>
                         <th>Health</th>
+                        <th>Low</th>
+                        <th>Normal</th>
+                        <th>High</th>
                     </tr>
                     <tr>
                         <td>Fiscal Balance</td>
                         <td><span class="metric-value" id="fiscalbalance-value">Loading...</span></td>
                         <td><span class="metric-change" id="fiscalbalance-change">--</span></td>
                         <td><span class="health-indicator" id="fiscalbalance-health">--</span></td>
+                        <td class="range-cell" id="fiscalbalance-low">--</td>
+                        <td class="range-cell" id="fiscalbalance-normal">--</td>
+                        <td class="range-cell" id="fiscalbalance-high">--</td>
                     </tr>
                 </table>
             </div>
@@ -1381,6 +1493,24 @@
             return `${sign}${change.toFixed(2)}% ${arrow}`;
         }
 
+        function setRangeCells(key, thresholds, reverse) {
+            const lowEl = document.getElementById(`${key}-low`);
+            const normalEl = document.getElementById(`${key}-normal`);
+            const highEl = document.getElementById(`${key}-high`);
+
+            if (!lowEl || !normalEl || !highEl || !thresholds) return;
+
+            if (reverse) {
+                lowEl.textContent = `≤ ${thresholds.good}`;
+                normalEl.textContent = `${thresholds.good}-${thresholds.warning}`;
+                highEl.textContent = `> ${thresholds.warning}`;
+            } else {
+                lowEl.textContent = `< ${thresholds.warning}`;
+                normalEl.textContent = `${thresholds.warning}-${thresholds.good}`;
+                highEl.textContent = `≥ ${thresholds.good}`;
+            }
+        }
+
         async function fetchFredData(seriesId, limit = 10) {
             const cacheKey = `${seriesId}_${Date.now()}`;
             
@@ -1550,6 +1680,8 @@
                         const healthStatus = getHealthStatus(dataPoint.value, indicator.thresholds, isReverse);
                         healthElement.textContent = getHealthLabel(healthStatus);
                         healthElement.className = `health-indicator ${healthStatus}`;
+
+                        setRangeCells(key, indicator.thresholds, isReverse);
                     }
                 });
 
