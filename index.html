@@ -1472,8 +1472,10 @@
 
         // Economic data (keeping existing functionality)
         // Insert your FRED API key below or configure it via environment during build
-        const FRED_API_KEY = '<YOUR_FRED_KEY>';
-        const SPORTS_API_KEY = '<YOUR_SPORTS_API_KEY>';
+        const FRED_API_KEY = '<5da971100c2d6bb0da05e61eb190bb78>';
+        // Optional CoinMarketCap API key for enhanced crypto data
+        const CMC_API_KEY = '<0a4353e0-be6f-4054-8a70-d091098ee130>';
+        const SPORTS_API_KEY = '<123>';
         const SPORTS_API_URL = 'https://www.thesportsdb.com/api/v1/json';
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
         const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
@@ -1917,7 +1919,55 @@
             });
         }
 
-        async function loadCryptoData() {
+        function updateCryptoUI(coinMap, dataMap) {
+            Object.entries(coinMap).forEach(([key, id]) => {
+                const coin = dataMap[id] || {};
+                const priceElement = document.getElementById(`${key}-price`);
+                if (priceElement) {
+                    if (typeof coin.current_price === 'number') {
+                        const price = coin.current_price;
+                        if (key === 'wmtx' || key === 'mntx') {
+                            priceElement.textContent = price.toFixed(4);
+                        } else {
+                            priceElement.textContent = price.toLocaleString();
+                        }
+                    } else {
+                        priceElement.textContent = 'N/A';
+                    }
+                    priceElement.classList.remove('loading');
+                }
+
+                const changes = {
+                    '24h': coin.price_change_percentage_24h_in_currency,
+                    '30d': coin.price_change_percentage_30d_in_currency,
+                    'ytd': coin.price_change_percentage_1y_in_currency
+                };
+
+                Object.keys(changes).forEach(period => {
+                    const value = changes[period];
+                    const changeElement = document.getElementById(`${key}-${period}`);
+                    if (changeElement) {
+                        if (typeof value === 'number') {
+                            const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
+                            changeElement.textContent = `${period}: ${formatChange(value, trend)}`;
+                            changeElement.className = `metric-change ${trend}`;
+                        } else {
+                            changeElement.textContent = `${period}: N/A`;
+                            changeElement.className = 'metric-change neutral';
+                        }
+                    }
+                });
+
+                if (key === 'wmtx' || key === 'mntx') {
+                    const volEl = document.getElementById(`${key}-volume`);
+                    if (volEl && typeof coin.total_volume === 'number') volEl.textContent = coin.total_volume.toLocaleString();
+                    const rankEl = document.getElementById(`${key}-rank`);
+                    if (rankEl && coin.market_cap_rank) rankEl.textContent = `#${coin.market_cap_rank}`;
+                }
+            });
+        }
+
+        async function loadCryptoDataFromCoinGecko() {
             const coinMap = {
                 btc: 'bitcoin',
                 eth: 'ethereum',
@@ -1933,79 +1983,12 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 const coins = await response.json();
 
-                if (!Array.isArray(coins) || coins.length === 0) {
-                    console.error('CoinGecko API returned no data for ids:', ids);
-                }
-
                 const dataMap = {};
                 coins.forEach(c => {
-                    if (!c.id || typeof c.current_price !== 'number' ||
-                        c.price_change_percentage_24h_in_currency === undefined ||
-                        c.price_change_percentage_30d_in_currency === undefined ||
-                        c.price_change_percentage_1y_in_currency === undefined) {
-                        console.error('Coin data missing fields:', c);
-                    }
                     dataMap[c.id] = c;
                 });
 
-                Object.entries(coinMap).forEach(([key, id]) => {
-                    const coin = dataMap[id];
-                    const priceElement = document.getElementById(`${key}-price`);
-                    if (priceElement) {
-                        if (coin && typeof coin.current_price === 'number') {
-                            const price = coin.current_price;
-                            if (key === 'wmtx' || key === 'mntx') {
-                                priceElement.textContent = price.toFixed(4);
-                            } else {
-                                priceElement.textContent = price.toLocaleString();
-                            }
-                        } else {
-                            priceElement.textContent = 'N/A';
-                        }
-                        priceElement.classList.remove('loading');
-                    }
-
-                    const changes = {
-                        '24h': coin.price_change_percentage_24h_in_currency,
-                        '30d': coin.price_change_percentage_30d_in_currency,
-                        'ytd': coin.price_change_percentage_1y_in_currency
-                    };
-
-                    Object.keys(changes).forEach(period => {
-                        const value = changes[period];
-                        const changeElement = document.getElementById(`${key}-${period}`);
-                        if (changeElement) {
-                            if (typeof value === 'number') {
-                                const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
-                                changeElement.textContent = `${period}: ${formatChange(value, trend)}`;
-                                changeElement.className = `metric-change ${trend}`;
-                            } else {
-                                changeElement.textContent = `${period}: N/A`;
-                                changeElement.className = 'metric-change neutral';
-                            }
-                        }
-                    });
-                    if (key === "wmtx" || key === "mntx") {
-                        const extraPrice = document.getElementById(`${key}-price`);
-                        if (extraPrice) {
-                            extraPrice.textContent = coin.current_price.toFixed(4);
-                            extraPrice.classList.remove("loading");
-                        }
-                        ["24h","30d","ytd"].forEach(p => {
-                            const val = changes[p];
-                            const el = document.getElementById(`${key}-${p}`);
-                            if (el && typeof val === "number") {
-                                const t = val > 0 ? "positive" : val < 0 ? "negative" : "neutral";
-                                el.textContent = `${p}: ${formatChange(val, t)}`;
-                                el.className = `metric-change ${t}`;
-                            }
-                        });
-                        const volEl = document.getElementById(`${key}-volume`);
-                        if (volEl) volEl.textContent = coin.total_volume.toLocaleString();
-                        const rankEl = document.getElementById(`${key}-rank`);
-                        if (rankEl) rankEl.textContent = `#${coin.market_cap_rank}`;
-                    }
-                });
+                updateCryptoUI(coinMap, dataMap);
 
                 const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
                 if (cryptoUpdateEl) {
@@ -2056,56 +2039,60 @@
                     }
                 };
 
-                Object.entries(coinMap).forEach(([key, id]) => {
-                    const coin = fallbackData[id];
-                    const priceEl = document.getElementById(`${key}-price`);
-                    if (priceEl) {
-                        if (coin && typeof coin.current_price === 'number') {
-                            const price = coin.current_price;
-                            if (key === 'wmtx' || key === 'mntx') {
-                                priceEl.textContent = price.toFixed(4);
-                            } else {
-                                priceEl.textContent = price.toLocaleString();
-                            }
-                        } else {
-                            priceEl.textContent = 'N/A';
-                        }
-                        priceEl.classList.remove('loading');
-                    }
-
-                    const changes = {
-                        '24h': coin.price_change_percentage_24h_in_currency,
-                        '30d': coin.price_change_percentage_30d_in_currency,
-                        'ytd': coin.price_change_percentage_1y_in_currency
-                    };
-
-                    Object.keys(changes).forEach(period => {
-                        const value = changes[period];
-                        const changeEl = document.getElementById(`${key}-${period}`);
-                        if (changeEl) {
-                            if (typeof value === 'number') {
-                                const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
-                                changeEl.textContent = `${period}: ${formatChange(value, trend)}`;
-                                changeEl.className = `metric-change ${trend}`;
-                            } else {
-                                changeEl.textContent = `${period}: N/A`;
-                                changeEl.className = 'metric-change neutral';
-                            }
-                        }
-                    });
-
-                    if (key === 'wmtx' || key === 'mntx') {
-                        const volEl = document.getElementById(`${key}-volume`);
-                        if (volEl) volEl.textContent = coin.total_volume.toLocaleString();
-                        const rankEl = document.getElementById(`${key}-rank`);
-                        if (rankEl) rankEl.textContent = `#${coin.market_cap_rank}`;
-                    }
-                });
+                updateCryptoUI(coinMap, fallbackData);
                 const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
                 if (cryptoUpdateEl) {
                     cryptoUpdateEl.textContent = 'Last updated: offline data';
                 }
             }
+        }
+        async function loadCryptoDataFromCMC() {
+            const coinMap = {
+                btc: 'bitcoin',
+                eth: 'ethereum',
+                ada: 'cardano',
+                wmtx: 'world-mobile-token',
+                mntx: 'minutes-network'
+            };
+
+            const slugs = Object.values(coinMap).join(',');
+            const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?slug=${slugs}&convert=USD`;
+            const response = await fetch(url, {
+                headers: { 'X-CMC_PRO_API_KEY': CMC_API_KEY }
+            });
+            if (!response.ok) throw new Error('Network response was not ok');
+            const json = await response.json();
+            const dataMap = {};
+            Object.values(json.data || {}).forEach(c => {
+                const quote = c.quote && c.quote.USD;
+                if (quote) {
+                    dataMap[c.slug] = {
+                        current_price: quote.price,
+                        price_change_percentage_24h_in_currency: quote.percent_change_24h,
+                        price_change_percentage_30d_in_currency: quote.percent_change_30d,
+                        price_change_percentage_1y_in_currency: quote.percent_change_1y || quote.percent_change_365d,
+                        total_volume: quote.volume_24h,
+                        market_cap_rank: c.cmc_rank
+                    };
+                }
+            });
+
+            updateCryptoUI(coinMap, dataMap);
+            const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
+            if (cryptoUpdateEl) {
+                cryptoUpdateEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+            }
+        }
+        async function loadCryptoData() {
+            if (CMC_API_KEY) {
+                try {
+                    await loadCryptoDataFromCMC();
+                    return;
+                } catch (err) {
+                    console.error('CMC load failed, falling back to CoinGecko', err);
+                }
+            }
+            await loadCryptoDataFromCoinGecko();
         }
 async function loadWorldMobileStats() {
             try {
