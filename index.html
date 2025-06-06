@@ -368,6 +368,18 @@
             font-size: 0.75rem;
             color: #999;
         }
+        .sports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .sport-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -536,6 +548,10 @@
             <a href="#" class="nav-item" data-section="news">
                 <div class="nav-item-icon">📰</div>
                 News
+            </a>
+            <a href="#" class="nav-item" data-section="sports">
+                <div class="nav-item-icon">🏅</div>
+                Sports
             </a>
             <a href="#" class="nav-item" data-section="climate">
                 <div class="nav-item-icon">🌡️</div>
@@ -996,7 +1012,6 @@
                 <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
                     🏅 World Sports News
                 </h3>
-                <div class="news-grid" id="world-sports-news-container">
                     <div class="news-card">
                         <div class="news-image"></div>
                         <div class="news-content">
@@ -1030,7 +1045,6 @@
                 <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
                     🏆 Costa Rica Sports News
                 </h3>
-                <div class="news-grid" id="costa-rica-sports-news-container">
                     <div class="news-card">
                         <div class="news-image"></div>
                         <div class="news-content">
@@ -1042,6 +1056,31 @@
                 </div>
             </div>
         </div>
+        <!-- Sports Section -->
+        <div class="content-section" id="sports">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Sports</h2>
+                    <p class="section-subtitle">Scores of the day, upcoming matches, and news</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 class="subsection-title">Scores of the Day</h3>
+                <div class="sports-grid" id="sports-scores-container">Loading...</div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 class="subsection-title">Upcoming Matches</h3>
+                <div class="sports-grid" id="sports-upcoming-container">Loading...</div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <h3 class="subsection-title">Related News</h3>
+                <div class="news-grid" id="sports-news-container">Loading...</div>
+            </div>
+        </div>
+
 
         <!-- Digital Assets Section -->
         <div class="content-section" id="digital-assets">
@@ -1288,17 +1327,20 @@
             loadEconomicData();
             loadWeatherData();
             loadNewsData();
+             loadSportsData();
             loadCryptoData();
             
             loadWorldMobileStats();
             // Auto-refresh data every 5 minutes
             setInterval(() => {
                 loadEconomicData();
+                 loadSportsData();
                 loadWeatherData();
                 loadCryptoData();
                 loadWorldMobileStats();
             }, 5 * 60 * 1000);
             
+             setInterval(loadSportsData, 15 * 60 * 1000);
             // Auto-refresh news every 10 minutes
             setInterval(loadNewsData, 10 * 60 * 1000);
         });
@@ -1642,13 +1684,6 @@
                         { title: "Renewable energy investments hit record levels", summary: "Solar and wind projects secure unprecedented funding.", time: "8h ago", link: "https://www.iea.org" },
                         { title: "Global health initiative launches new vaccine program", summary: "WHO expands immunization coverage in developing nations.", time: "10h ago", link: "https://www.who.int" }
                     ],
-                    worldSports: [
-                        { title: "Olympic committee announces 2032 host city", summary: "The selected venue prepares for major investments.", time: "1h ago", link: "https://www.olympics.com" },
-                        { title: "World Cup qualifiers deliver big upsets", summary: "Underdog teams surprise fans around the globe.", time: "3h ago", link: "https://www.fifa.com" },
-                        { title: "Top tennis star claims Grand Slam title", summary: "Victory marks the player's record-breaking win.", time: "5h ago", link: "https://www.atptour.com" },
-                        { title: "Marathon world record smashed", summary: "Runners celebrate historic achievement at major race.", time: "7h ago", link: "https://www.worldathletics.org" },
-                        { title: "International cricket league expands", summary: "New markets join as the sport's popularity grows.", time: "9h ago", link: "https://www.icc-cricket.com" }
-                    ],
                     us: [
                         { title: "Federal Reserve keeps interest rates steady", summary: "The central bank holds rates amid economic uncertainty.", time: "1h ago", link: "https://www.cnbc.com/2024/05/10/fed-keeps-rates-steady.html" },
                         { title: "Infrastructure bill boosts the economy", summary: "New data show job creation and modernization of public works.", time: "3h ago", link: "https://www.wsj.com/articles/infrastructure-bill-economic-impact-2024" },
@@ -1663,13 +1698,6 @@
                         { title: "Precios del cafe costarricense suben en mercados internacionales", summary: "Productores locales celebran el alza en las exportaciones.", time: "7 horas atras", link: "https://www.nacion.com/economia/agro/precios-del-cafe-costarricense-suben-en-mercados" },
                         { title: "Plan fiscal reactivara la economia en 2024", summary: "Analistas prev en impacto positivo sobre la inversion y el empleo.", time: "9 horas atras", link: "https://www.larepublica.net/noticia/plan-fiscal-reactivara-la-economia-en-2024" }
                     ],
-                    costaRicaSports: [
-                        { title: "Seleccion tica se prepara para la Copa Oro", summary: "La convocatoria incluye jovenes promesas del futbol.", time: "2 horas atras", link: "https://www.fedefutbol.com" },
-                        { title: "Final del campeonato local atrae a miles", summary: "Los aficionados llenan el estadio para apoyar a sus equipos.", time: "4 horas atras", link: "https://www.nacion.com" },
-                        { title: "Surfistas compiten en playa Jaco", summary: "Evento internacional de surf reune a atletas de todo el mundo.", time: "6 horas atras", link: "https://www.crsurf.com" },
-                        { title: "Ciclista costarricense gana prueba internacional", summary: "El deportista destaca en importante vuelta ciclística.", time: "8 horas atras", link: "https://www.crciclismo.com" },
-                        { title: "Equipo juvenil de voleibol celebra titulo nacional", summary: "Los jovenes atletas logran un campeonato historico.", time: "10 horas atras", link: "https://www.fecovol.co.cr" }
-                    ]
                 };
 
                 // Update World News
@@ -1679,13 +1707,11 @@
                 updateNewsSection('us-news-container', newsData.us);
 
                 // Update World Sports News
-                updateNewsSection('world-sports-news-container', newsData.worldSports);
 
                 // Update Costa Rica News
                 updateNewsSection('costa-rica-news-container', newsData.costaRica);
 
                 // Update Costa Rica Sports News
-                updateNewsSection('costa-rica-sports-news-container', newsData.costaRicaSports);
                 
             } catch (error) {
                 console.error('Error loading news data:', error);
@@ -1711,6 +1737,80 @@
         }
 
         async function loadCryptoData() {
+        async function loadSportsData() {
+            const fallback = {
+                scores: [
+                    { event: "Arsenal 2-1 Chelsea", time: "FT" },
+                    { event: "Lakers 110-108 Celtics", time: "FT" },
+                    { event: "Djokovic d. Nadal 6-3 6-4", time: "Final" }
+                ],
+                upcoming: [
+                    { event: "Man City vs Liverpool", date: "Tomorrow 18:00" },
+                    { event: "Chiefs vs Eagles", date: "Sun 13:00" }
+                ],
+                news: [
+                    { title: "Star player injured before finals", summary: "Team uncertain for championship", time: "1h ago", link: "#" },
+                    { title: "Transfer rumors heat up", summary: "Clubs prepare big offers", time: "3h ago", link: "#" }
+                ]
+            };
+
+            try {
+                const resp = await fetch('https://raw.githubusercontent.com/openfootball/football.json/master/2019-20/en.1.json');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    fallback.scores = data.matches.slice(0, 3).map(m => ({
+                        event: `${m.team1} ${m.score.ft[0]}-${m.score.ft[1]} ${m.team2}`,
+                        time: m.date
+                    }));
+                    fallback.upcoming = data.matches.slice(3, 5).map(m => ({
+                        event: `${m.team1} vs ${m.team2}`,
+                        date: m.date
+                    }));
+                }
+            } catch (e) {
+                // fall back to static data
+            }
+
+            updateSportsScores(fallback.scores);
+            updateSportsUpcoming(fallback.upcoming);
+            updateSportsNews(fallback.news);
+        }
+
+        function updateSportsScores(games) {
+            const c = document.getElementById('sports-scores-container');
+            if (!c) return;
+            c.innerHTML = '';
+            games.forEach(g => {
+                const card = document.createElement('div');
+                card.className = 'sport-card';
+                card.textContent = `${g.event} (${g.time})`;
+                c.appendChild(card);
+            });
+        }
+
+        function updateSportsUpcoming(matches) {
+            const c = document.getElementById('sports-upcoming-container');
+            if (!c) return;
+            c.innerHTML = '';
+            matches.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'sport-card';
+                card.textContent = `${m.event} - ${m.date}`;
+                c.appendChild(card);
+            });
+        }
+
+        function updateSportsNews(items) {
+            const c = document.getElementById('sports-news-container');
+            if (!c) return;
+            c.innerHTML = '';
+            items.forEach(n => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `<div class="news-content"><h3>${n.title}</h3><p>${n.summary}</p><div class="news-meta">${n.time}</div></div>`;
+                c.appendChild(card);
+            });
+        }
             const coinMap = {
                 btc: 'bitcoin',
                 eth: 'ethereum',
