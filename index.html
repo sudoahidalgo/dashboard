@@ -2151,6 +2151,7 @@ async function loadMinutesNetworkStats() {
 async function loadSportsScores() {
         const container = document.getElementById('sports-scores-container');
         container.innerHTML = '';
+
         const today = new Date().toISOString().slice(0, 10);
         const leagues = [
             'FIFA World Cup',
@@ -2161,30 +2162,58 @@ async function loadSportsScores() {
             'French Open',
             'Roland Garros'
         ];
-        const sports = ['Soccer', 'Tennis', 'American Football'];
-        const allEvents = [];
+
+        const sports = [
+            { name: 'Soccer', emoji: '⚽' },
+            { name: 'American Football', emoji: '🏈' },
+            { name: 'Tennis', emoji: '🎾' }
+        ];
+
+        const eventsBySport = {};
+
         for (const sport of sports) {
+            eventsBySport[sport.name] = [];
             try {
-                const resp = await fetch(`${SPORTS_API_URL}/${SPORTS_API_KEY}/eventsday.php?d=${today}&s=${encodeURIComponent(sport)}`);
+                const resp = await fetch(`${SPORTS_API_URL}/${SPORTS_API_KEY}/eventsday.php?d=${today}&s=${encodeURIComponent(sport.name)}`);
                 const data = await resp.json();
                 const events = (data.events || []).filter(ev => leagues.includes(ev.strLeague));
-                allEvents.push(...events);
+                eventsBySport[sport.name].push(...events);
             } catch (e) {
-                console.error(`Error loading ${sport} scores`, e);
+                console.error(`Error loading ${sport.name} scores`, e);
             }
         }
-        if (!allEvents.length) {
-            container.textContent = 'No matches today';
-            return;
+
+        const now = new Date();
+        let hasEvents = false;
+
+        for (const sport of sports) {
+            const events = (eventsBySport[sport.name] || []).filter(ev => {
+                const ts = ev.strTimestamp || `${ev.dateEvent}T${ev.strTime || '00:00:00'}Z`;
+                const date = ts ? new Date(ts) : null;
+                return date && date >= now;
+            });
+
+            if (!events.length) continue;
+
+            hasEvents = true;
+            const heading = document.createElement('h4');
+            heading.textContent = `${sport.emoji} ${sport.name}`;
+            heading.style.margin = '10px 0';
+            container.appendChild(heading);
+
+            events.forEach(event => {
+                const div = document.createElement('div');
+                div.className = 'news-card';
+                const score = event.intHomeScore && event.intAwayScore ? `${event.intHomeScore} - ${event.intAwayScore}` : 'vs';
+                const time = event.strTime ? event.strTime.slice(0,5) : '';
+                div.innerHTML = `<div class="news-content"><h3>${event.strEvent} ${score}</h3><div class="news-meta">${event.strLeague} • ${time}</div></div>`;
+                container.appendChild(div);
+            });
         }
-        allEvents.forEach(event => {
-            const div = document.createElement('div');
-            div.className = 'news-card';
-            const score = event.intHomeScore && event.intAwayScore ? `${event.intHomeScore} - ${event.intAwayScore}` : 'vs';
-            const time = event.strTime ? event.strTime.slice(0,5) : '';
-            div.innerHTML = `<div class="news-content"><h3>${event.strEvent} ${score}</h3><div class="news-meta">${event.strLeague} • ${time}</div></div>`;
-            container.appendChild(div);
-        });
+
+        if (!hasEvents) {
+            container.textContent = 'No upcoming matches today';
+        }
     }
     </script>
 </body>
