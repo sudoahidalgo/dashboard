@@ -2010,7 +2010,8 @@ async function loadWorldMobileStats() {
             { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/fr.1.json', name: 'Ligue 1' },
             { url: 'https://raw.githubusercontent.com/openfootball/football.json/master/2024-25/uefa.cl.json', name: 'Champions League' }
         ];
-        const today = new Date().toISOString().split('T')[0];
+        // Use the user's local timezone when comparing match dates
+        const today = new Date().toLocaleDateString('en-CA');
         const container = document.getElementById('sports-scores-container');
         container.innerHTML = '';
         let found = false;
