@@ -1718,14 +1718,17 @@
 
                 Object.entries(coinMap).forEach(([key, id]) => {
                     const coin = dataMap[id];
-                    if (!coin) return;
                     const priceElement = document.getElementById(`${key}-price`);
                     if (priceElement) {
-                        const price = coin.current_price;
-                        if (key === 'wmtx' || key === 'mntx') {
-                            priceElement.textContent = price.toFixed(4);
+                        if (coin && typeof coin.current_price === 'number') {
+                            const price = coin.current_price;
+                            if (key === 'wmtx' || key === 'mntx') {
+                                priceElement.textContent = price.toFixed(4);
+                            } else {
+                                priceElement.textContent = price.toLocaleString();
+                            }
                         } else {
-                            priceElement.textContent = price.toLocaleString();
+                            priceElement.textContent = 'N/A';
                         }
                         priceElement.classList.remove('loading');
                     }
@@ -1739,10 +1742,15 @@
                     Object.keys(changes).forEach(period => {
                         const value = changes[period];
                         const changeElement = document.getElementById(`${key}-${period}`);
-                        if (changeElement && typeof value === 'number') {
-                            const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
-                            changeElement.textContent = `${period}: ${formatChange(value, trend)}`;
-                            changeElement.className = `metric-change ${trend}`;
+                        if (changeElement) {
+                            if (typeof value === 'number') {
+                                const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
+                                changeElement.textContent = `${period}: ${formatChange(value, trend)}`;
+                                changeElement.className = `metric-change ${trend}`;
+                            } else {
+                                changeElement.textContent = `${period}: N/A`;
+                                changeElement.className = 'metric-change neutral';
+                            }
                         }
                     });
                 });
@@ -1753,6 +1761,20 @@
                 }
             } catch (error) {
                 console.error('Error loading crypto data:', error);
+                Object.keys(coinMap).forEach(key => {
+                    const priceEl = document.getElementById(`${key}-price`);
+                    if (priceEl) {
+                        priceEl.textContent = 'N/A';
+                        priceEl.classList.remove('loading');
+                    }
+                    ['24h','30d','ytd'].forEach(period => {
+                        const changeEl = document.getElementById(`${key}-${period}`);
+                        if (changeEl) {
+                            changeEl.textContent = `${period}: N/A`;
+                            changeEl.className = 'metric-change neutral';
+                        }
+                    });
+                });
                 const cryptoUpdateEl = document.getElementById('cryptoLastUpdated');
                 if (cryptoUpdateEl) {
                     cryptoUpdateEl.innerHTML = '<span style="color: #f44336;">Error loading data</span>';
