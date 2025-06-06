@@ -17,13 +17,6 @@ Provide your key in one of the following ways:
 
 If you use an automated build, create a script that reads `FRED_API_KEY` from the environment and replaces the placeholder before serving the page.
 
-For cryptocurrency prices the dashboard can use CoinMarketCap. Provide a CoinMarketCap API key in `index.html` via the `CMC_API_KEY` constant:
-
-```javascript
-const CMC_API_KEY = '<YOUR_CMC_KEY>'; // optional
-```
-
-If this key is not supplied the app will fall back to CoinGecko's public API.
 
 ## Running
 
