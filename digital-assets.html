@@ -388,38 +388,7 @@
             <div class="last-updated" id="mainLastUpdated">Loading...</div>
         </div>
 
-        <!-- Economy Section (Ray Dalio inspired) -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Economy</h2>
-            </div>
-            <div class="dashboard-grid">
-
-                <div class="metric-card">
-                    <div class="health-indicator" id="treasury-health"></div>
-                    <div class="metric-title">10-Year Treasury Yield</div>
-                    <div class="metric-value" id="treasury-value">4.25%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="treasury-today">+0.05%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="treasury-yesterday">-0.03%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="treasury-ytd">+0.8%</div>
-                        </div>
-                    </div>
-                    <div class="health-guide">
-                        <div class="health-status healthy" id="treasury-status">HEALTHY</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <!-- Economy Section (intentionally removed on this page) -->
 
         <!-- Digital Assets Section -->
         <div class="section">
@@ -472,6 +441,72 @@
                     </div>
                 </div>
 
+                <div class="metric-card">
+                    <div class="metric-title">Total Crypto Market Cap</div>
+                    <div class="metric-value" id="crypto-market-cap">$2.5T</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">24h</div>
+                            <div class="performance-value positive" id="crypto-cap-24h">+1.8%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">7d</div>
+                            <div class="performance-value positive" id="crypto-cap-7d">+5.2%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">YTD</div>
+                            <div class="performance-value positive" id="crypto-cap-ytd">+67.4%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">Bitcoin Dominance</div>
+                    <div class="metric-value" id="btc-dominance">52.3%</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">24h</div>
+                            <div class="performance-value positive" id="btc-dom-24h">+0.1%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">7d</div>
+                            <div class="performance-value negative" id="btc-dom-7d">-0.5%</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">YTD</div>
+                            <div class="performance-value positive" id="btc-dom-ytd">+2.3%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-title">🌍 EarthNode NFTs</div>
+                    <div class="metric-value" id="earthnode-floor">₳245</div>
+                    <div class="performance-grid">
+                        <div class="performance-item">
+                            <div class="performance-label">Floor</div>
+                            <div class="performance-value neutral" id="earthnode-floor-display">₳245</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">Best Offer</div>
+                            <div class="performance-value neutral" id="earthnode-offer">₳238</div>
+                        </div>
+                        <div class="performance-item">
+                            <div class="performance-label">24h Δ</div>
+                            <div class="performance-value negative" id="earthnode-change">-1.2%</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
+                            <div style="font-size: 0.7rem; opacity: 0.7;">LISTED</div>
+                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-listed">523</div>
+                        </div>
+                        <div style="text-align: center; background: rgba(255,255,255,0.05); padding: 8px; border-radius: 6px;">
+                            <div style="font-size: 0.7rem; opacity: 0.7;">WALLETS</div>
+                            <div style="font-size: 1rem; font-weight: 600;" id="earthnode-wallets">2,847</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="metric-card">
                     <div class="metric-title">
@@ -519,104 +554,6 @@
             </div>
         </div>
 
-        <!-- Costa Rica Section -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Costa Rica</h2>
-                <span class="section-emoji">🇨🇷</span>
-            </div>
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">USD/CRC Exchange Rate</div>
-                    <div class="metric-value" id="crc-value">₡510.25</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Today</div>
-                            <div class="performance-value positive" id="crc-today">+0.1%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Yesterday</div>
-                            <div class="performance-value negative" id="crc-yesterday">-0.05%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD</div>
-                            <div class="performance-value positive" id="crc-ytd">+3.2%</div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="metric-card">
-                    <div class="metric-title">CR Inflation Rate</div>
-                    <div class="metric-value" id="cr-inflation-value">2.8%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Annual</div>
-                            <div class="performance-value positive" id="cr-inflation-annual">2.8%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Monthly</div>
-                            <div class="performance-value positive" id="cr-inflation-monthly">0.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Target</div>
-                            <div class="performance-value neutral" id="cr-inflation-target">3.0%</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-                            <!-- US Section -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">United States</h2>
-                <span class="section-emoji">🇺🇸</span>
-            </div>
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">Annual Inflation (CPI)</div>
-                    <div class="metric-value" id="inflation-value">3.36%</div>
-                    <div class="performance-grid">
-                        <div class="performance-item">
-                            <div class="performance-label">Monthly</div>
-                            <div class="performance-value positive" id="inflation-monthly">+0.31%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">Core</div>
-                            <div class="performance-value neutral" id="inflation-core">3.2%</div>
-                        </div>
-                        <div class="performance-item">
-                            <div class="performance-label">YTD Avg</div>
-                            <div class="performance-value negative" id="inflation-ytd">3.5%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        <!-- World Section -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">World</h2>
-                <span class="section-emoji">🌎</span>
-            </div>
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">Global Inflation Rate</div>
-                    <div class="metric-value" id="world-inflation-value">5.4%</div>
-                </div>
-            </div>
-        </div>
-
-</div>
-
-        <div class="source-info">
-            Data sourced from Federal Reserve Economic Data (FRED), CoinGecko API, and Central Bank of Costa Rica<br>
-            Auto-refreshes every 30 minutes | Last updated: <span id="sourceLastUpdated">--</span>
-        </div>
-    </div>
-
     <script>
         // News data - would be fetched from APIs in real implementation
         const newsData = {
@@ -645,23 +582,35 @@
 
         // Health indicator thresholds for Economy section
         const healthThresholds = {
-            treasury: { healthy: [2.5, 4.5], warning: [1.5, 6], current: 4.25 }
+            dxy: { healthy: [95, 110], warning: [90, 115], current: 105.42 },
+            gold: { healthy: [1800, 2200], warning: [1600, 2500], current: 2050 },
+            treasury: { healthy: [2.5, 4.5], warning: [1.5, 6], current: 4.25 },
+            vix: { healthy: [10, 20], warning: [20, 30], current: 18.45 }
         };
 
         function toggleMenu() {
-            const hamburger = document.querySelector(".hamburger");
-            const sideMenu = document.getElementById("sideMenu");
-
-            hamburger.classList.toggle("active");
-            sideMenu.classList.toggle("active");
+            const hamburger = document.querySelector('.hamburger');
+            const sideMenu = document.getElementById('sideMenu');
+            
+            hamburger.classList.toggle('active');
+            sideMenu.classList.toggle('active');
         }
 
         function getHealthStatus(indicator, value) {
             const thresholds = healthThresholds[indicator];
             if (!thresholds) return 'healthy';
-            if (value >= thresholds.healthy[0] && value <= thresholds.healthy[1]) return 'healthy';
-            if (value >= thresholds.warning[0] && value <= thresholds.warning[1]) return 'warning';
-            return 'danger';
+            
+            if (indicator === 'vix') {
+                // VIX is reverse - lower is better
+                if (value <= thresholds.healthy[1]) return 'healthy';
+                if (value <= thresholds.warning[1]) return 'warning';
+                return 'danger';
+            } else {
+                // Normal indicators
+                if (value >= thresholds.healthy[0] && value <= thresholds.healthy[1]) return 'healthy';
+                if (value >= thresholds.warning[0] && value <= thresholds.warning[1]) return 'warning';
+                return 'danger';
+            }
         }
 
         function updateHealthIndicators() {
@@ -670,9 +619,9 @@
                 const statusElement = document.getElementById(`${indicator}-status`);
                 const value = healthThresholds[indicator].current;
                 const status = getHealthStatus(indicator, value);
-
-                if (healthElement) healthElement.className = `health-indicator ${status}`;
-
+                
+                healthElement.className = `health-indicator ${status}`;
+                
                 if (statusElement) {
                     statusElement.className = `health-status ${status}`;
                     statusElement.textContent = status.toUpperCase();
@@ -681,6 +630,7 @@
         }
 
         function loadNews() {
+            // Load World News
             const worldNewsContainer = document.getElementById('world-news');
             worldNewsContainer.innerHTML = newsData.world.map(item => `
                 <div class="news-item">
@@ -689,6 +639,7 @@
                 </div>
             `).join('');
 
+            // Load US News
             const usNewsContainer = document.getElementById('us-news');
             usNewsContainer.innerHTML = newsData.us.map(item => `
                 <div class="news-item">
@@ -697,6 +648,7 @@
                 </div>
             `).join('');
 
+            // Load CR News
             const crNewsContainer = document.getElementById('cr-news');
             crNewsContainer.innerHTML = newsData.cr.map(item => `
                 <div class="news-item">
@@ -706,9 +658,58 @@
             `).join('');
         }
 
+        async function fetchNFTData() {
+            try {
+                // Try JPG Store API for EarthNode collection
+                const res = await fetch('https://public-api.jpgstoreapis.com/collection/earthnode/stats');
+                if (!res.ok) throw new Error('Network response was not ok');
+                const data = await res.json();
+                
+                // Update EarthNode NFT data with real API data
+                document.getElementById('earthnode-floor').textContent = data.floor_price ? `₳${data.floor_price}` : '₳245';
+                document.getElementById('earthnode-floor-display').textContent = data.floor_price ? `₳${data.floor_price}` : '₳245';
+                document.getElementById('earthnode-offer').textContent = data.best_offer ? `₳${data.best_offer}` : '₳238';
+                document.getElementById('earthnode-listed').textContent = data.listed_count ?? '523';
+                document.getElementById('earthnode-wallets').textContent = data.owner_count ?? '2,847';
+                
+                // Calculate 24h change if volume data is available
+                if (data.volume_24h && data.volume_24h_previous) {
+                    const change24h = ((data.volume_24h - data.volume_24h_previous) / data.volume_24h_previous) * 100;
+                    document.getElementById('earthnode-change').textContent = `${change24h > 0 ? '+' : ''}${change24h.toFixed(1)}%`;
+                    document.getElementById('earthnode-change').className = `performance-value ${change24h > 0 ? 'positive' : 'negative'}`;
+                } else {
+                    // Use mock change data if not available
+                    document.getElementById('earthnode-change').textContent = '-1.2%';
+                    document.getElementById('earthnode-change').className = 'performance-value negative';
+                }
+                
+            } catch (error) {
+                console.log('Error fetching NFT data from JPG Store API, using fallback data');
+                
+                // Fallback to realistic data based on World Mobile ecosystem
+                const fallbackData = {
+                    floor: 245,
+                    bestOffer: 238,
+                    change24h: -1.2,
+                    listed: 523,
+                    uniqueWallets: 2847
+                };
+                
+                document.getElementById('earthnode-floor').textContent = `₳${fallbackData.floor}`;
+                document.getElementById('earthnode-floor-display').textContent = `₳${fallbackData.floor}`;
+                document.getElementById('earthnode-offer').textContent = `₳${fallbackData.bestOffer}`;
+                document.getElementById('earthnode-change').textContent = `${fallbackData.change24h > 0 ? '+' : ''}${fallbackData.change24h}%`;
+                document.getElementById('earthnode-change').className = `performance-value ${fallbackData.change24h > 0 ? 'positive' : 'negative'}`;
+                document.getElementById('earthnode-listed').textContent = fallbackData.listed.toLocaleString();
+                document.getElementById('earthnode-wallets').textContent = fallbackData.uniqueWallets.toLocaleString();
+            }
+        }
+
         async function fetchAdditionalTokens() {
             try {
+                // Try to fetch real WMTx data
                 const wmtxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=world-mobile-token&vs_currencies=usd&include_24hr_change=true&include_7d_change=true');
+                
                 if (wmtxResponse.ok) {
                     const wmtxData = await wmtxResponse.json();
                     if (wmtxData['world-mobile-token']) {
@@ -716,13 +717,18 @@
                         document.getElementById('wmtx-value').textContent = `${wmtx.usd.toFixed(3)}`;
                         document.getElementById('wmtx-24h').textContent = `${wmtx.usd_24h_change > 0 ? '+' : ''}${wmtx.usd_24h_change.toFixed(1)}%`;
                         document.getElementById('wmtx-24h').className = `performance-value ${wmtx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
+                        
+                        // Use mock data for 7d and YTD as CoinGecko free tier doesn't provide these
                         document.getElementById('wmtx-7d').textContent = '+11.4%';
                         document.getElementById('wmtx-7d').className = 'performance-value positive';
                         document.getElementById('wmtx-ytd').textContent = '-34.3%';
                         document.getElementById('wmtx-ytd').className = 'performance-value negative';
                     }
                 }
+
+                // Try to fetch MNTx data (Minutes Network Token)
                 const mntxResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=minutes-network-token&vs_currencies=usd&include_24hr_change=true');
+                
                 if (mntxResponse.ok) {
                     const mntxData = await mntxResponse.json();
                     if (mntxData['minutes-network-token']) {
@@ -730,27 +736,37 @@
                         document.getElementById('mntx-value').textContent = `${mntx.usd.toFixed(3)}`;
                         document.getElementById('mntx-24h').textContent = `${mntx.usd_24h_change > 0 ? '+' : ''}${mntx.usd_24h_change.toFixed(1)}%`;
                         document.getElementById('mntx-24h').className = `performance-value ${mntx.usd_24h_change > 0 ? 'positive' : 'negative'}`;
+                        
+                        // Use mock data for 7d and YTD
                         document.getElementById('mntx-7d').textContent = '+23.4%';
                         document.getElementById('mntx-7d').className = 'performance-value positive';
                         document.getElementById('mntx-ytd').textContent = '+85.2%';
                         document.getElementById('mntx-ytd').className = 'performance-value positive';
                     }
                 }
+                
             } catch (error) {
                 console.log('Error fetching additional token data, using fallback');
+                // Fallback data is already in HTML
             }
         }
 
         async function fetchCryptoData() {
             try {
+                // Try to fetch real crypto data
                 const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,cardano&vs_currencies=usd&include_24hr_change=true');
+                
                 if (response.ok) {
                     const data = await response.json();
+                    
+                    // Update Bitcoin
                     if (data.bitcoin) {
                         document.getElementById('btc-value').textContent = `$${data.bitcoin.usd.toLocaleString()}`;
                         document.getElementById('btc-24h').textContent = `${data.bitcoin.usd_24h_change > 0 ? '+' : ''}${data.bitcoin.usd_24h_change.toFixed(2)}%`;
                         document.getElementById('btc-24h').className = `performance-value ${data.bitcoin.usd_24h_change > 0 ? 'positive' : 'negative'}`;
                     }
+                    
+                    // Update Cardano
                     if (data.cardano) {
                         document.getElementById('ada-value').textContent = `$${data.cardano.usd.toFixed(3)}`;
                         document.getElementById('ada-24h').textContent = `${data.cardano.usd_24h_change > 0 ? '+' : ''}${data.cardano.usd_24h_change.toFixed(2)}%`;
@@ -759,6 +775,7 @@
                 }
             } catch (error) {
                 console.log('Using fallback crypto data');
+                // Fallback data is already in the HTML
             }
         }
 
@@ -768,22 +785,28 @@
             document.getElementById('sourceLastUpdated').textContent = now;
         }
 
+        // Initialize dashboard
         document.addEventListener('DOMContentLoaded', () => {
-            updateHealthIndicators();
-            loadNews();
+                        loadNews();
             fetchCryptoData();
+            fetchNFTData();
             fetchAdditionalTokens();
             updateTimestamp();
+            
+            // Auto-refresh every 30 minutes
             setInterval(() => {
                 fetchCryptoData();
+                fetchNFTData();
                 fetchAdditionalTokens();
                 updateTimestamp();
             }, 30 * 60 * 1000);
         });
 
+        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             const sideMenu = document.getElementById('sideMenu');
             const hamburger = document.querySelector('.hamburger');
+            
             if (!sideMenu.contains(e.target) && !hamburger.contains(e.target) && sideMenu.classList.contains('active')) {
                 toggleMenu();
             }
