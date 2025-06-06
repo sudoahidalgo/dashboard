@@ -1532,61 +1532,57 @@
         }
 
         async function loadCryptoData() {
-            const mockCrypto = {
-                btc: {
-                    price: 43250,
-                    change24H: { value: 2.4, trend: 'positive' },
-                    change30D: { value: -5.6, trend: 'negative' },
-                    changeYTD: { value: 120.1, trend: 'positive' }
-                },
-                eth: {
-                    price: 2650,
-                    change24H: { value: -1.2, trend: 'negative' },
-                    change30D: { value: 3.1, trend: 'positive' },
-                    changeYTD: { value: 90.4, trend: 'positive' }
-                },
-                ada: {
-                    price: 0.48,
-                    change24H: { value: 0.8, trend: 'positive' },
-                    change30D: { value: -2.1, trend: 'negative' },
-                    changeYTD: { value: 40.5, trend: 'positive' }
-                },
-                wmtx: {
-                    price: 0.1500,
-                    change24H: { value: 1.1, trend: 'positive' },
-                    change30D: { value: 4.2, trend: 'positive' },
-                    changeYTD: { value: 25.3, trend: 'positive' }
-                },
-                mntx: {
-                    price: 0.0500,
-                    change24H: { value: -0.5, trend: 'negative' },
-                    change30D: { value: 2.0, trend: 'positive' },
-                    changeYTD: { value: 10.1, trend: 'positive' }
-                }
+            const coinMap = {
+                btc: 'bitcoin',
+                eth: 'ethereum',
+                ada: 'cardano',
+                wmtx: 'world-mobile-token',
+                mntx: 'minutes-network'
             };
 
-            Object.keys(mockCrypto).forEach(crypto => {
-                const data = mockCrypto[crypto];
-                const priceElement = document.getElementById(`${crypto}-price`);
-                if (priceElement) {
-                    if (crypto === 'wmtx' || crypto === 'mntx') {
-                        priceElement.textContent = data.price.toFixed(4);
-                    } else {
-                        priceElement.textContent = `${data.price.toLocaleString()}`;
-                    }
-                    priceElement.classList.remove('loading');
-                }
+            try {
+                const ids = Object.values(coinMap).join(',');
+                const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&price_change_percentage=24h,30d,1y`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const coins = await response.json();
 
-                ['24h','30d','ytd'].forEach(period => {
-                    const changeElement = document.getElementById(`${crypto}-${period}`);
-                    const prop = `change${period.toUpperCase()}`;
-                    if (changeElement && data[prop]) {
-                        const info = data[prop];
-                        changeElement.textContent = `${period}: ${formatChange(info.value, info.trend)}`;
-                        changeElement.className = `metric-change ${info.trend}`;
+                const dataMap = {};
+                coins.forEach(c => dataMap[c.id] = c);
+
+                Object.entries(coinMap).forEach(([key, id]) => {
+                    const coin = dataMap[id];
+                    if (!coin) return;
+                    const priceElement = document.getElementById(`${key}-price`);
+                    if (priceElement) {
+                        const price = coin.current_price;
+                        if (key === 'wmtx' || key === 'mntx') {
+                            priceElement.textContent = price.toFixed(4);
+                        } else {
+                            priceElement.textContent = price.toLocaleString();
+                        }
+                        priceElement.classList.remove('loading');
                     }
+
+                    const changes = {
+                        '24h': coin.price_change_percentage_24h_in_currency,
+                        '30d': coin.price_change_percentage_30d_in_currency,
+                        'ytd': coin.price_change_percentage_1y_in_currency
+                    };
+
+                    Object.keys(changes).forEach(period => {
+                        const value = changes[period];
+                        const changeElement = document.getElementById(`${key}-${period}`);
+                        if (changeElement && typeof value === 'number') {
+                            const trend = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
+                            changeElement.textContent = `${period}: ${formatChange(value, trend)}`;
+                            changeElement.className = `metric-change ${trend}`;
+                        }
+                    });
                 });
-            });
+            } catch (error) {
+                console.error('Error loading crypto data:', error);
+            }
         }
     </script>
 </body>
