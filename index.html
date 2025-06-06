@@ -262,6 +262,11 @@
             color: #ef6c00;
         }
 
+        .metric-change.warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
         /* Metric Table */
         .metric-table {
             width: 100%;
@@ -1759,8 +1764,25 @@
                             const rainToday = daily.precipitation_sum[0];
                             document.getElementById('rain-forecast-value').textContent = `${rainToday} mm`;
                             document.getElementById('rain-forecast-value').classList.remove('loading');
-                            document.getElementById('rain-forecast-change').textContent = rainToday > 0 ? 'Rain expected' : 'No rain';
-                            document.getElementById('rain-forecast-change').className = `metric-change ${rainToday > 0 ? 'warning' : 'positive'}`;
+
+                            let rainLabel;
+                            let changeClass;
+                            if (rainToday === 0) {
+                                rainLabel = 'No rain';
+                                changeClass = 'positive';
+                            } else if (rainToday < 2) {
+                                rainLabel = 'Low rain expected';
+                                changeClass = 'positive';
+                            } else if (rainToday <= 10) {
+                                rainLabel = 'Normal rain expected';
+                                changeClass = 'neutral';
+                            } else {
+                                rainLabel = 'High rain expected';
+                                changeClass = 'warning';
+                            }
+
+                            document.getElementById('rain-forecast-change').textContent = rainLabel;
+                            document.getElementById('rain-forecast-change').className = `metric-change ${changeClass}`;
                         }
                         document.getElementById('forecast-today').textContent = `Today: ${Math.round(daily.temperature_2m_max[0])}°/${Math.round(daily.temperature_2m_min[0])}°`;
                         document.getElementById('forecast-tomorrow').textContent = `Tomorrow: ${Math.round(daily.temperature_2m_max[1])}°/${Math.round(daily.temperature_2m_min[1])}°`;
