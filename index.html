@@ -1364,13 +1364,13 @@
                     changeYTD: { value: 40.5, trend: 'positive' }
                 },
                 wmtx: {
-                    price: 0.15,
+                    price: 0.1500,
                     change24H: { value: 1.1, trend: 'positive' },
                     change30D: { value: 4.2, trend: 'positive' },
                     changeYTD: { value: 25.3, trend: 'positive' }
                 },
                 mntx: {
-                    price: 0.05,
+                    price: 0.0500,
                     change24H: { value: -0.5, trend: 'negative' },
                     change30D: { value: 2.0, trend: 'positive' },
                     changeYTD: { value: 10.1, trend: 'positive' }
@@ -1381,7 +1381,11 @@
                 const data = mockCrypto[crypto];
                 const priceElement = document.getElementById(`${crypto}-price`);
                 if (priceElement) {
-                    priceElement.textContent = `${data.price.toLocaleString()}`;
+                    if (crypto === 'wmtx' || crypto === 'mntx') {
+                        priceElement.textContent = data.price.toFixed(4);
+                    } else {
+                        priceElement.textContent = `${data.price.toLocaleString()}`;
+                    }
                     priceElement.classList.remove('loading');
                 }
 
