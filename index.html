@@ -1146,6 +1146,7 @@
         </div>
             <div style="margin-bottom: 30px;">
                 <h3 style="margin-bottom: 15px; color: #2c3e50;">📱 World Mobile</h3>
+                <div id="wm-last-updated" style="color: #666; font-size: 0.8rem;">Loading...</div>
                 <div class="dashboard-grid">
                     <div class="metric-card">
                         <div class="metric-title">WMTx Price</div>
@@ -1926,6 +1927,10 @@
                     if (totalAddrEl) totalAddrEl.textContent = Number(data.totalAddresses).toLocaleString();
                     const dailyEl = document.getElementById("wm-daily-txns");
                     if (dailyEl) dailyEl.textContent = Number(data.dailyTransactions).toLocaleString();
+                    const updateEl = document.getElementById('wm-last-updated');
+                    if (updateEl) {
+                        updateEl.textContent = `Last updated: ${new Date().toLocaleString()}`;
+                    }
                 }
             } catch (error) {
                 console.error("Error loading World Mobile stats:", error);
