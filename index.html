@@ -262,6 +262,28 @@
             color: #ef6c00;
         }
 
+        /* Metric Table */
+        .metric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .metric-table th,
+        .metric-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric-table th {
+            text-align: left;
+            background: #f8f9fa;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
         /* NFT Grid */
         .nft-grid {
             display: grid;
@@ -438,6 +460,15 @@
             color: #e0e0e0;
         }
 
+        body.dark-theme .metric-table th {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .metric-table td {
+            border-color: #333;
+        }
+
         /* Health Indicator Styles */
         .health-indicator {
             font-size: 0.8rem;
@@ -547,238 +578,276 @@
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Credit Growth &amp; Debt Levels</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Tracks credit expansion and overall debt burden to gauge financial stability.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Debt-to-GDP Ratio</div>
-                        <div class="metric-value" id="debt-value">Loading...</div>
-                        <div class="metric-change" id="debt-change">--</div>
-                        <div class="health-indicator" id="debt-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Private Credit Growth</div>
-                        <div class="metric-value" id="creditgrowth-value">Loading...</div>
-                        <div class="metric-change" id="creditgrowth-change">--</div>
-                        <div class="health-indicator" id="creditgrowth-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Debt Service Ratio</div>
-                        <div class="metric-value" id="debtservice-value">Loading...</div>
-                        <div class="metric-change" id="debtservice-change">--</div>
-                        <div class="health-indicator" id="debtservice-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Debt-to-GDP Ratio</td>
+                        <td><span class="metric-value" id="debt-value">Loading...</span></td>
+                        <td><span class="metric-change" id="debt-change">--</span></td>
+                        <td><span class="health-indicator" id="debt-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Private Credit Growth</td>
+                        <td><span class="metric-value" id="creditgrowth-value">Loading...</span></td>
+                        <td><span class="metric-change" id="creditgrowth-change">--</span></td>
+                        <td><span class="health-indicator" id="creditgrowth-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Debt Service Ratio</td>
+                        <td><span class="metric-value" id="debtservice-value">Loading...</span></td>
+                        <td><span class="metric-change" id="debtservice-change">--</span></td>
+                        <td><span class="health-indicator" id="debtservice-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Interest Rates & Yield Curves -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Interest Rates &amp; Yield Curves</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Signals monetary policy stance and expectations for future growth.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Short-Term Rate</div>
-                        <div class="metric-value" id="shortrate-value">Loading...</div>
-                        <div class="metric-change" id="shortrate-change">--</div>
-                        <div class="health-indicator" id="shortrate-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Long-Term Yield</div>
-                        <div class="metric-value" id="longrate-value">Loading...</div>
-                        <div class="metric-change" id="longrate-change">--</div>
-                        <div class="health-indicator" id="longrate-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Yield Curve Spread</div>
-                        <div class="metric-value" id="yieldcurve-value">Loading...</div>
-                        <div class="metric-change" id="yieldcurve-change">--</div>
-                        <div class="health-indicator" id="yieldcurve-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">30-Year Mortgage Rate</div>
-                        <div class="metric-value" id="mortgage-value">Loading...</div>
-                        <div class="metric-change" id="mortgage-change">--</div>
-                        <div class="health-indicator" id="mortgage-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Short-Term Rate</td>
+                        <td><span class="metric-value" id="shortrate-value">Loading...</span></td>
+                        <td><span class="metric-change" id="shortrate-change">--</span></td>
+                        <td><span class="health-indicator" id="shortrate-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Long-Term Yield</td>
+                        <td><span class="metric-value" id="longrate-value">Loading...</span></td>
+                        <td><span class="metric-change" id="longrate-change">--</span></td>
+                        <td><span class="health-indicator" id="longrate-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Yield Curve Spread</td>
+                        <td><span class="metric-value" id="yieldcurve-value">Loading...</span></td>
+                        <td><span class="metric-change" id="yieldcurve-change">--</span></td>
+                        <td><span class="health-indicator" id="yieldcurve-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>30-Year Mortgage Rate</td>
+                        <td><span class="metric-value" id="mortgage-value">Loading...</span></td>
+                        <td><span class="metric-change" id="mortgage-change">--</span></td>
+                        <td><span class="health-indicator" id="mortgage-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Money Supply & Liquidity -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Money Supply &amp; Liquidity</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Measures broad liquidity conditions via money supply and central bank actions.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">M2 Money Growth</div>
-                        <div class="metric-value" id="m2growth-value">Loading...</div>
-                        <div class="metric-change" id="m2growth-change">--</div>
-                        <div class="health-indicator" id="m2growth-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Central Bank Balance</div>
-                        <div class="metric-value" id="balancesheet-value">Loading...</div>
-                        <div class="metric-change" id="balancesheet-change">--</div>
-                        <div class="health-indicator" id="balancesheet-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>M2 Money Growth</td>
+                        <td><span class="metric-value" id="m2growth-value">Loading...</span></td>
+                        <td><span class="metric-change" id="m2growth-change">--</span></td>
+                        <td><span class="health-indicator" id="m2growth-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Central Bank Balance</td>
+                        <td><span class="metric-value" id="balancesheet-value">Loading...</span></td>
+                        <td><span class="metric-change" id="balancesheet-change">--</span></td>
+                        <td><span class="health-indicator" id="balancesheet-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Inflation & Inflation Expectations -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Inflation &amp; Inflation Expectations</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Current price pressures and future expectations guide policy responses.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Inflation Rate (YoY)</div>
-                        <div class="metric-value" id="inflation-value">Loading...</div>
-                        <div class="metric-change" id="inflation-change">--</div>
-                        <div class="health-indicator" id="inflation-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Inflation Expectations</div>
-                        <div class="metric-value" id="inflationexpect-value">Loading...</div>
-                        <div class="metric-change" id="inflationexpect-change">--</div>
-                        <div class="health-indicator" id="inflationexpect-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Inflation Rate (YoY)</td>
+                        <td><span class="metric-value" id="inflation-value">Loading...</span></td>
+                        <td><span class="metric-change" id="inflation-change">--</span></td>
+                        <td><span class="health-indicator" id="inflation-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Inflation Expectations</td>
+                        <td><span class="metric-value" id="inflationexpect-value">Loading...</span></td>
+                        <td><span class="metric-change" id="inflationexpect-change">--</span></td>
+                        <td><span class="health-indicator" id="inflationexpect-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Economic Output & Growth -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Economic Output &amp; Growth</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Shows momentum in production and business activity.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Real GDP Growth Rate</div>
-                        <div class="metric-value" id="gdp-value">Loading...</div>
-                        <div class="metric-change" id="gdp-change">--</div>
-                        <div class="health-indicator" id="gdp-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">PMI</div>
-                        <div class="metric-value" id="pmi-value">Loading...</div>
-                        <div class="metric-change" id="pmi-change">--</div>
-                        <div class="health-indicator" id="pmi-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Industrial Production</div>
-                        <div class="metric-value" id="industrialprod-value">Loading...</div>
-                        <div class="metric-change" id="industrialprod-change">--</div>
-                        <div class="health-indicator" id="industrialprod-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Real GDP Growth Rate</td>
+                        <td><span class="metric-value" id="gdp-value">Loading...</span></td>
+                        <td><span class="metric-change" id="gdp-change">--</span></td>
+                        <td><span class="health-indicator" id="gdp-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>PMI</td>
+                        <td><span class="metric-value" id="pmi-value">Loading...</span></td>
+                        <td><span class="metric-change" id="pmi-change">--</span></td>
+                        <td><span class="health-indicator" id="pmi-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Industrial Production</td>
+                        <td><span class="metric-value" id="industrialprod-value">Loading...</span></td>
+                        <td><span class="metric-change" id="industrialprod-change">--</span></td>
+                        <td><span class="health-indicator" id="industrialprod-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Labor Market Indicators -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Labor Market Indicators</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Measures employment conditions and wage pressures.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Unemployment Rate</div>
-                        <div class="metric-value" id="unemployment-value">Loading...</div>
-                        <div class="metric-change" id="unemployment-change">--</div>
-                        <div class="health-indicator" id="unemployment-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Labor Participation Rate</div>
-                        <div class="metric-value" id="labor-value">Loading...</div>
-                        <div class="metric-change" id="labor-change">--</div>
-                        <div class="health-indicator" id="labor-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Wage Growth</div>
-                        <div class="metric-value" id="wagegrowth-value">Loading...</div>
-                        <div class="metric-change" id="wagegrowth-change">--</div>
-                        <div class="health-indicator" id="wagegrowth-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Wealth Inequality (Gini)</div>
-                        <div class="metric-value" id="wealth-value">Loading...</div>
-                        <div class="metric-change" id="wealth-change">--</div>
-                        <div class="health-indicator" id="wealth-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Unemployment Rate</td>
+                        <td><span class="metric-value" id="unemployment-value">Loading...</span></td>
+                        <td><span class="metric-change" id="unemployment-change">--</span></td>
+                        <td><span class="health-indicator" id="unemployment-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Labor Participation Rate</td>
+                        <td><span class="metric-value" id="labor-value">Loading...</span></td>
+                        <td><span class="metric-change" id="labor-change">--</span></td>
+                        <td><span class="health-indicator" id="labor-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Wage Growth</td>
+                        <td><span class="metric-value" id="wagegrowth-value">Loading...</span></td>
+                        <td><span class="metric-change" id="wagegrowth-change">--</span></td>
+                        <td><span class="health-indicator" id="wagegrowth-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Wealth Inequality (Gini)</td>
+                        <td><span class="metric-value" id="wealth-value">Loading...</span></td>
+                        <td><span class="metric-change" id="wealth-change">--</span></td>
+                        <td><span class="health-indicator" id="wealth-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Asset Prices -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Asset Prices</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Reflects investor sentiment and potential wealth effects.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">S&amp;P 500 Index</div>
-                        <div class="metric-value" id="stockindex-value">Loading...</div>
-                        <div class="metric-change" id="stockindex-change">--</div>
-                        <div class="health-indicator" id="stockindex-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Real Estate Prices</div>
-                        <div class="metric-value" id="realestate-value">Loading...</div>
-                        <div class="metric-change" id="realestate-change">--</div>
-                        <div class="health-indicator" id="realestate-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Credit Spread Risk</div>
-                        <div class="metric-value" id="credit-value">Loading...</div>
-                        <div class="metric-change" id="credit-change">--</div>
-                        <div class="health-indicator" id="credit-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>S&amp;P 500 Index</td>
+                        <td><span class="metric-value" id="stockindex-value">Loading...</span></td>
+                        <td><span class="metric-change" id="stockindex-change">--</span></td>
+                        <td><span class="health-indicator" id="stockindex-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Real Estate Prices</td>
+                        <td><span class="metric-value" id="realestate-value">Loading...</span></td>
+                        <td><span class="metric-change" id="realestate-change">--</span></td>
+                        <td><span class="health-indicator" id="realestate-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Credit Spread Risk</td>
+                        <td><span class="metric-value" id="credit-value">Loading...</span></td>
+                        <td><span class="metric-change" id="credit-change">--</span></td>
+                        <td><span class="health-indicator" id="credit-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- External Balances & Currency -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">External Balances &amp; Currency</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Indicates international competitiveness and capital flows.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Current Account</div>
-                        <div class="metric-value" id="currentaccount-value">Loading...</div>
-                        <div class="metric-change" id="currentaccount-change">--</div>
-                        <div class="health-indicator" id="currentaccount-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">FX Reserves</div>
-                        <div class="metric-value" id="reserves-value">Loading...</div>
-                        <div class="metric-change" id="reserves-change">--</div>
-                        <div class="health-indicator" id="reserves-health">--</div>
-                    </div>
-
-                    <div class="metric-card">
-                        <div class="metric-title">Currency Strength</div>
-                        <div class="metric-value" id="currency-value">Loading...</div>
-                        <div class="metric-change" id="currency-change">--</div>
-                        <div class="health-indicator" id="currency-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Current Account</td>
+                        <td><span class="metric-value" id="currentaccount-value">Loading...</span></td>
+                        <td><span class="metric-change" id="currentaccount-change">--</span></td>
+                        <td><span class="health-indicator" id="currentaccount-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>FX Reserves</td>
+                        <td><span class="metric-value" id="reserves-value">Loading...</span></td>
+                        <td><span class="metric-change" id="reserves-change">--</span></td>
+                        <td><span class="health-indicator" id="reserves-health">--</span></td>
+                    </tr>
+                    <tr>
+                        <td>Currency Strength</td>
+                        <td><span class="metric-value" id="currency-value">Loading...</span></td>
+                        <td><span class="metric-change" id="currency-change">--</span></td>
+                        <td><span class="health-indicator" id="currency-health">--</span></td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Fiscal and Monetary Policy Actions -->
             <div style="margin-bottom: 30px;">
                 <h3 class="subsection-title">Fiscal and Monetary Policy Actions</h3>
                 <p style="color: #666; font-size: 0.85rem; margin-bottom: 10px;">Shows government budget stance and policy impacts on the economy.</p>
-                <div class="dashboard-grid">
-                    <div class="metric-card">
-                        <div class="metric-title">Fiscal Balance</div>
-                        <div class="metric-value" id="fiscalbalance-value">Loading...</div>
-                        <div class="metric-change" id="fiscalbalance-change">--</div>
-                        <div class="health-indicator" id="fiscalbalance-health">--</div>
-                    </div>
-                </div>
+                <table class="metric-table">
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Current</th>
+                        <th>Change</th>
+                        <th>Health</th>
+                    </tr>
+                    <tr>
+                        <td>Fiscal Balance</td>
+                        <td><span class="metric-value" id="fiscalbalance-value">Loading...</span></td>
+                        <td><span class="metric-change" id="fiscalbalance-change">--</span></td>
+                        <td><span class="health-indicator" id="fiscalbalance-health">--</span></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
