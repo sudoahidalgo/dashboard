@@ -395,6 +395,72 @@
             0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
+
+        /* Dark Theme Styles */
+        body.dark-theme {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .sidebar {
+            background: #1e1e1e;
+            border-right: 1px solid #333;
+        }
+
+        body.dark-theme .sidebar-header {
+            border-bottom: 1px solid #333;
+        }
+
+        body.dark-theme .user-info {
+            border-bottom: 1px solid #333;
+        }
+
+        body.dark-theme .nav-item:hover {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .nav-item.active {
+            background: #1a237e;
+            color: #e3f2fd;
+        }
+
+        body.dark-theme .main-content {
+            background: #121212;
+        }
+
+        body.dark-theme .top-bar,
+        body.dark-theme .content-section,
+        body.dark-theme .metric-card,
+        body.dark-theme .nft-card,
+        body.dark-theme .news-card {
+            background: #1e1e1e;
+            border-color: #333;
+        }
+
+        body.dark-theme .news-card:hover {
+            background: #2a2a2a;
+        }
+
+        body.dark-theme .search-input {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .notification-btn,
+        body.dark-theme .settings-btn {
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .section-title {
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .metric-value {
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -406,9 +472,9 @@
         </div>
 
         <div class="user-info">
-            <div class="user-avatar">AB</div>
+            <div class="user-avatar">AH</div>
             <div class="user-details">
-                <h4>Anna Barros</h4>
+                <h4>Adrian Hidalgo</h4>
                 <p>Premium User</p>
             </div>
         </div>
@@ -431,14 +497,17 @@
                 Digital Assets
                 <span class="nav-item-badge">New</span>
             </a>
-            <a href="#" class="nav-item" data-section="portfolio">
-                <div class="nav-item-icon">💼</div>
-                Portfolio
-            </a>
             <a href="#" class="nav-item" data-section="settings">
                 <div class="nav-item-icon">⚙️</div>
                 Settings
             </a>
+            
+            <div style="margin-top: auto; padding: 20px; border-top: 1px solid #eee;">
+                <button id="theme-toggle" class="nav-item" style="width: 100%; border: none; background: none; text-align: left;">
+                    <div class="nav-item-icon">🌙</div>
+                    Dark Theme
+                </button>
+            </div>
         </nav>
     </div>
 
@@ -453,7 +522,7 @@
             <div class="top-bar-actions">
                 <button class="notification-btn">🔔</button>
                 <button class="settings-btn">⚙️</button>
-                <div class="user-avatar" style="width: 32px; height: 32px;">AB</div>
+                <div class="user-avatar" style="width: 32px; height: 32px;">AH</div>
             </div>
         </div>
 
@@ -573,17 +642,55 @@
             </div>
 
             <div style="margin-bottom: 30px;">
-                <h3 style="margin-bottom: 15px; color: #2c3e50;">EarthNode NFTs (Cardano)</h3>
-                <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
+                    🌍 EarthNode NFTs (Cardano) 
+                    <span style="background: #1976d2; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;">Verified</span>
+                </h3>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
                     Policy ID: b97859c71e4e73af3ae83c30a3172c434c43041f6ff19c297fb76094
                 </p>
-                <div class="nft-grid" id="earthnode-nfts">
-                    <div class="nft-card">
-                        <div class="nft-image">Loading NFTs...</div>
-                        <div class="nft-info">
-                            <div class="nft-name">EarthNode #1</div>
-                            <div class="nft-price">Loading...</div>
-                        </div>
+                
+                <div class="dashboard-grid" style="margin-bottom: 20px;">
+                    <div class="metric-card">
+                        <div class="metric-title">Floor Price</div>
+                        <div class="metric-value">₳ 63k</div>
+                        <div class="metric-change positive">+2.1% ↗</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">Best Offer</div>
+                        <div class="metric-value">₳ 40k</div>
+                        <div class="metric-change neutral">-1.2% →</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">Volume</div>
+                        <div class="metric-value">₳ 22.5M</div>
+                        <div class="metric-change positive">+15.3% ↗</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">1M Average</div>
+                        <div class="metric-value">₳ 51.2k</div>
+                        <div class="metric-change positive">+8.7% ↗</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">Listed</div>
+                        <div class="metric-value">1.8%</div>
+                        <div class="metric-change negative">-0.3% ↘</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">Total NFTs</div>
+                        <div class="metric-value">1,000</div>
+                        <div class="metric-change neutral">0% →</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-title">Unique Wallets</div>
+                        <div class="metric-value">51%</div>
+                        <div class="metric-change positive">+1.8% ↗</div>
                     </div>
                 </div>
             </div>
@@ -605,36 +712,6 @@
                     <div class="metric-title">Cardano (ADA)</div>
                     <div class="metric-value" id="ada-price">Loading...</div>
                     <div class="metric-change" id="ada-change">--</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Portfolio Section -->
-        <div class="content-section" id="portfolio">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Portfolio Overview</h2>
-                    <p class="section-subtitle">Your investment performance</p>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="metric-card">
-                    <div class="metric-title">Total Portfolio Value</div>
-                    <div class="metric-value">$2,450</div>
-                    <div class="metric-change positive">+5.2% ↗</div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">Today's Change</div>
-                    <div class="metric-value">+$127</div>
-                    <div class="metric-change positive">+5.5% ↗</div>
-                </div>
-
-                <div class="metric-card">
-                    <div class="metric-title">NFT Holdings</div>
-                    <div class="metric-value">3 items</div>
-                    <div class="metric-change neutral">0% →</div>
                 </div>
             </div>
         </div>
@@ -677,9 +754,11 @@
     <script>
         // Navigation functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const navItems = document.querySelectorAll('.nav-item');
+            const navItems = document.querySelectorAll('.nav-item[data-section]');
             const contentSections = document.querySelectorAll('.content-section');
+            const themeToggle = document.getElementById('theme-toggle');
 
+            // Navigation
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -702,11 +781,33 @@
                 });
             });
 
+            // Dark theme toggle
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                const isDark = document.body.classList.contains('dark-theme');
+                
+                // Update icon and text
+                const icon = this.querySelector('.nav-item-icon');
+                icon.textContent = isDark ? '☀️' : '🌙';
+                this.childNodes[2].textContent = isDark ? ' Light Theme' : ' Dark Theme';
+                
+                // Save preference
+                localStorage.setItem('darkTheme', isDark);
+            });
+
+            // Load theme preference
+            const savedTheme = localStorage.getItem('darkTheme');
+            if (savedTheme === 'true') {
+                document.body.classList.add('dark-theme');
+                const icon = themeToggle.querySelector('.nav-item-icon');
+                icon.textContent = '☀️';
+                themeToggle.childNodes[2].textContent = ' Light Theme';
+            }
+
             // Initialize data loading
             loadEconomicData();
             loadNewsData();
             loadCryptoData();
-            loadEarthNodeNFTs();
         });
 
         // Economic data (keeping existing functionality)
@@ -742,10 +843,113 @@
             return `${sign}${change.toFixed(2)}% ${arrow}`;
         }
 
-        async function loadEconomicData() {
+        async function fetchFredData(seriesId, limit = 10) {
+            const cacheKey = `${seriesId}_${Date.now()}`;
+            
             try {
-                // Using mock data for demo purposes
-                const mockData = {
+                const url = `${CORS_PROXY}${encodeURIComponent(FRED_BASE_URL)}?series_id=${seriesId}&api_key=${FRED_API_KEY}&limit=${limit}&file_type=json&sort_order=desc`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(`Error fetching ${seriesId}:`, error);
+                return null;
+            }
+        }
+
+        function transformValue(value, transform) {
+            if (!value || value === '.') return null;
+            
+            const numValue = parseFloat(value);
+            if (isNaN(numValue)) return null;
+            
+            switch (transform) {
+                case 'billions_to_trillions':
+                    return numValue / 1000;
+                case 'millions_to_trillions':
+                    return numValue / 1000000;
+                case 'yoy_percent':
+                    return numValue * 0.1; // Simplified
+                default:
+                    return numValue;
+            }
+        }
+
+        function calculateChange(current, previous) {
+            if (!current || !previous || current === '.' || previous === '.') return 0;
+            
+            const curr = parseFloat(current);
+            const prev = parseFloat(previous);
+            
+            if (isNaN(curr) || isNaN(prev) || prev === 0) return 0;
+            
+            return ((curr - prev) / prev) * 100;
+        }
+
+        function determineTrend(change) {
+            if (Math.abs(change) < 0.01) return 'neutral';
+            return change > 0 ? 'positive' : 'negative';
+        }
+
+        async function fetchEconomicData() {
+            const results = {};
+            
+            try {
+                // Fetch all indicators in parallel
+                const promises = Object.entries(indicators).map(async ([key, indicator]) => {
+                    const data = await fetchFredData(indicator.series, 5);
+                    if (data && data.observations && data.observations.length >= 2) {
+                        const observations = data.observations;
+                        const latest = observations[0];
+                        const previous = observations[1];
+                        
+                        let value = transformValue(latest.value, indicator.transform) || parseFloat(latest.value);
+                        const change = calculateChange(latest.value, previous.value);
+                        const trend = determineTrend(change);
+                        
+                        // Special handling for inflation
+                        if (key === 'inflation') {
+                            const yearAgoIndex = Math.min(observations.length - 1, 12);
+                            if (observations[yearAgoIndex]) {
+                                const yearAgoValue = parseFloat(observations[yearAgoIndex].value);
+                                if (!isNaN(yearAgoValue) && yearAgoValue > 0) {
+                                    value = ((parseFloat(latest.value) - yearAgoValue) / yearAgoValue) * 100;
+                                }
+                            }
+                        }
+                        
+                        results[key] = {
+                            value: value || 0,
+                            change: change || 0,
+                            trend: trend,
+                            lastUpdated: latest.date
+                        };
+                    } else {
+                        // Fallback data
+                        const mockFallback = {
+                            gdp: { value: 22.75, change: 1.25, trend: 'positive' },
+                            inflation: { value: 3.36, change: 0.31, trend: 'negative' },
+                            unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
+                            debt: { value: 34.00, change: 2.52, trend: 'negative' },
+                            mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
+                            labor: { value: 62.7, change: 0.00, trend: 'neutral' }
+                        };
+                        results[key] = mockFallback[key];
+                    }
+                });
+                
+                await Promise.all(promises);
+                return results;
+                
+            } catch (error) {
+                console.error('Error fetching economic data:', error);
+                // Return fallback data
+                return {
                     gdp: { value: 22.75, change: 1.25, trend: 'positive' },
                     inflation: { value: 3.36, change: 0.31, trend: 'negative' },
                     unemployment: { value: 3.90, change: 0.10, trend: 'negative' },
@@ -753,23 +957,33 @@
                     mortgage: { value: 7.03, change: 0.09, trend: 'negative' },
                     labor: { value: 62.7, change: 0.00, trend: 'neutral' }
                 };
+            }
+        }
 
-                Object.keys(mockData).forEach(key => {
-                    const data = mockData[key];
+        async function loadEconomicData() {
+            try {
+                const data = await fetchEconomicData();
+
+                Object.keys(data).forEach(key => {
+                    const dataPoint = data[key];
                     const valueElement = document.getElementById(`${key}-value`);
                     const changeElement = document.getElementById(`${key}-change`);
                     
                     if (valueElement && changeElement) {
-                        valueElement.textContent = formatValue(data.value, indicators[key].format);
+                        valueElement.textContent = formatValue(dataPoint.value, indicators[key].format);
                         valueElement.classList.remove('loading');
-                        changeElement.textContent = formatChange(data.change, data.trend);
-                        changeElement.className = `metric-change ${data.trend}`;
+                        changeElement.textContent = formatChange(dataPoint.change, dataPoint.trend);
+                        changeElement.className = `metric-change ${dataPoint.trend}`;
                     }
                 });
 
                 document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleString()}`;
             } catch (error) {
                 console.error('Error loading economic data:', error);
+                document.getElementById('lastUpdated').innerHTML = `
+                    <span style="color: #f44336;">Error loading data</span><br>
+                    <small>Using cached/fallback data</small>
+                `;
             }
         }
 
@@ -812,7 +1026,7 @@
         }
 
         async function loadCryptoData() {
-            // Mock crypto data
+            // Mock crypto data - can be replaced with real API calls
             const mockCrypto = {
                 btc: { price: 43250, change: 2.4, trend: 'positive' },
                 eth: { price: 2650, change: -1.2, trend: 'negative' },
@@ -825,37 +1039,11 @@
                 const changeElement = document.getElementById(`${crypto}-change`);
                 
                 if (priceElement && changeElement) {
-                    priceElement.textContent = `$${data.price.toLocaleString()}`;
+                    priceElement.textContent = `${data.price.toLocaleString()}`;
                     priceElement.classList.remove('loading');
                     changeElement.textContent = formatChange(data.change, data.trend);
                     changeElement.className = `metric-change ${data.trend}`;
                 }
-            });
-        }
-
-        async function loadEarthNodeNFTs() {
-            // Mock EarthNode NFT data
-            const mockNFTs = [
-                { name: "EarthNode #1", price: "150 ADA", image: "🌍" },
-                { name: "EarthNode #2", price: "175 ADA", image: "🌱" },
-                { name: "EarthNode #3", price: "200 ADA", image: "🌳" },
-                { name: "EarthNode #4", price: "165 ADA", image: "🌿" }
-            ];
-
-            const nftContainer = document.getElementById('earthnode-nfts');
-            nftContainer.innerHTML = '';
-
-            mockNFTs.forEach(nft => {
-                const nftCard = document.createElement('div');
-                nftCard.className = 'nft-card';
-                nftCard.innerHTML = `
-                    <div class="nft-image" style="font-size: 4rem;">${nft.image}</div>
-                    <div class="nft-info">
-                        <div class="nft-name">${nft.name}</div>
-                        <div class="nft-price">${nft.price}</div>
-                    </div>
-                `;
-                nftContainer.appendChild(nftCard);
             });
         }
     </script>
