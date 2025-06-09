@@ -1632,7 +1632,6 @@
             // Auto-refresh data every 5 minutes
             setInterval(() => {
                 loadEconomicData();
-                loadCREconomicData();
                 loadWorldEconomicData();
                 loadWeatherData();
                 loadCryptoData();
@@ -1641,6 +1640,9 @@
                 loadEarthNodeStats();
                 loadSportsScores();
             }, 5 * 60 * 1000);
+
+            // Refresh Costa Rica metrics every hour
+            setInterval(loadCREconomicData, 60 * 60 * 1000);
 
             // Auto-refresh news every 10 minutes
             setInterval(loadNewsData, 10 * 60 * 1000);
@@ -1978,10 +1980,39 @@
 
         async function loadCREconomicData() {
             const data = {
-                usdcrc: { value: 520, change: 0.1, trend: 'positive' },
                 inflation: { value: 3.6, change: -0.2, trend: 'positive' },
                 unemployment: { value: 8.4, change: -0.1, trend: 'positive' }
             };
+
+            try {
+                const now = new Date();
+                const today = now.toISOString().split('T')[0];
+                const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                const url =
+                    CORS_PROXY +
+                    encodeURIComponent(
+                        `https://api.exchangerate.host/timeseries?base=USD&symbols=CRC&start_date=${yesterday}&end_date=${today}`
+                    );
+
+                const response = await fetch(url);
+                if (response.ok) {
+                    const json = await response.json();
+                    const rateToday = json.rates?.[today]?.CRC;
+                    const rateYesterday = json.rates?.[yesterday]?.CRC;
+                    let change = 0;
+                    if (rateToday && rateYesterday) {
+                        change = ((rateToday - rateYesterday) / rateYesterday) * 100;
+                    }
+                    const trend = determineTrend(change);
+                    data.usdcrc = { value: rateToday || 0, change, trend };
+                } else {
+                    data.usdcrc = { value: 0, change: 0, trend: 'neutral' };
+                }
+            } catch (err) {
+                console.error('Error fetching USD/CRC rate:', err);
+                data.usdcrc = { value: 0, change: 0, trend: 'neutral' };
+            }
+
             const idMap = { usdcrc: 'usdcrc', inflation: 'cr-inflation', unemployment: 'cr-unemployment' };
             Object.entries(data).forEach(([key, val]) => {
                 const valueEl = document.getElementById(`${idMap[key]}-value`);
