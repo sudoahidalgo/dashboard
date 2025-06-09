@@ -31,6 +31,12 @@ Replace `'123'` with your own API key from
 can manually edit the file or set an environment variable named
 `SPORTS_API_KEY` and inject it during your build process.
 
+### Exchange Rate API
+
+Costa Rica economy data requires access to the free
+[exchangerate.host](https://exchangerate.host/) service. The dashboard uses this
+API to pull the USD to CRC conversion rate via client-side requests.
+
 
 ## Running
 
