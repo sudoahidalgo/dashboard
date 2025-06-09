@@ -1508,6 +1508,7 @@
                     <div class="metric-value" id="mn-daily-txns">Loading...</div>
                 </div>
             </div>
+            <div id="mn-last-updated" style="color: #666; font-size: 0.8rem; margin-top: 10px;">Loading...</div>
         </div>
         </div>
 
@@ -1654,6 +1655,9 @@
         const SPORTS_API_URL = 'https://www.thesportsdb.com/api/v1/json/' + SPORTS_API_KEY;
         const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
         const FRED_BASE_URL = 'https://api.stlouisfed.org/fred/series/observations';
+        // Minutes Network configuration
+        const MINUTES_API_URL = 'https://explorer.minutesnetwork.io/api/v1/stats';
+        const MINUTES_POLICY_ID = '<YOUR_MNTX_POLICY_ID>';
 
         const CRYPTO_FALLBACK = {
             'bitcoin': {
@@ -2396,7 +2400,7 @@ async function loadWorldMobileStats() {
 
 async function loadMinutesNetworkStats() {
     try {
-        const response = await fetch(CORS_PROXY + encodeURIComponent('https://explorer.minutesnetwork.io/api/v1/stats'));
+        const response = await fetch(CORS_PROXY + encodeURIComponent(MINUTES_API_URL));
         const data = await response.json();
         if (data) {
             const totalTxEl = document.getElementById("mn-total-txns");
@@ -2405,6 +2409,8 @@ async function loadMinutesNetworkStats() {
             if (totalAddrEl) totalAddrEl.textContent = Number(data.totalAddresses).toLocaleString();
             const dailyEl = document.getElementById("mn-daily-txns");
             if (dailyEl) dailyEl.textContent = Number(data.dailyTransactions).toLocaleString();
+            const upd = document.getElementById('mn-last-updated');
+            if (upd) upd.textContent = `Last updated: ${new Date().toLocaleString()}`;
         }
     } catch (error) {
         console.error("Error loading Minutes Network stats:", error);
@@ -2415,6 +2421,8 @@ async function loadMinutesNetworkStats() {
         if (totalAddrEl) totalAddrEl.textContent = fallback.totalAddresses.toLocaleString();
         const dailyEl = document.getElementById("mn-daily-txns");
         if (dailyEl) dailyEl.textContent = fallback.dailyTransactions.toLocaleString();
+        const upd = document.getElementById('mn-last-updated');
+        if (upd) upd.innerHTML = '<span style="color: #f44336;">Error loading data - using fallback values</span>';
     }
 }
 
