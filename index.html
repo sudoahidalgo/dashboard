@@ -1454,23 +1454,19 @@
                 <div class="dashboard-grid" style="margin-top: 20px;">
                     <div class="metric-card">
                         <div class="metric-title">Floor Price</div>
-                        <div class="metric-value">₳ 63k</div>
-                        <div class="metric-change positive">+2.1% ↗</div>
+                        <div class="metric-value" id="earthnode-floor">Loading...</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-title">Best Offer</div>
-                        <div class="metric-value">₳ 40k</div>
-                        <div class="metric-change neutral">-1.2% →</div>
+                        <div class="metric-value" id="earthnode-best-offer">Loading...</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-title">Listed</div>
-                        <div class="metric-value">1.8%</div>
-                        <div class="metric-change negative">-0.3% ↘</div>
+                        <div class="metric-value" id="earthnode-listed">Loading...</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-title">Unique Wallets</div>
-                        <div class="metric-value">510</div>
-                        <div class="metric-change positive">+1.8% ↗</div>
+                        <div class="metric-value" id="earthnode-wallets">Loading...</div>
                     </div>
                 </div>
             </div>
@@ -1631,6 +1627,7 @@
 
             loadWorldMobileStats();
             loadMinutesNetworkStats();
+            loadEarthNodeStats();
             // Auto-refresh data every 5 minutes
             setInterval(() => {
                 loadEconomicData();
@@ -1640,6 +1637,7 @@
                 loadCryptoData();
                 loadWorldMobileStats();
                 loadMinutesNetworkStats();
+                loadEarthNodeStats();
                 loadSportsScores();
             }, 5 * 60 * 1000);
 
@@ -2411,6 +2409,45 @@ async function loadMinutesNetworkStats() {
         if (totalAddrEl) totalAddrEl.textContent = fallback.totalAddresses.toLocaleString();
         const dailyEl = document.getElementById("mn-daily-txns");
         if (dailyEl) dailyEl.textContent = fallback.dailyTransactions.toLocaleString();
+    }
+}
+
+async function loadEarthNodeStats() {
+    const fallback = {
+        floorPrice: 63000,
+        bestOffer: 40000,
+        listedPercent: 1.8,
+        uniqueWallets: 510
+    };
+
+    const floorEl = document.getElementById('earthnode-floor');
+    const offerEl = document.getElementById('earthnode-best-offer');
+    const listedEl = document.getElementById('earthnode-listed');
+    const walletsEl = document.getElementById('earthnode-wallets');
+
+    try {
+        const url = CORS_PROXY + encodeURIComponent('https://server.jpgstoreapis.com/policy/b97859c71e4e73af3ae83c30a3172c434c43041f6ff19c297fb76094/stats');
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data) {
+            const floor = data.floor_price || data.floorPrice || data.floor || fallback.floorPrice;
+            const offer = data.best_offer || data.bestOffer || fallback.bestOffer;
+            const listed = data.listed_percent || data.listed || data.percent_listed || fallback.listedPercent;
+            const wallets = data.unique_wallets || data.holders || fallback.uniqueWallets;
+
+            if (floorEl) floorEl.textContent = `₳ ${Number(floor).toLocaleString()}`;
+            if (offerEl) offerEl.textContent = `₳ ${Number(offer).toLocaleString()}`;
+            if (listedEl) listedEl.textContent = `${Number(listed).toFixed(1)}%`;
+            if (walletsEl) walletsEl.textContent = Number(wallets).toLocaleString();
+            return;
+        }
+        throw new Error('Invalid data');
+    } catch (error) {
+        console.error('Error loading Earth Node stats:', error);
+        if (floorEl) floorEl.textContent = `₳ ${fallback.floorPrice.toLocaleString()}`;
+        if (offerEl) offerEl.textContent = `₳ ${fallback.bestOffer.toLocaleString()}`;
+        if (listedEl) listedEl.textContent = `${fallback.listedPercent}%`;
+        if (walletsEl) walletsEl.textContent = fallback.uniqueWallets.toLocaleString();
     }
 }
 
