@@ -1986,19 +1986,25 @@
 
             try {
                 const now = new Date();
-                const today = now.toISOString().split('T')[0];
                 const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-                const url =
-                    CORS_PROXY +
-                    encodeURIComponent(
-                        `https://api.exchangerate.host/timeseries?base=USD&symbols=CRC&start_date=${yesterday}&end_date=${today}`
-                    );
 
-                const response = await fetch(url);
-                if (response.ok) {
-                    const json = await response.json();
-                    const rateToday = json.rates?.[today]?.CRC;
-                    const rateYesterday = json.rates?.[yesterday]?.CRC;
+                const todayUrl =
+                    CORS_PROXY +
+                    encodeURIComponent('https://api.exchangerate.host/latest?base=USD&symbols=CRC');
+                const yesterdayUrl =
+                    CORS_PROXY +
+                    encodeURIComponent(`https://api.exchangerate.host/${yesterday}?base=USD&symbols=CRC`);
+
+                const [todayRes, yesterdayRes] = await Promise.all([
+                    fetch(todayUrl),
+                    fetch(yesterdayUrl)
+                ]);
+
+                if (todayRes.ok && yesterdayRes.ok) {
+                    const todayJson = await todayRes.json();
+                    const yesterdayJson = await yesterdayRes.json();
+                    const rateToday = todayJson.rates?.CRC;
+                    const rateYesterday = yesterdayJson.rates?.CRC;
                     let change = 0;
                     if (rateToday && rateYesterday) {
                         change = ((rateToday - rateYesterday) / rateYesterday) * 100;

@@ -34,8 +34,10 @@ can manually edit the file or set an environment variable named
 ### Exchange Rate API
 
 Costa Rica economy data requires access to the free
-[exchangerate.host](https://exchangerate.host/) service. The dashboard uses this
-API to pull the USD to CRC conversion rate via client-side requests.
+[exchangerate.host](https://exchangerate.host/) service. The dashboard fetches
+the latest USD to CRC rate along with the previous day's value every hour via
+client-side requests. A CORS proxy is used for these requests, so ensure you
+have network access when running the page.
 
 
 ## Running
