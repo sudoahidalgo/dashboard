@@ -2292,8 +2292,11 @@
                 });
 
                 Object.values(coinMap).forEach(id => {
-                    if (!dataMap[id] && CRYPTO_FALLBACK[id]) {
-                        dataMap[id] = CRYPTO_FALLBACK[id];
+                    if (!dataMap[id]) {
+                        console.warn(`No data returned for slug: ${id}`);
+                        if (CRYPTO_FALLBACK[id]) {
+                            dataMap[id] = CRYPTO_FALLBACK[id];
+                        }
                     }
                 });
 
@@ -2344,8 +2347,11 @@
             });
 
             Object.values(coinMap).forEach(id => {
-                if (!dataMap[id] && CRYPTO_FALLBACK[id]) {
-                    dataMap[id] = CRYPTO_FALLBACK[id];
+                if (!dataMap[id]) {
+                    console.warn(`No data returned for slug: ${id}`);
+                    if (CRYPTO_FALLBACK[id]) {
+                        dataMap[id] = CRYPTO_FALLBACK[id];
+                    }
                 }
             });
 
