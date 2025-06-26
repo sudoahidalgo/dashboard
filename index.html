@@ -449,91 +449,7 @@
         }
 
         /* ===== NEW SPORTS SECTION STYLES ===== */
-        #sports-grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .sport-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .sport-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .sport-card-header h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .sport-card-header .icon {
-            font-size: 1.8rem;
-        }
-
-        .match-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .match-list .loading-item,
-        .match-list .message-item {
-             text-align: center;
-             padding: 20px;
-             color: #888;
-        }
-
-        .match-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-radius: 6px;
-            background: #f8f9fa;
-        }
-
-        .match-item-teams {
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
-
-        .team-logo {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
-        }
-
-        .match-item-details {
-            text-align: right;
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .match-item-details .round {
-            display: block;
-            font-size: 0.75rem;
-            color: #888;
-        }
-        /* ===== END NEW SPORTS SECTION STYLES ===== */
+        /* Moved to sports.html */
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -551,9 +467,6 @@
             }
             
             .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            #sports-grid-container {
                 grid-template-columns: 1fr;
             }
         }
@@ -784,7 +697,7 @@
                 <div class="nav-item-icon">📰</div>
                 News
             </a>
-            <a href="#" class="nav-item" data-section="sports">
+            <a href="sports.html" class="nav-item">
                 <div class="nav-item-icon">🏟️</div>
                 Sports
             </a>
@@ -1524,38 +1437,7 @@
 
         </div>
 
-        <!-- Sports Section -->
-        <div class="content-section" id="sports">
-            <div class="section-header">
-                <div>
-                    <h2 class="section-title">Sports Center</h2>
-                    <p class="section-subtitle">Scores, schedules, and news for your favorite leagues</p>
-                </div>
-            </div>
 
-            <!-- New Sports Grid Container -->
-            <div id="sports-grid-container"></div>
-
-            <!-- Sports News Subsections -->
-            <div style="margin-top: 30px;">
-                 <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
-                        🏅 World Sports News
-                    </h3>
-                    <div class="news-grid" id="world-sports-news-container">
-                        <div class="loading">Loading...</div>
-                    </div>
-                </div>
-                <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 15px; color: #2c3e50; display: flex; align-items: center; gap: 10px;">
-                        🏆 Costa Rica Sports News
-                    </h3>
-                    <div class="news-grid" id="costa-rica-sports-news-container">
-                         <div class="loading">Loading...</div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Digital Assets Section -->
         <div class="content-section" id="digital-assets">
@@ -2516,7 +2398,6 @@
             loadWorldEconomicData();
             loadWeatherData();
             loadNewsData();
-            loadSportsScores();
             loadCryptoData();
             loadWorldMobileStats();
             loadMinutesNetworkStats();
@@ -2534,7 +2415,6 @@
                 loadWorldMobileStats();
                 loadMinutesNetworkStats();
                 loadEarthNodeStats();
-                loadSportsScores();
             }, 5 * 60 * 1000);
 
             // Refresh Costa Rica metrics every hour

@@ -17,19 +17,12 @@ Provide your key in one of the following ways:
 
 If you use an automated build, create a script that reads `FRED_API_KEY` from the environment and replaces the placeholder before serving the page.
 
-### Sports API Key
+### Sports Page
 
-The page also pulls live scores using TheSportsDB. In `index.html` you'll see
-the following placeholder:
-
-```javascript
-const SPORTS_API_KEY = '123';
-```
-
-Replace `'123'` with your own API key from
-[TheSportsDB](https://www.thesportsdb.com/api.php). As with the FRED key, you
-can manually edit the file or set an environment variable named
-`SPORTS_API_KEY` and inject it during your build process.
+The original sports widget has been replaced with a dedicated
+`sports.html` page that loads football, NFL and tennis data from open
+APIs via a CORS proxy. The page falls back to mock data if the requests
+fail, so no API key is required to view scores.
 
 ### Exchange Rate API
 
