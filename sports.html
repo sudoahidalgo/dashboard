@@ -142,6 +142,11 @@
             object-fit: contain;
         }
 
+        .score {
+            margin: 0 4px;
+            font-weight: bold;
+        }
+
         .match-item-details {
             text-align: right;
             font-size: 0.9rem;
@@ -264,7 +269,11 @@
                         }
                     }
 
-                    return matches.slice(0, 10); // Limit to 10 matches
+                    if (matches.length === 0) {
+                        return this.getFIFAMockData();
+                    }
+                    matches.sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate));
+                    return matches.slice(0, 10); // Limit to 10 matches in chronological order
                 } catch (error) {
                     console.error('Error fetching FIFA matches:', error);
                     return this.getFIFAMockData();
@@ -317,25 +326,26 @@
                 return [
                     {
                         homeTeam: { name: 'Real Madrid', crest: 'https://crests.football-data.org/86.png' },
-                        awayTeam: { name: 'Manchester City', crest: 'https://crests.football-data.org/65.png' },
-                        competition: { name: 'FIFA Club World Cup' },
-                        utcDate: new Date(Date.now() + 2*60*60*1000).toISOString(),
-                        status: 'SCHEDULED',
-                        matchday: 'Final'
+                        awayTeam: { name: 'Barcelona', crest: 'https://crests.football-data.org/81.png' },
+                        competition: { name: 'La Liga' },
+                        utcDate: new Date(Date.now() - 2*60*60*1000).toISOString(),
+                        status: 'FINISHED',
+                        score: { fullTime: { home: 2, away: 1 } },
+                        matchday: 'Matchday 30'
                     },
                     {
                         homeTeam: { name: 'Bayern Munich', crest: 'https://crests.football-data.org/5.png' },
                         awayTeam: { name: 'Chelsea', crest: 'https://crests.football-data.org/61.png' },
-                        competition: { name: 'FIFA Club World Cup' },
-                        utcDate: new Date(Date.now() + 6*60*60*1000).toISOString(),
+                        competition: { name: 'Champions League' },
+                        utcDate: new Date(Date.now() + 3*60*60*1000).toISOString(),
                         status: 'SCHEDULED',
-                        matchday: '3rd Place'
+                        matchday: 'Quarterfinal'
                     },
                     {
                         homeTeam: { name: 'Arsenal', crest: 'https://crests.football-data.org/57.png' },
                         awayTeam: { name: 'Liverpool', crest: 'https://crests.football-data.org/64.png' },
                         competition: { name: 'Premier League' },
-                        utcDate: new Date(Date.now() + 24*60*60*1000).toISOString(),
+                        utcDate: new Date(Date.now() + 27*60*60*1000).toISOString(),
                         status: 'SCHEDULED',
                         matchday: 'Matchday 22'
                     }
@@ -364,19 +374,19 @@
                         name: 'Jannik Sinner vs Carlos Alcaraz',
                         homeTeam: { displayName: 'Jannik Sinner', logo: 'https://www.atptour.com/en/-/media/images/players/head-shots/s/sinner-head.png' },
                         awayTeam: { displayName: 'Carlos Alcaraz', logo: 'https://www.atptour.com/en/-/media/images/players/head-shots/a/alcaraz-head.png' },
-                        competition: { name: 'Australian Open' },
-                        date: new Date(Date.now() + 2*60*60*1000).toISOString(),
-                        status: 'SCHEDULED',
-                        round: 'Quarterfinal'
+                        competition: { name: 'Wimbledon' },
+                        date: new Date(Date.now() - 60*60*1000).toISOString(),
+                        status: 'FINISHED',
+                        round: 'Semifinal'
                     },
                     {
                         name: 'Novak Djokovic vs Alexander Zverev',
                         homeTeam: { displayName: 'Novak Djokovic', logo: 'https://www.atptour.com/en/-/media/images/players/head-shots/d/djokovic-head.png' },
                         awayTeam: { displayName: 'Alexander Zverev', logo: 'https://www.atptour.com/en/-/media/images/players/head-shots/z/zverev-head.png' },
-                        competition: { name: 'Australian Open' },
-                        date: new Date(Date.now() + 4*60*60*1000).toISOString(),
+                        competition: { name: 'Wimbledon' },
+                        date: new Date(Date.now() + 2*60*60*1000).toISOString(),
                         status: 'SCHEDULED',
-                        round: 'Semifinal'
+                        round: 'Final'
                     }
                 ];
             }
@@ -467,11 +477,15 @@
                 const homeTeam = match.homeTeam?.name || 'TBD';
                 const awayTeam = match.awayTeam?.name || 'TBD';
                 const competition = match.competition?.name || match.competition || 'Unknown';
-                const matchTime = new Date(match.utcDate).toLocaleTimeString('en-US', { 
-                    hour: '2-digit', 
+                const matchTime = new Date(match.utcDate).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
                     minute: '2-digit',
                     timeZone: 'America/Costa_Rica'
                 });
+                const isFinished = match.status === 'FINISHED';
+                const scoreHtml = isFinished && match.score?.fullTime
+                    ? `<span class="score">${match.score.fullTime.home}-${match.score.fullTime.away}</span>`
+                    : '';
                 const round = match.matchday || match.round || '';
 
                 return `
@@ -479,6 +493,7 @@
                         <div class="match-item-teams">
                             ${match.homeTeam?.crest ? `<img src="${match.homeTeam.crest}" alt="${homeTeam}" class="team-logo">` : '⚽'}
                             ${homeTeam} vs ${awayTeam}
+                            ${scoreHtml}
                             ${match.awayTeam?.crest ? `<img src="${match.awayTeam.crest}" alt="${awayTeam}" class="team-logo">` : '⚽'}
                         </div>
                         <div class="match-item-details">
